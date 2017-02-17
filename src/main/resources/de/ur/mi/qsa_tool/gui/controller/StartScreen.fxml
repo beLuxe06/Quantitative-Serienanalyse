@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu id="start_screen_menu_file" fx:id="start_screen_menu_file" mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem id="start_screen_menu_file_sub_close" fx:id="start_screen_menu_file_sub_close" mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu id="start_screen_menu_edit" fx:id="start_screen_menu_edit" mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem id="start_screen_menu_edit_sub_delete" fx:id="start_screen_menu_edit_sub_delete" mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu id="start_screen_menu_help" fx:id="start_screen_menu_edit" mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem id="start_screen_menu_help_sub_about" fx:id="start_screen_menu_help_sub_about" mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <left>
+      <AnchorPane prefHeight="1080.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <AnchorPane prefHeight="1080.0" prefWidth="40.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <AnchorPane prefHeight="40.0" prefWidth="1920.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <center>
+      <AnchorPane>
+         <children>
+            <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <top>
+                  <AnchorPane prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+               </top>
+               <center>
+                  <AnchorPane BorderPane.alignment="CENTER">
+                     <children>
+                        <VBox prefHeight="144.0" prefWidth="880.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane>
+                                 <children>
+                                    <HBox AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <AnchorPane>
+                                             <children>
+                                                <ImageView id="start_screen_logo" fx:id="start_screen_logo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="0.0">
+                                                   <image>
+                                                      <Image url="@../../../../../../img/QST-Logo_v2.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                    <HBox AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <AnchorPane>
+                                             <children>
+                                                <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quantitative Serienanalyse Tool" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
+                                                               <font>
+                                                                  <Font name="Calibri" size="48.0" />
+                                                               </font>
+                                                            </Text>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </VBox>
+                                                <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ihr Tool zur methodischen Analyse von Fernsehserien" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="80.0">
+                                                               <font>
+                                                                  <Font name="Calibri" size="24.0" />
+                                                               </font>
+                                                            </Text>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="800.0" prefWidth="880.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="144.0">
+                           <children>
+                              <AnchorPane>
+                                 <children>
+                                    <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <AnchorPane>
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dateien Importieren" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="10.0">
+                                                   <font>
+                                                      <Font name="Calibri" size="14.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="30.0" prefWidth="880.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                       <children>
+                                          <AnchorPane>
+                                             <children>
+                                                <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane prefHeight="30.0" prefWidth="100.0">
+                                                         <children>
+                                                            <ImageView id="start_screen_search_file" fx:id="start_screen_search_file" fitHeight="30.0" fitWidth="100.0" onMouseClicked="#openFileFromSystem" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                                                               <image>
+                                                                  <Image url="@../../../../../../img/folder-open-outline.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </HBox>
+                                                <HBox layoutX="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <TextField id="start_screen_insert_filepath_edit" fx:id="start_screen_insert_filepath_edit" onAction="#onStartScreenFilepathInserted" onDragDropped="#handleInputFileDropped" onDragOver="#handleInputFileDragOver" prefHeight="30.0" prefWidth="1800.0" promptText="Insert Filepath or Drop Files here..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <font>
+                                                                  <Font name="Calibri" size="12.0" />
+                                                               </font>
+                                                            </TextField>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </HBox>
+                                                <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane prefHeight="30.0" prefWidth="100.0">
+                                                         <children>
+                                                            <ImageView fitHeight="30.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+                                                               <image>
+                                                                  <Image url="@../../../../../../img/Icon%20Add.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </VBox>
+                                    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
+                                       <children>
+                                          <AnchorPane>
+                                             <children>
+                                                <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <ListView id="start_screen_inserted_files_table_view" fx:id="start_screen_inserted_files_table_view" prefHeight="800.0" prefWidth="1800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </HBox>
+                                                <HBox AnchorPane.rightAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <Button id="start_screen_start_analysis_button" fx:id="start_screen_start_analysis_button" mnemonicParsing="false" onAction="#startAnalysis" text="Analyse starten" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="144.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                           <children>
+                              <AnchorPane>
+                                 <children>
+                                    <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+                                      <panes>
+                                        <TitledPane id="start_screen_further_settings_accordion" fx:id="start_screen_further_settings_accordion" animated="false" text="Weitere Einstellungen">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0">
+                                                   <children>
+                                                      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <AnchorPane>
+                                                               <children>
+                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                     <children>
+                                                                        <AnchorPane>
+                                                                           <children>
+                                                                              <CheckBox id="start_screen_checkbox_extract_persons" fx:id="start_screen_checkbox_extract_persons" mnemonicParsing="false" onAction="#extractPersons" text="Personen extrahieren" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </children></VBox>
+                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                                     <children>
+                                                                        <AnchorPane>
+                                                                           <children>
+                                                                              <CheckBox id="start_screen_checkbox_analyse_szenes" fx:id="start_screen_checkbox_analyse_szenes" mnemonicParsing="false" onAction="#analyseSzenes" text="Szenenangaben auswerten" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </children></VBox>
+                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                                                                     <children>
+                                                                        <AnchorPane>
+                                                                           <children>
+                                                                              <CheckBox id="start_screen_checkbox_analyse_stage_directions" fx:id="start_screen_checkbox_analyse_stage_directions" mnemonicParsing="false" onAction="#analyseStageDirections" text="Regieanweisungen auswerten" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </children></VBox>
+                                                               </children>
+                                                            </AnchorPane>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <AnchorPane>
+                                                               <children>
+                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                     <children>
+                                                                        <AnchorPane>
+                                                                           <children>
+                                                                              <CheckBox id="start_screen_checkbox_calculate_configuration_matrix" fx:id="start_screen_checkbox_calculate_configuration_matrix" mnemonicParsing="false" onAction="#calculateConfigurationMatrix" text="Konfigurationsmatritzen berechnen" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                                     <children>
+                                                                        <AnchorPane>
+                                                                           <children>
+                                                                              <CheckBox id="start_screen_checkbox_count_words" fx:id="start_screen_checkbox_count_words" mnemonicParsing="false" onAction="#countWords" text="Wörter zählen" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </children>
+                                                                  </VBox>
+                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                                                                     <children>
+                                                                        <AnchorPane>
+                                                                           <children>
+                                                                              <CheckBox id="start_screen_checkbox_show_person_constellations" fx:id="start_screen_checkbox_show_person_constellations" mnemonicParsing="false" onAction="#showPersonConstellations" text="Personenkonstellationen darstellen" />
+                                                                           </children>
+                                                                        </AnchorPane>
+                                                                     </children>
+                                                                  </VBox>
+                                                               </children></AnchorPane>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                      </panes>
+                                    </Accordion>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

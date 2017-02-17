@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="20.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane>
+               <children>
+                  <ImageView id="import_list_view_item_remove_button" fx:id="import_list_view_item_remove_button" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#removeListViewItem" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                     <image>
+                        <Image url="@../../../../../../img/Remove%20Icon.png" />
+                     </image></ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane>
+               <children>
+                  <Text id="import_list_view_item_file_name" fx:id="import_list_view_item_file_name" strokeType="OUTSIDE" strokeWidth="0.0" text="Data_Name.datatype" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="4.0">
+                     <font>
+                        <Font name="Calibri" size="12.0" />
+                     </font>
+                  </Text>
+               </children></AnchorPane>
+         </children>
+      </HBox>
+      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane>
+               <children>
+                  <ImageView id="import_list_view_item_file_icon" fx:id="import_list_view_item_file_icon" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                     <image>
+                        <Image url="@../../../../../../img/File-TXT-icon.png" />
+                     </image></ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

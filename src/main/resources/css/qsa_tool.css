@@ -1,0 +1,99 @@
+.white-small-text {
+    -fx-font: 15px "Serif";
+    -fx-text-fill: #FFFFFF;
+}
+.white-medium-text
+{
+    -fx-font: 25px "Serif";
+    -fx-text-fill: #FFFFFF;
+}
+.data-value-text
+{
+    -fx-font: 40px "Serif";
+    -fx-text-fill: #FFFFFF;
+}
+.revmeter-value-text
+{
+    -fx-font: 30px "Serif";
+    -fx-text-fill: #FFFFFF;
+}
+.data-panel
+{
+	-fx-alignment: bottom_left;
+	-fx-padding: 0px 0px 3px 0px;
+}
+.progress-bar > .track {
+  -fx-text-box-border: white;
+  -fx-control-inner-background: white;
+}
+
+.background {
+    -fx-background-color: #FFFFFF;
+}
+
+.text-area {
+    -fx-background-insets: -0.4, 1, 2;
+    -fx-background-radius: 3.4, 2, 2;
+}
+
+.text-area:focused {
+    -fx-background-insets: -0.4, 1, 2;
+    -fx-background-radius: 3.4, 2, 2;
+}
+
+.label {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: black;
+    -fx-opacity: 0.6;
+}
+
+.digitalClock {
+    -fx-text-fill: white;
+    -fx-font-size: 65px;
+    -fx-padding: 5 10 5 10;
+}
+
+.btnBook{
+	-fx-background-color: linear-gradient(to bottom right,  #A9218E 50%, purple ); 
+    -fx-text-fill: white;
+    -fx-font-size: 25px;
+    -fx-padding: 5 10 5 10;
+}
+
+#btnBook2{
+	-fx-background-color:  linear-gradient(greenyellow   , limegreen );
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+    -fx-padding: 5 10 5 10;
+   }
+
+.screenSaverHeadline {
+ -fx-text-fill: #A9218E;
+ -fx-font-size: 16pt;
+}
+
+.screenSaverRoomName {
+ -fx-text-fill: #A9218E;	
+ -fx-font-size: 24pt;
+}
+
+.screenSaverBody {
+    -fx-background-insets: -0.4, 1, 2;
+    -fx-background-radius: 3.4, 2, 2;
+    -fx-border-color: #A9218E; 
+}
+
+.btnAppointment {
+	-fx-background-color:  linear-gradient(greenyellow   , limegreen );
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+    -fx-padding: 5 10 5 10;
+}
+
+.btnEmptyAppointment {
+	-fx-background-color:  linear-gradient(grey   , limegreen );
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+    -fx-padding: 5 10 5 10;
+}
