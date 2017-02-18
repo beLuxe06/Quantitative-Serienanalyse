@@ -19,6 +19,9 @@ public class StartScreenController {
 	
     @FXML
     private ResourceBundle resources;
+    
+    @FXML
+    private ImageView start_screen_add_button;
 
     @FXML
     private URL location;
@@ -104,11 +107,16 @@ public class StartScreenController {
     
     @FXML
     void handleInputFileDropped(ActionEvent event) {
-
+    	
     }
 
     @FXML
     void handleInputFileDragOver(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void addFile(ActionEvent event) {
 
     }
     

@@ -159,7 +159,7 @@
                                                    <children>
                                                       <AnchorPane prefHeight="30.0" prefWidth="100.0">
                                                          <children>
-                                                            <ImageView fitHeight="30.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+                                                            <ImageView id="start_screen_add_button" fx:id="start_screen_add_button" fitHeight="30.0" fitWidth="100.0" onMouseClicked="#addFile" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
                                                                <image>
                                                                   <Image url="@../../../../../../img/Icon%20Add.png" />
                                                                </image>
