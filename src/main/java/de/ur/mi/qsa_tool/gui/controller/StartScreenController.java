@@ -14,8 +14,15 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class StartScreenController {
+	
+	private Stage prevStage;
+	
+	@FXML
+	private BorderPane pane;
 	
     @FXML
     private ResourceBundle resources;
@@ -165,5 +172,13 @@ public class StartScreenController {
 
     }
 
+    
+    public void setPrevStage(Stage prevStage) {
+		this.prevStage = prevStage;
+	}
+
+	public Stage getPrevStage() {
+		return this.prevStage;
+	}
     
 }

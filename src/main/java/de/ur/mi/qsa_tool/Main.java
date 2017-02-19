@@ -3,8 +3,11 @@ package de.ur.mi.qsa_tool;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import de.ur.mi.qsa_tool.gui.controller.StartScreenController;
@@ -21,17 +24,23 @@ public class Main extends Application {
 
 	private void mainWindow() {
 		try {
-			FXMLLoader loader = new FXMLLoader(Main.class.getResource("StartScreen.fxml"));
-			AnchorPane pane = loader.load();
+						
+			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("StartScreen.fxml"));
+			Parent root = (Parent) myLoader.load();
+			primaryStage.setTitle("StartScreen");
 
-			StartScreenController startScreenController = loader.getController();
-			startScreenController.setMain(this);
+			StartScreenController controller = (StartScreenController) myLoader.getController();
 
-			Scene scene = new Scene(pane);
+			if (controller.getPrevStage() == null) {
+				controller.setPrevStage(primaryStage);
+			}
+			
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add("css/qsa_tool.css");
 			primaryStage.setTitle("Quantitative Serienanalyse");
 			primaryStage.setScene(scene);
 			primaryStage.show();
-
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
