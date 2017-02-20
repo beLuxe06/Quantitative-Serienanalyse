@@ -1,11 +1,15 @@
 package de.ur.mi.qsa_tool.gui.controller;
 
+import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import de.ur.mi.qsa_tool.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
@@ -14,6 +18,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -84,15 +90,36 @@ public class StartScreenController {
     @FXML
     private CheckBox start_screen_checkbox_count_words;
 
+    private ImportListViewController importListViewController;
+    
     private Main main;
+    private ArrayList<String> filepaths = new ArrayList<>();
     
     public void setMain(Main main) {
 		this.main = main;
 	}
     
     @FXML
-    void initialize() {
-        assert start_screen_menu_edit_sub_delete != null : "fx:id=\"start_screen_menu_edit_sub_delete\" was not injected: check your FXML file 'StartScreen.fxml'.";
+	public void initialize() {
+        validateUIFields();
+        initUI();
+    }
+    
+    private void initUI() {
+		initUIController();
+	}
+
+	private void initUIController() {
+		initListViewController();
+		
+	}
+
+	private void initListViewController() {
+		importListViewController = new ImportListViewController(filepaths);
+	}
+
+	private void validateUIFields() {
+    	assert start_screen_menu_edit_sub_delete != null : "fx:id=\"start_screen_menu_edit_sub_delete\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_checkbox_analyse_stage_directions != null : "fx:id=\"start_screen_checkbox_analyse_stage_directions\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_menu_file != null : "fx:id=\"start_screen_menu_file\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_logo != null : "fx:id=\"start_screen_logo\" was not injected: check your FXML file 'StartScreen.fxml'.";
@@ -109,22 +136,48 @@ public class StartScreenController {
         assert start_screen_menu_edit != null : "fx:id=\"start_screen_menu_edit\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_checkbox_extract_persons != null : "fx:id=\"start_screen_checkbox_extract_persons\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_checkbox_count_words != null : "fx:id=\"start_screen_checkbox_count_words\" was not injected: check your FXML file 'StartScreen.fxml'.";
+			}
 
+	@FXML
+    void handleInputFileDropped(DragEvent event) {
+    	List<File> files = event.getDragboard().getFiles();
+    	getFilePaths(files);
+    	System.out.println("FileList dropped: " + filepaths.toString());
+    	addFilePathsToInputFileTextBox();
     }
-    
-    @FXML
-    void handleInputFileDropped(ActionEvent event) {
-    	
-    }
 
-    @FXML
-    void handleInputFileDragOver(ActionEvent event) {
+    private void addFilePathsToInputFileTextBox() {
+    	String filePathsString = getAllPathsAsSingleString();
+		start_screen_insert_filepath_edit.setText(filePathsString);
+		
+	}
 
+	private String getAllPathsAsSingleString() {
+		String filepathsAsSingleString = "";
+		for(String filepath: filepaths){
+			filepathsAsSingleString = filepathsAsSingleString.concat(filepath + "; ");
+		}
+		System.out.println("FileList: " + filepaths.toString());
+		return filepathsAsSingleString;
+	}
+
+	private void getFilePaths(List<File> files) {
+    	for(File file: files){
+			filepaths.add(file.getAbsolutePath());
+		}
+	}
+
+	@FXML
+    void handleInputFileDragOver(DragEvent event) {
+    	if(event.getDragboard().hasFiles()){
+    		event.acceptTransferModes(TransferMode.ANY);
+    	} 	
+    	System.out.println(event.getDragboard().getFiles().get(0).getAbsolutePath());
     }
     
     @FXML
     void addFile(ActionEvent event) {
-
+    	
     }
     
     @FXML
