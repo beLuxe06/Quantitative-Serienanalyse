@@ -34,6 +34,7 @@ public class ListViewItem
 
     public void setText(String string)
     {
+    	System.out.println("Item Text: " + string);
         import_list_view_item_file_name.setText(string);
     }
 

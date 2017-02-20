@@ -7,6 +7,7 @@ public class ListViewCell extends ListCell<String>
     @Override
     public void updateItem(String string, boolean empty)
     {
+    	System.out.println("Cell Text: " + string);
         super.updateItem(string,empty);
         if(string != null)
         {

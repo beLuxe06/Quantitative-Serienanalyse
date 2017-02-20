@@ -6,15 +6,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="20.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.ur.mi.qsa_tool.gui.controller.ImportListViewController">
+<AnchorPane prefHeight="20.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane>
                <children>
-                  <ImageView id="import_list_view_item_remove_button" fx:id="import_list_view_item_remove_button" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#removeListViewItem" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                  <ImageView id="import_list_view_item_remove_button" fx:id="import_list_view_item_remove_button" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                      <image>
-                        <Image url="@../../../../../../img/Remove%20Icon.png" />
+                        <Image url="@/img/file_txt_icon.png" />
                      </image></ImageView>
                </children>
             </AnchorPane>
@@ -38,7 +38,7 @@
                <children>
                   <ImageView id="import_list_view_item_file_icon" fx:id="import_list_view_item_file_icon" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                      <image>
-                        <Image url="@../../../../../../img/File-TXT-icon.png" />
+                        <Image url="@/img/remove_icon.png" />
                      </image></ImageView>
                </children>
             </AnchorPane>
