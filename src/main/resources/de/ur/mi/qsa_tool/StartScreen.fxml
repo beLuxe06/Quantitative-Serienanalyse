@@ -135,7 +135,7 @@
                                                          <children>
                                                             <ImageView id="start_screen_search_file" fx:id="start_screen_search_file" fitHeight="30.0" fitWidth="100.0" onMouseClicked="#openFileFromSystem" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                                                                <image>
-                                                                  <Image url="@/img/file_txt_icon.png" />
+                                                                  <Image url="@/img/folder_icon.png" />
                                                                </image>
                                                             </ImageView>
                                                          </children>

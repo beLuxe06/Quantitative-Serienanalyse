@@ -27,7 +27,6 @@ public class Main extends Application {
 						
 			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("StartScreen.fxml"));
 			Parent root = (Parent) myLoader.load();
-			primaryStage.setTitle("StartScreen");
 
 			StartScreenController controller = (StartScreenController) myLoader.getController();
 

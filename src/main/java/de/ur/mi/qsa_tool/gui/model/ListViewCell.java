@@ -13,6 +13,7 @@ public class ListViewCell extends ListCell<String>
         {
             ListViewItem item = new ListViewItem();
             item.setText(string);
+            setGraphic(item.setPane());
         }
     }
 }

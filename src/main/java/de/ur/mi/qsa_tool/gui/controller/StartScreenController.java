@@ -3,17 +3,16 @@ package de.ur.mi.qsa_tool.gui.controller;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import de.ur.mi.qsa_tool.Main;
 import de.ur.mi.qsa_tool.gui.model.ListViewCell;
+import de.ur.mi.qsa_tool.util.FileInputChecker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
@@ -24,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -100,7 +100,8 @@ public class StartScreenController {
     
     private Main main;
     private ArrayList<String> filepaths = new ArrayList<>();
-    private String inputFilePathsAsSingleString = "";
+    
+    private FileInputChecker fileInputChecker;
     
     public void setMain(Main main) {
 		this.main = main;
@@ -111,7 +112,7 @@ public class StartScreenController {
         validateUIFields();
     }
 	
-	private void updateListView(ArrayList<String> filepaths){
+	private void updateListView(){
 		observableImportList.setAll(filepaths);
 		System.out.println("observableList: " + observableImportList.toString());
 		start_screen_inserted_files_table_view.setItems(observableImportList);
@@ -143,52 +144,43 @@ public class StartScreenController {
         assert start_screen_menu_edit != null : "fx:id=\"start_screen_menu_edit\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_checkbox_extract_persons != null : "fx:id=\"start_screen_checkbox_extract_persons\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_checkbox_count_words != null : "fx:id=\"start_screen_checkbox_count_words\" was not injected: check your FXML file 'StartScreen.fxml'.";
+        initListView();
+        initFileInputChecker();
 			}
+
+	private void initFileInputChecker() {
+		fileInputChecker = new FileInputChecker();
+	}
+
+	private void initListView() {
+		updateListView();
+	}
 
 	@FXML
     void handleInputFileDropped(DragEvent event) {
-    	List<File> files = event.getDragboard().getFiles();
-    	getFilePaths(files);
-    	System.out.println("FileList dropped: " + filepaths.toString());
-    	updateFilePathsInInputFileTextBox();
+		System.out.println(event.getDragboard().getFiles());
+    	start_screen_insert_filepath_edit.setText(fileInputChecker.getAllPathsAsSingleString(getFilePaths(event.getDragboard().getFiles())));
     }
 
-    private void updateFilePathsInInputFileTextBox() {
-    	getAllPathsAsSingleString();
-		start_screen_insert_filepath_edit.setText(inputFilePathsAsSingleString);
-		
+    
+    private void fillListViewWithImportFiles() {
+    	ArrayList<String> actualInputFiles = new ArrayList<>();
+    	actualInputFiles.addAll(start_screen_inserted_files_table_view.getItems());
+    	fileInputChecker.updateArrayListFromFilePathsAsString(start_screen_insert_filepath_edit.getText(), actualInputFiles);
+    	System.out.println("Files to add to ListView: " + actualInputFiles);
+    	observableImportList.setAll(actualInputFiles);
+    	start_screen_insert_filepath_edit.clear();
 	}
 
-	private void getAllPathsAsSingleString() {
-		for(String filepath: filepaths){
-			if(!filepath.isEmpty()){
-				inputFilePathsAsSingleString = inputFilePathsAsSingleString.concat(filepath + "; ");
-			}
+	private ArrayList<String> getFilePaths(List<File> files) {
+    	ArrayList<String> filepaths = new ArrayList<>();
+		for(File file: files){
+    		if(!filepaths.contains(file.getAbsolutePath())){
+    			filepaths.add(file.getAbsolutePath());
+    		}
 		}
-		System.out.println("FileList: " + filepaths.toString());
-	}
-	
-	private void updateFilePathArrayListFromSingleString() {
-		filepaths.clear();
-		filepaths.addAll(Arrays.asList(inputFilePathsAsSingleString.split(";")));
-		for(String filepath: filepaths){
-			filepath = filepath.replace(";", "");
-			filepath = filepath.replace(" ", "");
-		}
-		deleteEmptyStringsInFilePathLists();
-		System.out.println("FileList: " + filepaths.toString());
-	}
-
-	private void deleteEmptyStringsInFilePathLists() {
-		String[] emptyString = new String[]{" "};
-		filepaths.removeAll(Arrays.asList(emptyString));
-		
-	}
-
-	private void getFilePaths(List<File> files) {
-    	for(File file: files){
-			filepaths.add(file.getAbsolutePath());
-		}
+		System.out.println("FileList received: " + filepaths.toString());
+		return filepaths;
 	}
 
 	@FXML
@@ -196,16 +188,16 @@ public class StartScreenController {
     	if(event.getDragboard().hasFiles()){
     		event.acceptTransferModes(TransferMode.ANY);
     	} 	
-    	System.out.println(event.getDragboard().getFiles().get(0).getAbsolutePath());
     }
     
     @FXML
     void openFileFromSystem(ActionEvent event) {
-
+    	//openSystemExplorer();
+    	//start_screen_insert_filepath_edit.setText(fileInputChecker.getAllPathsAsSingleString(getFilePaths(SystemExplorer.getFiles())));
     }
 
     @FXML
-    void onAddButtonClicked(ActionEvent event){
+    void onAddButtonClicked(MouseEvent event){
     	fillListViewWithImportFiles();
     }
     
@@ -213,12 +205,6 @@ public class StartScreenController {
     void onStartScreenFilepathInserted(ActionEvent event) {
     	fillListViewWithImportFiles();
     }
-
-    private void fillListViewWithImportFiles() {
-    	inputFilePathsAsSingleString = start_screen_insert_filepath_edit.getText();
-    	updateFilePathArrayListFromSingleString();
-    	updateListView(filepaths);
-	}
 
 	@FXML
     void startAnalysis(ActionEvent event) {

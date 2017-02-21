@@ -2,9 +2,8 @@ package de.ur.mi.qsa_tool.gui.model;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -17,6 +16,8 @@ public class ListViewItem
     private Text import_list_view_item_file_name;
     @FXML
     private ImageView import_list_view_item_file_icon;
+    @FXML
+    private AnchorPane list_view_item_pane;
 
     public ListViewItem()
     {
@@ -37,5 +38,11 @@ public class ListViewItem
     	System.out.println("Item Text: " + string);
         import_list_view_item_file_name.setText(string);
     }
+    
+    public AnchorPane setPane()
+    {
+    	return list_view_item_pane;
+    }
+
 
 }
