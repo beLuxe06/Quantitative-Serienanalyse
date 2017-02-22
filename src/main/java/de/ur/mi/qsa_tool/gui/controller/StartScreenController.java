@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class StartScreenController {
@@ -182,12 +183,30 @@ public class StartScreenController {
     }
     
     @FXML
-    void openFileFromSystem(ActionEvent event) {
-    	//openSystemExplorer();
-    	//start_screen_insert_filepath_edit.setText(fileInputChecker.getAllPathsAsSingleString(getFilePaths(SystemExplorer.getFiles())));
+    void openFileFromSystem(MouseEvent event) {
+    	start_screen_insert_filepath_edit.setText(fileInputChecker.getAllPathsAsSingleString(getFilePathsFromSystemExplorer()));
     }
 
-    @FXML
+    private ArrayList<String> getFilePathsFromSystemExplorer() {
+    	FileChooser fileChooser = new FileChooser();
+    	configureFileChooser(fileChooser);
+    	List<File> fileList = fileChooser.showOpenMultipleDialog(getPrevStage());
+    	ArrayList<String> actualInputFiles = new ArrayList<>();
+        if (fileList != null) {
+                for (File file : fileList) {
+                    actualInputFiles.add(file.getAbsolutePath());
+                }
+            }
+        return actualInputFiles;
+	}
+
+	private void configureFileChooser(FileChooser fileChooser) {
+		fileChooser.setTitle("Import Files");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt", "*.txt"));
+	}
+
+	@FXML
     void onAddButtonClicked(MouseEvent event){
     	fillListViewWithImportFiles();
     }
