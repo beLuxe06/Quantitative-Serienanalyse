@@ -176,15 +176,7 @@
                                        <children>
                                           <AnchorPane>
                                              <children>
-                                                <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
-                                                   <children>
-                                                      <AnchorPane>
-                                                         <children>
-                                                            <ListView id="start_screen_inserted_files_table_view" fx:id="start_screen_inserted_files_table_view" prefHeight="800.0" prefWidth="1800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                         </children>
-                                                      </AnchorPane>
-                                                   </children>
-                                                </HBox>
+                                                <HBox fx:id="start_screen_list_view_container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0" />
                                                 <HBox AnchorPane.rightAnchor="0.0">
                                                    <children>
                                                       <AnchorPane>
