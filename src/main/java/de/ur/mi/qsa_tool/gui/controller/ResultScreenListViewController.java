@@ -47,7 +47,7 @@ public class ResultScreenListViewController {
 	public ObservableList<String> getItems() {
 		return result_list_view.getItems();
 	}
-
+	
 	public void updateListViewContent() {
 		result_list_view.setItems(observableItemList);
 		result_list_view.setCellFactory(new Callback<ListView<String>, javafx.scene.control.ListCell<String>>()

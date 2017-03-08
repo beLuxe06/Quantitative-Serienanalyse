@@ -96,4 +96,16 @@ public class Person {
 		this.wordCounts = wordCounts;
 	}
 	
+	public String[] getScenePresenceArray(Integer totalSceneCount){
+		String[] scenePresenceArray = new String[totalSceneCount+1];
+		scenePresenceArray[0] = personId.getName();
+		for(int i = 1; i<totalSceneCount; i++){
+			if(sceneIdList.contains(i)){
+				scenePresenceArray[i] = "1";
+			}
+			else scenePresenceArray[i] = "0";
+		}
+		return scenePresenceArray;
+	}
+	
 }

@@ -8,10 +8,13 @@ import de.ur.mi.qsa_tool.model.Corpus;
 import de.ur.mi.qsa_tool.model.Data;
 import de.ur.mi.qsa_tool.model.DiagramRawData;
 import de.ur.mi.qsa_tool.model.NewData;
+import de.ur.mi.qsa_tool.model.Stats;
 import de.ur.mi.qsa_tool.service.RawDataGeneratorService;
 import de.ur.mi.qsa_tool.service.RawDataGeneratorService2;
+import de.ur.mi.qsa_tool.service.StatsGeneratorService;
 import de.ur.mi.qsa_tool.service.FileImportService;
 import de.ur.mi.qsa_tool.service.FineDataGeneratorService;
+import de.ur.mi.qsa_tool.service.FineDataGeneratorService2;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -23,6 +26,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 
 public class ResultScreenController {
@@ -97,6 +101,7 @@ public class ResultScreenController {
     private HashMap<String, String> filepathAndContentMap = new HashMap<>();
     private Corpus corpus;
     private NewData data;
+    private Stats stats;
 
     @FXML
     void changeSelectionFromConfigurationMatrix(Event event) {
@@ -125,7 +130,7 @@ public class ResultScreenController {
     }
 
     private void initListViews() {
-		initListView(result_screen_anchor_configuration_matrix, configurationMatrixListViewController, fileNames);
+		//initListView(result_screen_anchor_configuration_matrix, configurationMatrixListViewController, fileNames);
     	//initListView(result_screen_anchor_configuration_matrix, configurationMatrixListViewController, getObservableList(observableConfigurationMatrixDataSubtitles, data.getConfigurationMatrixData()));
 		//initListView(result_screen_anchor_word_counts, wordCountsListViewController, getObservableList(observableWordCountsDataSubtitles, data.getWordCountsData()));
 		//initListView(result_screen_anchor_person_constellations, personConstellationsListViewController, getObservableList(observablePersonConstellationsDataSubtitles, data.getPersonConstellationsData()));
@@ -137,13 +142,21 @@ public class ResultScreenController {
 		observableList.addAll(diagramData.getSubListTitles());
 		return observableList;
 	}
-
-    
     
 	private void initListView(AnchorPane pane, ResultScreenListViewController controller, ObservableList<String> dataList){
     	controller = new ResultScreenListViewController(dataList, pane);
 		controller.updateListViewContent();
     }
+	
+	private void updateUIwithStats() {
+		updateConfigurationMatrix();
+	}
+
+	private void updateConfigurationMatrix() {
+		ResultScreenConfigurationMatrixController controller = new ResultScreenConfigurationMatrixController(stats.getConfigurationMatrix(), result_screen_anchor_configuration_matrix);
+		controller.updateConfigurationMatrixViewContent();
+		
+	}
 
 	private void setData(){
 		data = new NewData();
@@ -173,7 +186,7 @@ public class ResultScreenController {
 				System.out.println("raw data processed!");
 				data = rawDataGeneratorService.getValue();
 				System.out.println(data.toString());
-				//startFineDataGeneratorTask();
+				startFineDataGeneratorTask();
 			}					
 		});
 		
@@ -194,7 +207,7 @@ public class ResultScreenController {
 	}
 
 	private void startFineDataGeneratorTask(){
-		Service<NewData> fineDataGeneratorService = new FineDataGeneratorService(data);
+		Service<NewData> fineDataGeneratorService = new FineDataGeneratorService2(data);
 		fineDataGeneratorService.start();
 		System.out.println("fine data processing started!");
 		fineDataGeneratorService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
@@ -203,6 +216,7 @@ public class ResultScreenController {
 				System.out.println("fine data processed!");
 				data = fineDataGeneratorService.getValue();
 				System.out.println(data.toString());
+				startStatsGeneratorTask();
 			}					
 		});
 		
@@ -222,9 +236,41 @@ public class ResultScreenController {
 		});
 	}
 	
+
+	private void startStatsGeneratorTask() {
+		Service<Stats> statsGeneratorService = new StatsGeneratorService(data);
+		statsGeneratorService.start();
+		System.out.println("stats processing started!");
+		statsGeneratorService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				System.out.println("stats processed!");
+				stats = statsGeneratorService.getValue();
+				System.out.println(stats.toString());
+				updateUIwithStats();
+			}					
+		});
+		
+		statsGeneratorService.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				System.out.println("stats processing failed!");
+				System.out.println(stats.toString());
+			}					
+		});
+		statsGeneratorService.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				System.out.println("stats processing cancelled!");
+				System.out.println(stats.toString());
+			}					
+		});
+		
+	}
+	
 	private void updateSelection(){
-		actualSelectedTab = getSelecetedTab();
-    	actualSelectedController = getSelecetedTabController();
+		//actualSelectedTab = getSelecetedTab();
+    	//actualSelectedController = getSelecetedTabController();
 	}
 	
 	private Tab getSelecetedTab(){

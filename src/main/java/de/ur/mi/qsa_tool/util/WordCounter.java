@@ -36,5 +36,15 @@ public class WordCounter {
 		wordsFromLine.add(line.substring(lastNotLetter+1,line.length()-1));
 		return wordsFromLine;
 	}
+	
+	public ArrayList<String> getWordsFromLine2(String line){
+		ArrayList<String> wordsFromLine = new ArrayList<>();
+		line = line.trim();
+		String[] words = line.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
+		for(String word : words){
+			wordsFromLine.add(word);
+		}
+		return wordsFromLine;
+	}
 
 }

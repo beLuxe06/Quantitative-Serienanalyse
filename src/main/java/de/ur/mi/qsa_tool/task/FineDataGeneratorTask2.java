@@ -35,9 +35,9 @@ public class FineDataGeneratorTask2 extends Task<NewData>{
 	
 	private int lineCounter = 0;
 	private int testVariable = 0;
-	private int episodeCounter = 0;
-	private int seasonCounter = 0;
-	private int sceneCounter = 0;
+	private int episodeCounter = 1;
+	private int seasonCounter = 1;
+	private int sceneCounter = 1;
 	private int actionCounter = 0;
 	private int actionCount = 0;
 	private int personCounter = 0;
@@ -76,7 +76,6 @@ public class FineDataGeneratorTask2 extends Task<NewData>{
 				String file = fileContent.get(i);
 				String[] lines = file.split("\\n");
 				System.out.println("lines size: " + lines.length + " of file no.: " + (fileContent.indexOf(file)+1));
-				seasonCounter++;
 				
 				for(String line : lines) {
 					char c = line.charAt(0);
@@ -84,7 +83,9 @@ public class FineDataGeneratorTask2 extends Task<NewData>{
 					// check for scene
 					if (c == SCENE_STARTER) {
 						sceneNameAnalysis(line, sceneList.get(sceneCounter));
-						sceneCounter++;
+						if(sceneCounter<sceneList.size()-1){
+							sceneCounter++;
+						}
 					} 
 					// check for action
 					else if (c == ACTION_STARTER) {
@@ -95,11 +96,15 @@ public class FineDataGeneratorTask2 extends Task<NewData>{
 					} 
 					// check for episode
 					else if (c == EPISODE_STARTER) {
-						episodeCounter++;
+						if(episodeCounter<episodeList.size()-1){
+							episodeCounter++;
+						}
 					} 
 					// check for season
 					else if (c == SEASON_STARTER) {
-						seasonCounter++;
+						if(seasonCounter<seasonList.size()-1){
+							seasonCounter++;
+						}
 					} 
 					
 					else {
@@ -116,14 +121,14 @@ public class FineDataGeneratorTask2 extends Task<NewData>{
 								Person person = personList.get(personNames.indexOf(personName));
 								addPersontoScene(person);
 								addIdsToPerson(person);
-								ArrayList<String> words = wordCounter.getWordsFromLine(endLine.substring(1));
+								ArrayList<String> words = wordCounter.getWordsFromLine2(endLine.substring(1));
 								addReplyLengthToPerson(person, words.size());
 								addWordCountsToPerson(person, words);
 								addWordCountsToScene(words);
 							}
 						}
 						else{
-							ArrayList<String> words = wordCounter.getWordsFromLine(endLine);
+							ArrayList<String> words = wordCounter.getWordsFromLine2(endLine);
 							addWordCountsToScene(words);
 						}
 					}
@@ -168,20 +173,20 @@ public class FineDataGeneratorTask2 extends Task<NewData>{
 	}
 
 	private void addIdsToPerson(Person person) {
-		if(!person.getSeasonIdList().contains(seasonList.get(seasonCounter).getSeasonId())){
-			person.getSeasonIdList().add(seasonList.get(seasonCounter).getSeasonId());
+		if(!person.getSeasonIdList().contains(seasonList.get(seasonCounter-1).getSeasonId())){
+			person.getSeasonIdList().add(seasonList.get(seasonCounter-1).getSeasonId());
 		}
-		if(!person.getEpisodeIdList().contains(episodeList.get(episodeCounter).getEpisodeId())){
-			person.getEpisodeIdList().add(episodeList.get(episodeCounter).getEpisodeId());
+		if(!person.getEpisodeIdList().contains(episodeList.get(episodeCounter-1).getEpisodeId())){
+			person.getEpisodeIdList().add(episodeList.get(episodeCounter-1).getEpisodeId());
 		}
-		if(!person.getSceneIdList().contains(sceneList.get(sceneCounter).getSceneId())){
-			person.getSceneIdList().add(sceneList.get(sceneCounter).getSceneId());
+		if(!person.getSceneIdList().contains(sceneList.get(sceneCounter-1).getSceneId())){
+			person.getSceneIdList().add(sceneList.get(sceneCounter-1).getSceneId());
 		}
 		
 	}
 
 	private void addPersontoScene(Person person) {
-		Scene scene = sceneList.get(sceneCounter);
+		Scene scene = sceneList.get(sceneCounter-1);
 		if(!scene.getPersonIdList().contains(person.getPersonId().getId())){
 			scene.getPersonIdList().add(person.getPersonId().getId());
 		}
@@ -206,7 +211,7 @@ public class FineDataGeneratorTask2 extends Task<NewData>{
 						
 					} else {
 						String lineEnd = line.substring(10,line.length());
-						ArrayList <String> words = wordCounter.getWordsFromLine(lineEnd);
+						ArrayList <String> words = wordCounter.getWordsFromLine2(lineEnd);
 						for(int i = 0; i < words.size();i++){
 							for(int j = 0; j < scene.getSceneNameWords().size();j++){
 								if(words.get(i).equals(scene.getSceneNameWords().get(i))){
@@ -238,7 +243,7 @@ public class FineDataGeneratorTask2 extends Task<NewData>{
 			Integer sceneEpisodeId = scene.getEpisodeId();
 			for(Episode episode : episodeList){
 				if(episode.getEpisodeId().equals(sceneEpisodeId)){
-					episode.getSceneIdList().add(sceneEpisodeId);
+					episode.getSceneIdList().add(scene.getSceneId());
 				}
 			}
 		}
@@ -249,7 +254,7 @@ public class FineDataGeneratorTask2 extends Task<NewData>{
 			Integer episodeSeasonId = episode.getSeasonId();
 			for(Season season : seasonList){
 				if(season.getSeasonId().equals(episodeSeasonId)){
-					season.getEpisodeList().add(episodeSeasonId);
+					season.getEpisodeList().add(episode.getEpisodeId());
 				}
 			}
 		}

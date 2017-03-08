@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ReplyLength {
 	
 	private ScriptId scriptId;
-	private ArrayList<Integer> lengths;
+	private ArrayList<Integer> lengths = new ArrayList<>();
 	
 	public ReplyLength(ScriptId scriptId, ArrayList<Integer> lengths) {
 		this.scriptId = scriptId;
