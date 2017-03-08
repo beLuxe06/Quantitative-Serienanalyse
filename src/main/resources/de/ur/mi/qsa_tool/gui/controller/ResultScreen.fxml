@@ -48,7 +48,7 @@
                   <Insets />
                </BorderPane.margin>
                <center>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <AnchorPane BorderPane.alignment="CENTER">
                      <children>
                         <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -105,30 +105,142 @@
                               </AnchorPane>
                            </children>
                         </VBox>
-                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+                        <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
                            <children>
-                              <AnchorPane fx:id="result_screen_tab_anchor_pane">
+                              <AnchorPane fx:id="result_screen_tab_anchor_pane" prefHeight="1800.0" prefWidth="1800.0">
                                  <children>
-                                    <TabPane id="result_screen_tab_pane" fx:id="result_screen_tab_pane" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <tabs>
-                                        <Tab id="result_screen_tab_configuration_matrix" fx:id="result_screen_tab_configuration_matrix" onSelectionChanged="#changeSelectionFromConfigurationMatrix" text="Konfigurationsmatritzen">
-                                             <content>
-                                                <AnchorPane fx:id="result_screen_anchor_configuration_matrix" />
-                                             </content></Tab>
-                                        <Tab id="result_screen_tab_word_counts" fx:id="result_screen_tab_word_counts" onSelectionChanged="#changeSelectionFromWordCount" text="Häufigkeiten">
-                                             <content>
-                                                <AnchorPane fx:id="result_screen_anchor_word_counts" />
-                                             </content></Tab>
-                                          <Tab id="result_screen_tab_person_constellations" fx:id="result_screen_tab_person_constellations" onSelectionChanged="#changeSelectionFromPersonConstellations" text="Personenkonstellationen">
-                                             <content>
-                                                <AnchorPane fx:id="result_screen_anchor_person_constellations" />
-                                             </content></Tab>
-                                          <Tab id="result_screen_tab_summary" fx:id="result_screen_tab_timeline" onSelectionChanged="#changeSelectionFromSummary" text="Zeitstrahl">
-                                             <content>
-                                                <AnchorPane fx:id="result_screen_anchor_time_line" />
-                                             </content></Tab>
-                                      </tabs>
-                                    </TabPane>
+                                    <ScrollPane fx:id="result_content_scroll_pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <content>
+                                        <AnchorPane>
+                                             <children>
+                                                <VBox prefHeight="400.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <AnchorPane>
+                                                                     <children>
+                                                                        <Text fx:id="title_configuration_matrix" strokeType="OUTSIDE" strokeWidth="0.0" text="Konfigurationsmatrix" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <AnchorPane>
+                                                                     <children>
+                                                                        <TableView fx:id="table_configuration_matrix" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+                                                                          <columns>
+                                                                            <TableColumn prefWidth="75.0" text="C1" />
+                                                                            <TableColumn prefWidth="75.0" text="C2" />
+                                                                          </columns>
+                                                                        </TableView>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="400.0" prefWidth="1200.0" AnchorPane.bottomAnchor="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="450.0">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <AnchorPane>
+                                                                     <children>
+                                                                        <Text fx:id="title_word_count" strokeType="OUTSIDE" strokeWidth="0.0" text="Worthäufigkeiten" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                               <children>
+                                                                  <AnchorPane>
+                                                                     <children>
+                                                                        <TableView fx:id="table_word_count" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+                                                                          <columns>
+                                                                            <TableColumn prefWidth="75.0" text="C1" />
+                                                                            <TableColumn prefWidth="75.0" text="C2" />
+                                                                          </columns>
+                                                                        </TableView>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="400.0" prefWidth="1200.0" AnchorPane.bottomAnchor="450.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="900.0">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <AnchorPane>
+                                                                     <children>
+                                                                        <Text fx:id="title_reply_length" strokeType="OUTSIDE" strokeWidth="0.0" text="Replikenlängen" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                               <children>
+                                                                  <AnchorPane>
+                                                                     <children>
+                                                                        <TableView fx:id="table_reply_length" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+                                                                          <columns>
+                                                                            <TableColumn prefWidth="75.0" text="C1" />
+                                                                            <TableColumn prefWidth="75.0" text="C2" />
+                                                                          </columns>
+                                                                        </TableView>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="400.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1350.0">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <AnchorPane>
+                                                                     <children>
+                                                                        <Text fx:id="title_time_line" strokeType="OUTSIDE" strokeWidth="0.0" text="Zeitstrahl" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                               <children>
+                                                                  <AnchorPane>
+                                                                     <children>
+                                                                        <TableView fx:id="table_time_line" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+                                                                          <columns>
+                                                                            <TableColumn prefWidth="75.0" text="C1" />
+                                                                            <TableColumn prefWidth="75.0" text="C2" />
+                                                                          </columns>
+                                                                        </TableView>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </ScrollPane>
                                  </children>
                               </AnchorPane>
                            </children>
