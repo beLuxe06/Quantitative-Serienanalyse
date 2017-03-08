@@ -3,6 +3,8 @@ package de.ur.mi.qsa_tool.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.logging.log4j.core.util.KeyValuePair;
+
 public class Person {
 	
 	private PersonId personId;
@@ -10,11 +12,11 @@ public class Person {
 	private ArrayList<Integer> episodeIdList = new ArrayList<>();
 	private ArrayList<Integer> sceneIdList = new ArrayList<>();
 	private ArrayList<ReplyLength> replyLengths = new ArrayList<>();
-	private ArrayList<HashMap<ScriptId, WordCount>> wordCounts = new ArrayList<>();
+	private HashMap<String, Integer> wordCounts = new HashMap<>();
 	
 	public Person(PersonId personId, ArrayList<Integer> seasonIdList, ArrayList<Integer> episodeIdList,
 			ArrayList<Integer> sceneIdList, ArrayList<ReplyLength> replyLengths,
-			ArrayList<HashMap<ScriptId, WordCount>> wordCounts) {
+			HashMap<String, Integer> wordCounts) {
 		this.personId = personId;
 		this.seasonIdList = seasonIdList;
 		this.episodeIdList = episodeIdList;
@@ -58,7 +60,15 @@ public class Person {
 	public void setSceneIdList(ArrayList<Integer> sceneIdList) {
 		this.sceneIdList = sceneIdList;
 	}
-
+	
+	public ReplyLength getReplyLength(ScriptId scriptId) {
+		for(ReplyLength replyLength : replyLengths){
+			if(replyLength.getScriptId().equals(scriptId))
+				return replyLength;
+		}
+		return null;
+	}
+	
 	public ArrayList<ReplyLength> getReplyLengths() {
 		return replyLengths;
 	}
@@ -67,11 +77,22 @@ public class Person {
 		this.replyLengths = replyLengths;
 	}
 
-	public ArrayList<HashMap<ScriptId, WordCount>> getWordCounts() {
+	public HashMap<String, Integer> getWordCounts() {
 		return wordCounts;
 	}
 
-	public void setWordCounts(ArrayList<HashMap<ScriptId, WordCount>> wordCounts) {
+	public void increaseWordCount(String word){
+		int count = 1;
+		if(wordCounts.containsKey(word)){
+			count = wordCounts.get(word);
+			count++;
+			wordCounts.remove(word);
+			wordCounts.put(word, count);
+		}
+		else wordCounts.put(word, count);
+	}
+	
+	public void setWordCounts(HashMap<String, Integer> wordCounts) {
 		this.wordCounts = wordCounts;
 	}
 	

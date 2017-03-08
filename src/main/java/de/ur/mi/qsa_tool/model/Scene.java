@@ -9,13 +9,14 @@ public class Scene {
 	private String title;
 	private ArrayList<Integer> lineNumbersList = new ArrayList<>();
 	private ArrayList<Integer> personIdList = new ArrayList<>();
-	private ArrayList<HashMap<String, Integer>> wordCounts = new ArrayList<>();
+	private HashMap<String, Integer> wordCounts = new HashMap<>();
+	private ArrayList<String> sceneNameWords = new ArrayList<>();
 	private boolean isFlashback;
 	private ScriptId flashbackReferenceScriptId;
 	
 	
 	public Scene(ScriptId scriptId, String title, ArrayList<Integer> lineNumbersList, ArrayList<Integer> personIdList,
-			ArrayList<HashMap<String, Integer>> wordCounts, boolean isFlashback, ScriptId flashbackReferenceScriptId) {
+			HashMap<String, Integer> wordCounts, boolean isFlashback, ScriptId flashbackReferenceScriptId) {
 		this.scriptId = scriptId;
 		this.title = title;
 		this.lineNumbersList = lineNumbersList;
@@ -37,6 +38,14 @@ public class Scene {
 		this.scriptId = new ScriptId(seasonId, episodeId, sceneId);
 	}
 
+	public ArrayList<String> getSceneNameWords() {
+		return sceneNameWords;
+	}
+
+	public void setSceneNameWords(ArrayList<String> sceneNameWords) {
+		this.sceneNameWords = sceneNameWords;
+	}
+	
 	public Integer getSeasonId(){
 		return scriptId.getSeasonId();
 	}
@@ -73,14 +82,25 @@ public class Scene {
 		this.personIdList = personIdList;
 	}
 
-	public ArrayList<HashMap<String, Integer>> getWordCounts() {
+	public HashMap<String, Integer> getWordCounts() {
 		return wordCounts;
 	}
 
-	public void setWordCounts(ArrayList<HashMap<String, Integer>> wordCounts) {
+	public void setWordCounts(HashMap<String, Integer> wordCounts) {
 		this.wordCounts = wordCounts;
 	}
 
+	public void increaseWordCount(String word){
+		int count = 1;
+		if(wordCounts.containsKey(word)){
+			count = wordCounts.get(word);
+			count++;
+			wordCounts.remove(word);
+			wordCounts.put(word, count);
+		}
+		else wordCounts.put(word, count);
+	}
+	
 	public boolean isFlashback() {
 		return isFlashback;
 	}

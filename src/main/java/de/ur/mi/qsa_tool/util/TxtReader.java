@@ -9,6 +9,10 @@ import java.util.List;
 
 public class TxtReader {
 	
+	public TxtReader(){
+		
+	}
+	
 	public String readFile(String filepathAsString) throws Exception{
 		File file = new File(filepathAsString);
 		Path filepath = file.toPath();

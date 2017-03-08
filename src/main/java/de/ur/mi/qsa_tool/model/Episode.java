@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Episode {
 
 	private ScriptId scriptId;
-	private ArrayList<Scene> sceneList = new ArrayList<>();
+	private ArrayList<Integer> sceneIdList = new ArrayList<>();
 	
 	
-	public Episode(Integer seasonId, Integer episodeId, ArrayList<Scene> sceneList) {
+	public Episode(Integer seasonId, Integer episodeId, ArrayList<Integer> sceneIdList) {
 		this.scriptId = new ScriptId(seasonId, episodeId, 0);
-		this.sceneList = sceneList;
+		this.sceneIdList = sceneIdList;
 	}
 	
 	public Episode(Integer seasonId, Integer episodeId) {
@@ -35,13 +35,13 @@ public class Episode {
 	}
 
 
-	public ArrayList<Scene> getSceneList() {
-		return sceneList;
+	public ArrayList<Integer> getSceneIdList() {
+		return sceneIdList;
 	}
 
 
-	public void setSceneList(ArrayList<Scene> sceneList) {
-		this.sceneList = sceneList;
+	public void setSceneIdList(ArrayList<Integer> sceneIdList) {
+		this.sceneIdList = sceneIdList;
 	}
 	
 	

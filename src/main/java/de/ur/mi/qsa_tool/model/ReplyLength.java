@@ -11,6 +11,11 @@ public class ReplyLength {
 		this.scriptId = scriptId;
 		this.lengths = lengths;
 	}
+	
+	public ReplyLength(ScriptId scriptId, Integer lengths) {
+		this.scriptId = scriptId;
+		this.lengths.add(lengths);
+	}
 
 	public ScriptId getScriptId() {
 		return scriptId;
