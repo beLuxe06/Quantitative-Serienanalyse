@@ -9,9 +9,9 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-import de.ur.mi.qsa_tool.gui.controller.ListViewController;
+import de.ur.mi.qsa_tool.gui.controller.StartScreenListViewController;
 
-public class ListViewItem
+public class StartScreenListViewItem
 {
     @FXML
     private ImageView import_list_view_item_remove_button;
@@ -22,9 +22,9 @@ public class ListViewItem
     @FXML
     private AnchorPane list_view_item_pane;
 
-    private ListViewController controller;
+    private StartScreenListViewController controller;
     
-    public ListViewItem(ListViewController controller)
+    public StartScreenListViewItem(StartScreenListViewController controller)
     {
     	this.controller = controller;
     	
@@ -55,7 +55,7 @@ public class ListViewItem
 	void removeItem(MouseEvent event){
     	System.out.println(((ImageView) event.getSource()).getParent().getParent().getParent().getParent().toString());
     	ImageView image = ((ImageView) event.getSource());
-    	ListViewCell cell = ((ListViewCell) image.getParent().getParent().getParent().getParent());
+    	StartScreenListViewCell cell = ((StartScreenListViewCell) image.getParent().getParent().getParent().getParent());
     	controller.removeItemFromListView(cell.getIndex());
     	
 	}

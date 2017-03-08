@@ -1,15 +1,15 @@
 package de.ur.mi.qsa_tool.gui.model;
 
-import de.ur.mi.qsa_tool.gui.controller.ListViewController;
+import de.ur.mi.qsa_tool.gui.controller.ResultScreenListViewController;
 import javafx.scene.control.ListCell;
 
 
-public class ListViewCell extends ListCell<String>
+public class ResultScreenListViewCell extends ListCell<String>
 {
 	
-	private ListViewController controller;
+	private ResultScreenListViewController controller;
 	
-	public ListViewCell(ListViewController controller){
+	public ResultScreenListViewCell(ResultScreenListViewController controller){
 		this.controller = controller;
 	}
 	
@@ -20,7 +20,7 @@ public class ListViewCell extends ListCell<String>
         super.updateItem(string,empty);
         if(string != null)
         {
-            ListViewItem item = new ListViewItem(controller);
+            ResultScreenListViewItem item = new ResultScreenListViewItem(controller);
             item.setText(string);
             setGraphic(item.getPane());
         }

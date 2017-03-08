@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FileInputChecker {
-	
-	public FileInputChecker(){
-		
-	}
 
 	public void updateArrayListFromFilePathsAsString(String filepathsAsString, ArrayList<String> actualInputFiles) {
 		ArrayList<String> filepaths = getFilePathArrayListFromSingleString(filepathsAsString);
