@@ -1,22 +1,20 @@
 package de.ur.mi.qsa_tool.service;
 
-import java.util.List;
-
-import de.ur.mi.qsa_tool.model.NewData;
+import de.ur.mi.qsa_tool.model.Data;
 import de.ur.mi.qsa_tool.task.RawDataGeneratorTask;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-public class RawDataGeneratorService extends Service<NewData> {
+public class RawDataGeneratorService extends Service<Data> {
 
-	private NewData newData;
+	private Data newData;
 	
-	public RawDataGeneratorService(NewData newData) {
+	public RawDataGeneratorService(Data newData) {
 		this.newData = newData;
 	}
 	
 	@Override
-	protected Task<NewData> createTask() {
+	protected Task<Data> createTask() {
 		try{
 			return new RawDataGeneratorTask(newData);
 		}

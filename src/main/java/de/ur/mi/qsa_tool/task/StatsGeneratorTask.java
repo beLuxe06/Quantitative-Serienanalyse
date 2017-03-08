@@ -7,7 +7,7 @@ import java.util.List;
 import de.ur.mi.qsa_tool.model.Action;
 import de.ur.mi.qsa_tool.model.Corpus;
 import de.ur.mi.qsa_tool.model.Episode;
-import de.ur.mi.qsa_tool.model.NewData;
+import de.ur.mi.qsa_tool.model.Data;
 import de.ur.mi.qsa_tool.model.Person;
 import de.ur.mi.qsa_tool.model.Scene;
 import de.ur.mi.qsa_tool.model.Season;
@@ -16,7 +16,7 @@ import javafx.concurrent.Task;
 
 public class StatsGeneratorTask extends Task <Stats>{
 
-	private NewData data;
+	private Data data;
 	private Stats stats;
 	
 	private ArrayList<Person> personList = new ArrayList<>();
@@ -26,7 +26,7 @@ public class StatsGeneratorTask extends Task <Stats>{
 	private ArrayList<Episode> episodeList = new ArrayList<>();
 	private ArrayList<Action> actionList = new ArrayList<>();
 	
-	public StatsGeneratorTask(NewData data) {
+	public StatsGeneratorTask(Data data) {
 		this.data = data;
 		readDataValues();
 	}

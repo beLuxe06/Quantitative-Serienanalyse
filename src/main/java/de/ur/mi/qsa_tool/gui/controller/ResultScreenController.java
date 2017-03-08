@@ -6,15 +6,11 @@ import java.util.ResourceBundle;
 
 import de.ur.mi.qsa_tool.model.Corpus;
 import de.ur.mi.qsa_tool.model.Data;
-import de.ur.mi.qsa_tool.model.DiagramRawData;
-import de.ur.mi.qsa_tool.model.NewData;
 import de.ur.mi.qsa_tool.model.Stats;
 import de.ur.mi.qsa_tool.service.RawDataGeneratorService;
-import de.ur.mi.qsa_tool.service.RawDataGeneratorService2;
 import de.ur.mi.qsa_tool.service.StatsGeneratorService;
 import de.ur.mi.qsa_tool.service.FileImportService;
 import de.ur.mi.qsa_tool.service.FineDataGeneratorService;
-import de.ur.mi.qsa_tool.service.FineDataGeneratorService2;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -85,81 +81,28 @@ public class ResultScreenController {
     @FXML
     private Menu result_screen_menu_file;
     
-    private ResultScreenListViewController configurationMatrixListViewController;
-    private ResultScreenListViewController personConstellationsListViewController;
-    private ResultScreenListViewController wordCountsListViewController;
-    private ResultScreenListViewController timeLineListViewController;
-    
     private ObservableList<String> observableConfigurationMatrixDataSubtitles = FXCollections.observableArrayList();
     private ObservableList<String> observableWordCountsDataSubtitles = FXCollections.observableArrayList();
     private ObservableList<String> observablePersonConstellationsDataSubtitles = FXCollections.observableArrayList();
     private ObservableList<String> observableTimeLineDataSubtitles = FXCollections.observableArrayList();
     private ObservableList<String> fileNames = FXCollections.observableArrayList();
 
-    private ResultScreenListViewController actualSelectedController;
     private Tab actualSelectedTab;
     private HashMap<String, String> filepathAndContentMap = new HashMap<>();
     private Corpus corpus;
-    private NewData data;
+    private Data data;
     private Stats stats;
 
-    @FXML
-    void changeSelectionFromConfigurationMatrix(Event event) {
-    	updateSelection();
-    }
-
-    @FXML
-    void changeSelectionFromWordCount(Event event) {
-    	updateSelection();
-    }
-
-    @FXML
-    void changeSelectionFromPersonConstellations(Event event) {
-    	updateSelection();
-    }
-
-    @FXML
-    void changeSelectionFromSummary(Event event) {
-    	updateSelection();
-    }
 
     @FXML
     void initialize() {
     	validateUIFields();
-    	initListViews();
     }
 
-    private void initListViews() {
-		//initListView(result_screen_anchor_configuration_matrix, configurationMatrixListViewController, fileNames);
-    	//initListView(result_screen_anchor_configuration_matrix, configurationMatrixListViewController, getObservableList(observableConfigurationMatrixDataSubtitles, data.getConfigurationMatrixData()));
-		//initListView(result_screen_anchor_word_counts, wordCountsListViewController, getObservableList(observableWordCountsDataSubtitles, data.getWordCountsData()));
-		//initListView(result_screen_anchor_person_constellations, personConstellationsListViewController, getObservableList(observablePersonConstellationsDataSubtitles, data.getPersonConstellationsData()));
-		//initListView(result_screen_anchor_time_line, timeLineListViewController, getObservableList(observableTimeLineDataSubtitles, data.getTimeLineData()));
-		updateSelection();
-	}
-    
-    private ObservableList<String> getObservableList(ObservableList<String> observableList, DiagramRawData diagramData) {
-		observableList.addAll(diagramData.getSubListTitles());
-		return observableList;
-	}
-    
-	private void initListView(AnchorPane pane, ResultScreenListViewController controller, ObservableList<String> dataList){
-    	controller = new ResultScreenListViewController(dataList, pane);
-		controller.updateListViewContent();
-    }
 	
-	private void updateUIwithStats() {
-		updateConfigurationMatrix();
-	}
-
-	private void updateConfigurationMatrix() {
-		ResultScreenConfigurationMatrixController controller = new ResultScreenConfigurationMatrixController(stats.getConfigurationMatrix(), result_screen_anchor_configuration_matrix);
-		controller.updateConfigurationMatrixViewContent();
-		
-	}
-
+	
 	private void setData(){
-		data = new NewData();
+		data = new Data();
 		data.setCorpus(corpus);
 		fileNames.addAll(corpus.getFileNames());
 		processMissingData();
@@ -177,7 +120,7 @@ public class ResultScreenController {
 
 	private void startRawDataGeneratorTask() {
 		//Service<NewData> rawDataGeneratorService = new RawDataGeneratorService(data);
-		Service<NewData> rawDataGeneratorService = new RawDataGeneratorService2(data);
+		Service<Data> rawDataGeneratorService = new RawDataGeneratorService(data);
 		rawDataGeneratorService.start();
 		System.out.println("raw data processing started!");
 		rawDataGeneratorService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
@@ -207,7 +150,7 @@ public class ResultScreenController {
 	}
 
 	private void startFineDataGeneratorTask(){
-		Service<NewData> fineDataGeneratorService = new FineDataGeneratorService2(data);
+		Service<Data> fineDataGeneratorService = new FineDataGeneratorService(data);
 		fineDataGeneratorService.start();
 		System.out.println("fine data processing started!");
 		fineDataGeneratorService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
@@ -247,7 +190,7 @@ public class ResultScreenController {
 				System.out.println("stats processed!");
 				stats = statsGeneratorService.getValue();
 				System.out.println(stats.toString());
-				updateUIwithStats();
+				//updateUIwithStats();
 			}					
 		});
 		
@@ -267,31 +210,7 @@ public class ResultScreenController {
 		});
 		
 	}
-	
-	private void updateSelection(){
-		//actualSelectedTab = getSelecetedTab();
-    	//actualSelectedController = getSelecetedTabController();
-	}
-	
-	private Tab getSelecetedTab(){
-		return result_screen_tab_pane.getSelectionModel().getSelectedItem();
-	}
-	
-	private ResultScreenListViewController getSelecetedTabController(){
-		if(getSelecetedTab().equals(result_screen_tab_configuration_matrix)){
-			return configurationMatrixListViewController;
-		}
-		if(getSelecetedTab().equals(result_screen_tab_person_constellations)){
-			return personConstellationsListViewController;
-		}
-		if(getSelecetedTab().equals(result_screen_tab_word_counts)){
-			return wordCountsListViewController;
-		}
-		if(getSelecetedTab().equals(result_screen_tab_timeline)){
-			return timeLineListViewController;
-		}
-		else return null;
-	}
+
 
 	private void validateUIFields() {
 		assert result_screen_tab_person_constellations != null : "fx:id=\"result_screen_tab_person_constellations\" was not injected: check your FXML file 'ResultScreen.fxml'.";

@@ -1,17 +1,17 @@
 package de.ur.mi.qsa_tool.service;
 
-import de.ur.mi.qsa_tool.model.NewData;
+import de.ur.mi.qsa_tool.model.Data;
 import de.ur.mi.qsa_tool.model.Stats;
-import de.ur.mi.qsa_tool.task.RawDataGeneratorTask2;
+import de.ur.mi.qsa_tool.task.RawDataGeneratorTask;
 import de.ur.mi.qsa_tool.task.StatsGeneratorTask;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
 public class StatsGeneratorService extends Service<Stats> {
 
-	private NewData newData;
+	private Data newData;
 	
-	public StatsGeneratorService(NewData newData) {
+	public StatsGeneratorService(Data newData) {
 		this.newData = newData;
 	}
 	

@@ -3,47 +3,78 @@ package de.ur.mi.qsa_tool.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Data extends ArrayList<ArrayList<HashMap<String, String>>>{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4069220786905564910L;
-	private ArrayList<ArrayList<HashMap<String, String>>> data;  
+public class Data {
+
+	private Corpus corpus;
+	private ArrayList<Person> personList = new ArrayList<>();
+	private ArrayList<Scene> sceneList = new ArrayList<>();
+	private ArrayList<Episode> episodeList = new ArrayList<>();
+	private ArrayList<Season> seasonList = new ArrayList<>();
+	private ArrayList<Action> actionList = new ArrayList<>();
+	private Integer actionCount = 0;
 	
-	public Data(ArrayList<ArrayList<HashMap<String, String>>> data){
-		this.data = data;
+	public Integer getActionCount() {
+		return actionCount;
 	}
 
-	public ArrayList<ArrayList<HashMap<String, String>>> getData() {
-		return data;
+	public void setActionCount(Integer actionCount) {
+		this.actionCount = actionCount;
+	}
+
+	public ArrayList<Action> getActionList() {
+		return actionList;
+	}
+
+	public void setActionList(ArrayList<Action> actionList) {
+		this.actionList = actionList;
+	}
+
+	public Corpus getCorpus() {
+		return corpus;
 	}
 	
-	public ArrayList<HashMap<String, String>> getMetaData(){
-		return data.get(0);
+	public void setCorpus(Corpus corpus) {
+		this.corpus = corpus;
 	}
 	
-	public DiagramRawData getConfigurationMatrixData(){
-		return (DiagramRawData) data.get(1);
+	public ArrayList<Person> getPersonList() {
+		return personList;
 	}
 	
-	public DiagramRawData getWordCountsData(){
-		return (DiagramRawData) data.get(2);
+	public void setPersonList(ArrayList<Person> personList) {
+		this.personList = personList;
 	}
 	
-	public DiagramRawData getPersonConstellationsData(){
-		return (DiagramRawData) data.get(3);
+	public ArrayList<Scene> getSceneList() {
+		return sceneList;
 	}
 	
-	public DiagramRawData getTimeLineData(){
-		return (DiagramRawData) data.get(4);
+	public void setSceneList(ArrayList<Scene> sceneList) {
+		this.sceneList = sceneList;
+	}
+	
+	public ArrayList<Episode> getEpisodeList() {
+		return episodeList;
+	}
+	
+	public void setEpisodeList(ArrayList<Episode> episodeList) {
+		this.episodeList = episodeList;
+	}
+	
+	public ArrayList<Season> getSeasonList() {
+		return seasonList;
+	}
+	
+	public void setSeasonList(ArrayList<Season> seasonList) {
+		this.seasonList = seasonList;
 	}
 
 	@Override
 	public String toString() {
-		String toString = "Data: {} + size {}" ;
-		return toString + super.toString() + data.size();
+		return "NewData values: fileNames: " + corpus.getFileNames().toString() + " found persons: " + personList.size() + " found actions: " + actionList.size() + 
+				" found scenes: " + sceneList.size() +" found episodes: " + episodeList.size() + " found seasons: " + seasonList.size();
 	}
 	
 	
-
+	
 }

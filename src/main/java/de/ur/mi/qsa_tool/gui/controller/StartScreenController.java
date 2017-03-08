@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import de.ur.mi.qsa_tool.Main;
 import de.ur.mi.qsa_tool.model.Corpus;
 import de.ur.mi.qsa_tool.model.Data;
-import de.ur.mi.qsa_tool.model.NewData;
+import de.ur.mi.qsa_tool.model.Data;
 import de.ur.mi.qsa_tool.model.Script;
 import de.ur.mi.qsa_tool.service.FileImportService;
 import de.ur.mi.qsa_tool.util.FileInputChecker;
