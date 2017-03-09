@@ -173,11 +173,15 @@ public class ResultScreenController {
 
 	private void updateConfigurationMatrixTable() {
 		table_configuration_matrix.getItems().clear();
-		configurationMatrixContent.addAll(stats.getConfigurationEpisodeMatrix());
+		configurationMatrixContent.addAll(stats.getConfigurationSceneMatrix());
+		System.out.println("configuration matrix content size: " + configurationMatrixContent.size());
+		System.out.println("configuration matrix length: " + configurationMatrixContent.get(0).length);
 		configurationMatrixContent.remove(0);
 		System.out.println("configuration matrix content size: " + configurationMatrixContent.size());
-		for(int i = 0; i<configurationMatrixContent.get(0).length; i++){
-			String columnTitle = stats.getConfigurationEpisodeMatrix()[0][i];
+		System.out.println("configuration matrix length: " + configurationMatrixContent.get(0).length);
+		System.out.println("configuration matrix [1]: " + configurationMatrixContent.get(1).length);
+		for(int i = 0; i<configurationMatrixContent.get(0).length-1; i++){
+			String columnTitle = stats.getConfigurationSceneMatrix()[0][i];
 			TableColumn<String[], String> column = new TableColumn<String[], String>(columnTitle);
 			final int columnIndex = i;
 			column.setCellValueFactory(new Callback<CellDataFeatures<String[], String>, ObservableValue<String>>() {

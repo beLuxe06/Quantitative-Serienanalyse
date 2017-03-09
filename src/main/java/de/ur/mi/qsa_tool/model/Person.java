@@ -117,11 +117,11 @@ public class Person {
 	public String[] getScenePresenceArray(Integer totalSceneCount){
 		String[] scenePresenceArray = new String[totalSceneCount+1];
 		scenePresenceArray[0] = personId.getName();
-		for(int i = 1; i<totalSceneCount; i++){
+		for(int i = 0; i<totalSceneCount; i++){
 			if(sceneIdList.contains(i)){
-				scenePresenceArray[i] = "1";
+				scenePresenceArray[i+1] = "1";
 			}
-			else scenePresenceArray[i] = "0";
+			else scenePresenceArray[i+1] = "0";
 		}
 		return scenePresenceArray;
 	}
@@ -129,11 +129,11 @@ public class Person {
 	public String[] getEpisodePresenceArray(int totalEpisodeCount) {
 		String[] episodePresenceArray = new String[totalEpisodeCount+1];
 		episodePresenceArray[0] = personId.getName();
-		for(int i = 1; i<totalEpisodeCount; i++){
+		for(int i = 0; i<totalEpisodeCount; i++){
 			if(episodeIdList.contains(i)){
-				episodePresenceArray[i] = "1";
+				episodePresenceArray[i+1] = "1";
 			}
-			else episodePresenceArray[i] = "0";
+			else episodePresenceArray[i+1] = "0";
 		}
 		return episodePresenceArray;
 	}

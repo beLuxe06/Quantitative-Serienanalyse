@@ -51,7 +51,9 @@ public class StatsGeneratorTask extends Task <Stats>{
 		//getAllWordCounter();
 		//stats.setConfigurationSceneMatrix(getQuickSceneMatrix());
 		//stats.setConfigurationSeasonMatrix(getQuickSeasonMatrix());
-		stats.setConfigurationEpisodeMatrix(getQuickEpisodeMatrix());
+		//stats.setConfigurationSceneMatrix(getQuickSceneMatrixFromPerson());
+		stats.setConfigurationSceneMatrix(getQuickSceneMatrixFromScene());
+		//stats.setConfigurationEpisodeMatrix(getQuickEpisodeMatrixFromPerson());
 		
 		return stats;
 	}
@@ -73,8 +75,8 @@ public class StatsGeneratorTask extends Task <Stats>{
 		}
 	}
 	
-	private String[][] getQuickSeasonMatrix() {
-		String[][] configurationMatrix = new String[seasonList.size()+1][];
+	private String[][] getQuickSeasonMatrixFromPerson() {
+		String[][] configurationMatrix = new String[seasonList.size()+1][personList.size()+1];
 		configurationMatrix [0] = getSeasonNamesAsArray();
 		for (int i = 0; i < personList.size(); i++) { 
 			int rowIndex = i+1;
@@ -93,11 +95,12 @@ public class StatsGeneratorTask extends Task <Stats>{
 		return seasonNamesAsArray;
 	}
 
-	private String[][] getQuickEpisodeMatrix() {
-		String[][] configurationMatrix = new String[episodeList.size()+1][];
+	private String[][] getQuickEpisodeMatrixFromPerson() {
+		String[][] configurationMatrix = new String[episodeList.size()+1][personList.size()+1];
 		configurationMatrix [0] = getEpisodeNamesAsArray();
-		for (int i = 0; i < personList.size(); i++) { 
-			int rowIndex = i+1;
+		for (int i = 0; i < episodeList.size(); i++) { 
+			int rowIndex = i;
+			rowIndex++;
 		    configurationMatrix[rowIndex] = personList.get(i).getEpisodePresenceArray(episodeList.size());
 		}
 		return configurationMatrix;
@@ -113,10 +116,20 @@ public class StatsGeneratorTask extends Task <Stats>{
 		return episodeNamesAsArray;
 	}
 
-	private String[][] getQuickSceneMatrix() {
+	private String[][] getQuickSceneMatrixFromScene() {
 		String[][] configurationMatrix = new String[sceneList.size()+1][];
 		configurationMatrix [0] = getSceneNamesAsArray();
-		for (int i = 0; i < personList.size(); i++) { 
+		for (int i = 0; i < sceneList.size(); i++) { 
+			int colIndex = i+1;
+		    configurationMatrix[colIndex] = sceneList.get(i).getPersonPresenceList(personList);
+		}
+		return configurationMatrix;
+	}
+	
+	private String[][] getQuickSceneMatrixFromPerson() {
+		String[][] configurationMatrix = new String[sceneList.size()+1][personList.size()+1];
+		configurationMatrix [0] = getSceneNamesAsArray();
+		for (int i = 0; i < sceneList.size(); i++) { 
 			int rowIndex = i+1;
 		    configurationMatrix[rowIndex] = personList.get(i).getScenePresenceArray(sceneList.size());
 		}
