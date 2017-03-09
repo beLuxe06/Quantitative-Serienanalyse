@@ -1,30 +1,30 @@
 package de.ur.mi.qsa_tool.gui.controller;
 
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.ResourceBundle;
-
+import de.ur.mi.qsa_tool.gui.model.PersonUI;
 import de.ur.mi.qsa_tool.model.Corpus;
 import de.ur.mi.qsa_tool.model.Data;
 import de.ur.mi.qsa_tool.model.Stats;
-import de.ur.mi.qsa_tool.service.FineDataGeneratorService;
-import de.ur.mi.qsa_tool.service.RawDataGeneratorService;
-import de.ur.mi.qsa_tool.service.StatsGeneratorService;
+import de.ur.mi.qsa_tool.task.FineDataGeneratorTask;
+import de.ur.mi.qsa_tool.task.RawDataGeneratorTask;
+import de.ur.mi.qsa_tool.task.StatsGeneratorTask;
+import de.ur.mi.qsa_tool.util.NumberAsStringComparator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Service;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -67,7 +67,7 @@ public class ResultScreenController {
     private Menu result_screen_menu_edit;
 
     @FXML
-    private TableView<?> table_word_count;
+    private TableView<PersonUI> table_overall_stats;
 
     @FXML
     private TableView<?> table_reply_length;
@@ -82,19 +82,16 @@ public class ResultScreenController {
     private MenuItem result_screen_menu_edit_submenu_delete;
 
     @FXML
-    private Text title_word_count;
+    private Text title_overall_stats;
 
     @FXML
     private Menu result_screen_menu_file;
     
-    private ObservableList<String> observableConfigurationMatrixDataSubtitles = FXCollections.observableArrayList();
-    private ObservableList<String> observableWordCountsDataSubtitles = FXCollections.observableArrayList();
-    private ObservableList<String> observablePersonConstellationsDataSubtitles = FXCollections.observableArrayList();
-    private ObservableList<String> observableTimeLineDataSubtitles = FXCollections.observableArrayList();
     private ObservableList<String> fileNames = FXCollections.observableArrayList();
+    private ObservableList<String[]> configurationMatrixContent = FXCollections.observableArrayList();
+    private ObservableList<PersonUI> personsOverviewContent = FXCollections.observableArrayList();
+    private ArrayList<String> personNames = new ArrayList<>();
 
-    private Tab actualSelectedTab;
-    private HashMap<String, String> filepathAndContentMap = new HashMap<>();
     private Corpus corpus;
     private Data data;
     private Stats stats;
@@ -126,130 +123,189 @@ public class ResultScreenController {
 	
 	private void updateUIWithStats(){
 		updateConfigurationMatrixTable();
+		updateOverviewStats();
 	}
+	
+	private void updateOverviewStats() {
+		table_overall_stats.getItems().clear();
+		personsOverviewContent.addAll(stats.getPersonOverviewStats());
+		System.out.println("personsOverview content size: " + personsOverviewContent.size());
+		TableColumn<PersonUI, String> nameColumn = new TableColumn<PersonUI, String>("Person:");
+		nameColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("name"));
+		table_overall_stats.getColumns().add(nameColumn);
+		TableColumn<PersonUI, String> wordNumbersColumn = new TableColumn<PersonUI, String>("Wortanzahl:");
+		wordNumbersColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("wordNumbers"));
+		wordNumbersColumn.setComparator(new NumberAsStringComparator());
+		table_overall_stats.getColumns().add(wordNumbersColumn);
+		TableColumn<PersonUI, String> speechNumbersColumn = new TableColumn<PersonUI, String>("Replikanzahl:");
+		speechNumbersColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("speechNumbers"));
+		speechNumbersColumn.setComparator(new NumberAsStringComparator());
+		table_overall_stats.getColumns().add(speechNumbersColumn);
+		TableColumn<PersonUI, String> seasonsColumn = new TableColumn<PersonUI, String>("Auftritt in Staffeln:");
+		seasonsColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("seasonsPresenceSize"));
+		seasonsColumn.setComparator(new NumberAsStringComparator());
+		table_overall_stats.getColumns().add(seasonsColumn);
+		TableColumn<PersonUI, String> seasonsShareColumn = new TableColumn<PersonUI, String>("Auftrittanteil in Staffeln:");
+		seasonsShareColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("appereanceSeasonsShare"));
+		seasonsShareColumn.setComparator(new NumberAsStringComparator());
+		table_overall_stats.getColumns().add(seasonsShareColumn);
+		TableColumn<PersonUI, String> episodesColumn = new TableColumn<PersonUI, String>("Auftritt in Episoden:");
+		episodesColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("episodesPresenceSize"));
+		episodesColumn.setComparator(new NumberAsStringComparator());
+		table_overall_stats.getColumns().add(episodesColumn);
+		TableColumn<PersonUI, String> episodesShareColumn = new TableColumn<PersonUI, String>("Auftrittanteil in Episode:");
+		episodesShareColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("appereanceEpisodesShare"));
+		episodesShareColumn.setComparator(new NumberAsStringComparator());
+		table_overall_stats.getColumns().add(episodesShareColumn);
+		TableColumn<PersonUI, String> scenesColumn = new TableColumn<PersonUI, String>("Auftritt in Szenen:");
+		scenesColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("scenesPresenceSize"));
+		scenesColumn.setComparator(new NumberAsStringComparator());
+		table_overall_stats.getColumns().add(scenesColumn);
+		TableColumn<PersonUI, String> scenesShareColumn = new TableColumn<PersonUI, String>("Auftrittanteil in Szenen:");
+		scenesShareColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("appereanceScenesShare"));
+		scenesShareColumn.setComparator(new NumberAsStringComparator());
+		table_overall_stats.getColumns().add(scenesShareColumn);
+		table_overall_stats.setItems(personsOverviewContent);
+		table_overall_stats.refresh();
+	}
+
+
 
 	private void updateConfigurationMatrixTable() {
-		ObservableList<String[]> configurationMatrixData = FXCollections.observableArrayList();
-        configurationMatrixData.addAll(Arrays.asList(stats.getConfigurationMatrix()));
-        configurationMatrixData.remove(0);//remove titles from data
-       table_configuration_matrix = new TableView<>();
-        for (int i = 0; i < stats.getConfigurationMatrix()[0].length; i++) {
-        	// add titles to table
-            TableColumn<String[], String> tc = new TableColumn<String[], String>(stats.getConfigurationMatrix()[0][i]);
-            final int colNo = i;
-            tc.setCellValueFactory(new Callback<CellDataFeatures<String[], String>, ObservableValue<String>>() {
+		table_configuration_matrix.getItems().clear();
+		configurationMatrixContent.addAll(stats.getConfigurationEpisodeMatrix());
+		configurationMatrixContent.remove(0);
+		System.out.println("configuration matrix content size: " + configurationMatrixContent.size());
+		for(int i = 0; i<configurationMatrixContent.get(0).length; i++){
+			String columnTitle = stats.getConfigurationEpisodeMatrix()[0][i];
+			TableColumn<String[], String> column = new TableColumn<String[], String>(columnTitle);
+			final int columnIndex = i;
+			column.setCellValueFactory(new Callback<CellDataFeatures<String[], String>, ObservableValue<String>>() {
                 @Override
                 public ObservableValue<String> call(CellDataFeatures<String[], String> p) {
-                    return new SimpleStringProperty((p.getValue()[colNo]));
+                    return new SimpleStringProperty((p.getValue()[columnIndex]));
                 }
             });
-            tc.setPrefWidth(90);
-            table_configuration_matrix.getColumns().add(tc);
-        }
-        table_configuration_matrix.setItems(configurationMatrixData);
+			table_configuration_matrix.getColumns().add(column);
+		}
+		table_configuration_matrix.setItems(configurationMatrixContent);
+		table_configuration_matrix.refresh();
 	}
 
-
-
 	private void startRawDataGeneratorTask() {
-		Service<Data> rawDataGeneratorService = new RawDataGeneratorService(data);
-		try{
-			rawDataGeneratorService.start();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
+		RawDataGeneratorTask rawDataGeneratorTask = new RawDataGeneratorTask(data);
 		System.out.println("raw data processing started!");
-		rawDataGeneratorService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+		rawDataGeneratorTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				System.out.println("raw data processed!");
-				data = rawDataGeneratorService.getValue();
-				System.out.println(data.toString());
+				data = rawDataGeneratorTask.getValue();
+				System.out.println(data);
 				startFineDataGeneratorTask();
 			}					
 		});
 		
-		rawDataGeneratorService.setOnFailed(new EventHandler<WorkerStateEvent>() {
+		rawDataGeneratorTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
+				Throwable throwable = rawDataGeneratorTask.getException(); 
+		        throwable.printStackTrace();
 				System.out.println("raw data processing failed!");
 				System.out.println(data.toString());
 			}					
 		});
-		rawDataGeneratorService.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+		rawDataGeneratorTask.setOnCancelled(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				System.out.println("raw data processing cancelled!");
 				System.out.println(data.toString());
 			}					
 		});
+		rawDataGeneratorTask.setOnRunning(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				System.out.println("raw data processing running!");
+			}					
+		});
+		
+		Thread th = new Thread(rawDataGeneratorTask);
+		th.setDaemon(true);
+		th.start();
 	}
 
 	private void startFineDataGeneratorTask(){
-		Service<Data> fineDataGeneratorService = new FineDataGeneratorService(data);
-		fineDataGeneratorService.start();
+		FineDataGeneratorTask fineDataGeneratorTask = new FineDataGeneratorTask(data);
 		System.out.println("fine data processing started!");
-		fineDataGeneratorService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+		fineDataGeneratorTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				System.out.println("fine data processed!");
-				data = fineDataGeneratorService.getValue();
-				System.out.println(data.toString());
+				data = fineDataGeneratorTask.getValue();
+				getPersonNames();
+				System.out.println("getting PersonNames: " + personNames.size());
 				startStatsGeneratorTask();
 			}					
 		});
 		
-		fineDataGeneratorService.setOnFailed(new EventHandler<WorkerStateEvent>() {
+		fineDataGeneratorTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				System.out.println("fine data processing failed!");
 			}					
 		});
-		fineDataGeneratorService.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+		fineDataGeneratorTask.setOnCancelled(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				System.out.println("fine data processing cancelled!");
 			}					
 		});
-		fineDataGeneratorService.setOnRunning(new EventHandler<WorkerStateEvent>() {
+		fineDataGeneratorTask.setOnRunning(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				System.out.println("fine data processing running!");
 			}					
 		});
+		
+		Thread th = new Thread(fineDataGeneratorTask);
+		th.setDaemon(true);
+		th.start();
 	}
 	
 
 	private void startStatsGeneratorTask() {
-		Service<Stats> statsGeneratorService = new StatsGeneratorService(data);
-		statsGeneratorService.start();
+		StatsGeneratorTask statsGeneratorTask = new StatsGeneratorTask(data);
 		System.out.println("stats processing started!");
-		statsGeneratorService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+		statsGeneratorTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				System.out.println("stats processed!");
-				stats = statsGeneratorService.getValue();
-				System.out.println(stats.toString());
+				stats = statsGeneratorTask.getValue();
+				System.out.println("fill UI with stats: " + stats.toString());
 				updateUIWithStats();
 			}					
 		});
 		
-		statsGeneratorService.setOnFailed(new EventHandler<WorkerStateEvent>() {
+		statsGeneratorTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				System.out.println("stats processing failed!");
-				System.out.println(stats.toString());
 			}					
 		});
-		statsGeneratorService.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+		statsGeneratorTask.setOnCancelled(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
 				System.out.println("stats processing cancelled!");
-				System.out.println(stats.toString());
 			}					
 		});
-		
+		Thread th = new Thread(statsGeneratorTask);
+		th.setDaemon(true);
+		th.start();
+	}
+	
+	private void getPersonNames() {
+		for(int i = 0; i < data.getPersonList().size(); i++){
+			personNames.add(data.getPersonList().get(i).getPersonId().getName());
+		}
 	}
 
 
@@ -263,12 +319,12 @@ public class ResultScreenController {
         assert result_content_scroll_pane != null : "fx:id=\"result_content_scroll_pane\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert table_configuration_matrix != null : "fx:id=\"table_configuration_matrix\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_screen_menu_edit != null : "fx:id=\"result_screen_menu_edit\" was not injected: check your FXML file 'ResultScreen.fxml'.";
-        assert table_word_count != null : "fx:id=\"table_word_count\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert table_overall_stats != null : "fx:id=\"table_overall_stats\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert table_reply_length != null : "fx:id=\"table_reply_length\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_screen_menu_help_submenu_about != null : "fx:id=\"result_screen_menu_help_submenu_about\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert title_reply_length != null : "fx:id=\"title_reply_length\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_screen_menu_edit_submenu_delete != null : "fx:id=\"result_screen_menu_edit_submenu_delete\" was not injected: check your FXML file 'ResultScreen.fxml'.";
-        assert title_word_count != null : "fx:id=\"title_word_count\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert title_overall_stats != null : "fx:id=\"title_overall_stats\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_screen_menu_file != null : "fx:id=\"result_screen_menu_file\" was not injected: check your FXML file 'ResultScreen.fxml'.";
 
     }

@@ -1,7 +1,6 @@
 package de.ur.mi.qsa_tool.gui.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,15 +9,12 @@ import java.util.ResourceBundle;
 
 import de.ur.mi.qsa_tool.Main;
 import de.ur.mi.qsa_tool.model.Corpus;
-import de.ur.mi.qsa_tool.model.Data;
-import de.ur.mi.qsa_tool.model.Data;
 import de.ur.mi.qsa_tool.model.Script;
-import de.ur.mi.qsa_tool.service.FileImportService;
+import de.ur.mi.qsa_tool.task.FileImportTask;
 import de.ur.mi.qsa_tool.util.FileInputChecker;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Service;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -174,9 +170,21 @@ public class StartScreenController {
 	private void initListView() {
 		importFileListViewController = new StartScreenListViewController(observableImportList, start_screen_list_view_container);
 		importFileListViewController.updateListViewContent();
+		addChangeListenerToObservableImportList();
 	}
 	
 	
+
+	private void addChangeListenerToObservableImportList() {
+		observableImportList.addListener(new ListChangeListener<String>() {
+
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends String> c) {
+				cleanFilePathAndContentMap();
+			}
+		});
+		
+	}
 
 	@FXML
     void handleInputFileDropped(DragEvent event) {
@@ -194,7 +202,6 @@ public class StartScreenController {
     	}
     	observableImportList.setAll(filesFromTextField);
     	importFileListViewController.updateListViewContent();
-    	cleanFilePathAndContentMap(filesFromTextField);
     	processFileContentAndFillHashMap();
     	start_screen_insert_filepath_edit.clear();
 	}
@@ -205,7 +212,7 @@ public class StartScreenController {
 				if(filepathAndContentMap.get(filepath).isEmpty()){
 					System.out.println("map contains filepath: " + filepath + " but empty content!");
 					filepathAndContentMap.remove(filepath);
-					startFileImportService(filepath);
+					startFileImportTask(filepath);
 				}
 				else{
 					System.out.println("map contains filepath: " + filepath + " with content!");
@@ -213,45 +220,46 @@ public class StartScreenController {
 			}
 			else{
 				System.out.println("map misses filepath: " + filepath + " and content!");
-				startFileImportService(filepath);
+				startFileImportTask(filepath);
 			}
 		}
 		
 	}
 
-	private void cleanFilePathAndContentMap(ArrayList<String> actualFilePaths) {
+	private void cleanFilePathAndContentMap() {
 		for(String filepath : filepathAndContentMap.keySet()){
-			if(!actualFilePaths.contains(filepath)){
+			if(!observableImportList.contains(filepath)){
 				filepathAndContentMap.remove(filepath);
 			}
 		}
 		
 	}
 
-	private void startFileImportService(String actualInputFile) {
-		Service<String> fileImportService = new FileImportService(actualInputFile);
-		fileImportService.start();
+	private void startFileImportTask(String actualInputFile) {
+		FileImportTask importTask = new FileImportTask(actualInputFile);
 		System.out.println("Fileimport started of file: " + actualInputFile);
-		fileImportService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+		importTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				System.out.println("Fileimport succeeded of file: " + actualInputFile);
-				filepathAndContentMap.put(actualInputFile, fileImportService.getValue());
+				System.out.println("FileimportTask succeeded of file: " + actualInputFile);
+				filepathAndContentMap.put(actualInputFile, importTask.getValue());
 			}					
 		});
-		fileImportService.setOnFailed(new EventHandler<WorkerStateEvent>() {
+		importTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				System.out.println("Fileimport failed of file: " + actualInputFile);
+				System.out.println("FileimportTask failed of file: " + actualInputFile);
 			}					
 		});
-		fileImportService.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+		importTask.setOnCancelled(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				System.out.println("Fileimport cancelled of file: " + actualInputFile);
+				System.out.println("FileimportTask cancelled of file: " + actualInputFile);
 			}					
 		});
-		
+		Thread th = new Thread(importTask);
+		th.setDaemon(true);
+		th.start();
 	}
 	
 	private ArrayList<String> getFilePaths(List<File> files) {

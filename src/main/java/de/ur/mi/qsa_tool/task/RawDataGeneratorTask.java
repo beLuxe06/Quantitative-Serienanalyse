@@ -24,13 +24,13 @@ public class RawDataGeneratorTask extends Task <Data>{
 	private int sceneCounter = 1;
 	private int actionCounter = 0;
 	private int episodeCounter = 1;
-	private int seasonCounter = 0;
+	private int seasonCounter = 1;
 	private int personCounter = 1;
 	
 	private static final char ACTION_STARTER = '(';
-	private static final char ACTION_STOPPER = ')';
+	//private static final char ACTION_STOPPER = ')';
 	private static final char SCENE_STARTER = '[';
-	private static final char SCENE_STOPPER = ']';
+	//private static final char SCENE_STOPPER = ']';
 	private static final char EPISODE_STARTER = '-';
 	private static final char SEASON_STARTER = '~';
 	
@@ -40,7 +40,6 @@ public class RawDataGeneratorTask extends Task <Data>{
 	
 	@Override
 	protected Data call() throws Exception {
-		try{
 			ArrayList<String> fileContent = new ArrayList<String>(getFileContents());
 			System.out.println("Raw Data: processed fileContentSize: " + fileContent.size());
 			
@@ -48,8 +47,8 @@ public class RawDataGeneratorTask extends Task <Data>{
 				String file = fileContent.get(i);
 				String[] lines = file.split("\\n");
 				System.out.println("lines size: " + lines.length + " of file no.: " + (fileContent.indexOf(file)+1));
-				seasonCounter++;
 				seasonList.add(new Season(seasonCounter));
+				seasonCounter++;
 				for(String line : lines) {
 					char c = line.charAt(0);
 					
@@ -70,8 +69,8 @@ public class RawDataGeneratorTask extends Task <Data>{
 					} 
 					// check for season
 					else if (c == SEASON_STARTER) {
-						seasonCounter++;
 						seasonList.add(new Season(seasonCounter));
+						seasonCounter++;
 					} 
 					else {
 						int charCounter = 0;
@@ -92,16 +91,19 @@ public class RawDataGeneratorTask extends Task <Data>{
 					
 				}
 			}
-		} catch(Exception e){
-			System.out.println(e.getStackTrace());
-			e.printStackTrace();
-		}
-		
 		
 		System.out.println("Found Seasons: " + seasonList.size());
 		createData();
 		
 		return data;
+	}
+	
+	
+
+	@Override
+	protected void failed() {
+		super.failed();
+		throw new RuntimeException(this.getException());
 	}
 
 	private ArrayList<String> getFileContents() {

@@ -1,7 +1,6 @@
 package de.ur.mi.qsa_tool.gui.controller;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Comparator;
 
 import de.ur.mi.qsa_tool.gui.model.StartScreenListViewCell;

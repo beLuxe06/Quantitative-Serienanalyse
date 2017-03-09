@@ -1,14 +1,6 @@
 package de.ur.mi.qsa_tool.task;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.security.Permissions;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import de.ur.mi.qsa_tool.model.Action;
 import de.ur.mi.qsa_tool.model.Episode;
@@ -33,16 +25,15 @@ public class FineDataGeneratorTask extends Task<Data>{
 	private ArrayList<Action> actionList = new ArrayList<>();
 	//private ArrayList<WordCount> wordCounterList = new ArrayList<>();
 	
-	private int lineCounter = 0;
-	private int testVariable = 0;
+	// private int lineCounter = 0;
+	// private int testVariable = 0;
 	private int episodeCounter = 1;
 	private int seasonCounter = 1;
 	private int sceneCounter = 1;
 	private int actionCounter = 0;
-	private int actionCount = 0;
-	private int personCounter = 0;
+	// private int personCounter = 0;
 		
-	private static final Integer SPEECH_LENGTH_MAX_SIZE = 200;
+	// private static final Integer SPEECH_LENGTH_MAX_SIZE = 200;
 	private static final char SCENE_STARTER = '[';
 	private static final char ACTION_STARTER = '(';
 	private static final char EPISODE_STARTER = '-';
@@ -60,7 +51,6 @@ public class FineDataGeneratorTask extends Task<Data>{
 		seasonList = data.getSeasonList();
 		episodeList = data.getEpisodeList();
 		actionList = data.getActionList();
-		actionCount = data.getActionCount();
 	}
 
 	@Override
@@ -119,16 +109,17 @@ public class FineDataGeneratorTask extends Task<Data>{
 							String personName = line.substring(0, charCounter);
 							if(personNames.contains(personName)){
 								Person person = personList.get(personNames.indexOf(personName));
-								addPersontoScene(person);
+								addPersonToScene(person);
 								addIdsToPerson(person);
-								ArrayList<String> words = wordCounter.getWordsFromLine2(endLine.substring(1));
+								ArrayList<String> words = wordCounter.getWordsFromLine(endLine.substring(1));
+								addSpeechAndWordCountToPerson(person, words.size());
 								addReplyLengthToPerson(person, words.size());
 								addWordCountsToPerson(person, words);
 								addWordCountsToScene(words);
 							}
 						}
 						else{
-							ArrayList<String> words = wordCounter.getWordsFromLine2(endLine);
+							ArrayList<String> words = wordCounter.getWordsFromLine(endLine);
 							addWordCountsToScene(words);
 						}
 					}
@@ -144,6 +135,11 @@ public class FineDataGeneratorTask extends Task<Data>{
 		return data;
 	}
 	
+	private void addSpeechAndWordCountToPerson(Person person, int wordSize) {
+		person.setSpeechNumbers(person.getSpeechNumbers()+1);
+		person.setWordNumbers(person.getWordNumbers()+wordSize);
+	}
+
 	private void addWordCountsToScene(ArrayList<String> words) {
 		for(String word : words){
 			sceneList.get(sceneCounter).increaseWordCount(word);
@@ -185,7 +181,7 @@ public class FineDataGeneratorTask extends Task<Data>{
 		
 	}
 
-	private void addPersontoScene(Person person) {
+	private void addPersonToScene(Person person) {
 		Scene scene = sceneList.get(sceneCounter-1);
 		if(!scene.getPersonIdList().contains(person.getPersonId().getId())){
 			scene.getPersonIdList().add(person.getPersonId().getId());
@@ -211,7 +207,7 @@ public class FineDataGeneratorTask extends Task<Data>{
 						
 					} else {
 						String lineEnd = line.substring(10,line.length());
-						ArrayList <String> words = wordCounter.getWordsFromLine2(lineEnd);
+						ArrayList <String> words = wordCounter.getWordsFromLine(lineEnd);
 						for(int i = 0; i < words.size();i++){
 							for(int j = 0; j < scene.getSceneNameWords().size();j++){
 								if(words.get(i).equals(scene.getSceneNameWords().get(i))){

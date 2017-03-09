@@ -1,7 +1,6 @@
 package de.ur.mi.qsa_tool.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Data {
 
@@ -19,6 +18,24 @@ public class Data {
 
 	public void setActionCount(Integer actionCount) {
 		this.actionCount = actionCount;
+	}
+	
+	public Person getPersonFromId(String personID){
+		for(Person person : personList){
+			if(person.getPersonId().getId().equals(personID)){
+				return person;
+			}
+		}
+		return null;
+	}
+	
+	public Person getPersonFromName(String name){
+		for(Person person : personList){
+			if(person.getPersonId().getName().equals(name)){
+				return person;
+			}
+		}
+		return null;
 	}
 
 	public ArrayList<Action> getActionList() {

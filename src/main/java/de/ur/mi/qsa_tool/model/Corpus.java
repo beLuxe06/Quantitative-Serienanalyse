@@ -2,8 +2,6 @@ package de.ur.mi.qsa_tool.model;
 
 import java.util.ArrayList;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 public class Corpus {
 	
 	private ArrayList<Script> scripts = new ArrayList<>();

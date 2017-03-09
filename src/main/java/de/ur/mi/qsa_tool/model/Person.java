@@ -3,8 +3,6 @@ package de.ur.mi.qsa_tool.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.logging.log4j.core.util.KeyValuePair;
-
 public class Person {
 	
 	private PersonId personId;
@@ -13,18 +11,38 @@ public class Person {
 	private ArrayList<Integer> sceneIdList = new ArrayList<>();
 	private ArrayList<ReplyLength> replyLengths = new ArrayList<>();
 	private HashMap<String, Integer> wordCounts = new HashMap<>();
+	private Integer wordNumbers = 0;
+	private Integer speechNumbers = 0;
 	
 	public Person(PersonId personId, ArrayList<Integer> seasonIdList, ArrayList<Integer> episodeIdList,
 			ArrayList<Integer> sceneIdList, ArrayList<ReplyLength> replyLengths,
-			HashMap<String, Integer> wordCounts) {
+			HashMap<String, Integer> wordCounts, Integer wordNumbers, Integer speechNumbers) {
 		this.personId = personId;
 		this.seasonIdList = seasonIdList;
 		this.episodeIdList = episodeIdList;
 		this.sceneIdList = sceneIdList;
 		this.replyLengths = replyLengths;
 		this.wordCounts = wordCounts;
+		this.wordNumbers = wordNumbers;
+		this.speechNumbers = speechNumbers;
 	}
 	
+	public Integer getWordNumbers() {
+		return wordNumbers;
+	}
+
+	public void setWordNumbers(Integer wordNumbers) {
+		this.wordNumbers = wordNumbers;
+	}
+
+	public Integer getSpeechNumbers() {
+		return speechNumbers;
+	}
+
+	public void setSpeechNumbers(Integer speechNumbers) {
+		this.speechNumbers = speechNumbers;
+	}
+
 	public Person(Integer id, String name){
 		this.personId = new PersonId(id, name);
 	}
@@ -106,6 +124,30 @@ public class Person {
 			else scenePresenceArray[i] = "0";
 		}
 		return scenePresenceArray;
+	}
+
+	public String[] getEpisodePresenceArray(int totalEpisodeCount) {
+		String[] episodePresenceArray = new String[totalEpisodeCount+1];
+		episodePresenceArray[0] = personId.getName();
+		for(int i = 1; i<totalEpisodeCount; i++){
+			if(episodeIdList.contains(i)){
+				episodePresenceArray[i] = "1";
+			}
+			else episodePresenceArray[i] = "0";
+		}
+		return episodePresenceArray;
+	}
+	
+	public String[] getSeasonPresenceArray(int totalSeasonCount) {
+		String[] seasonPresenceArray = new String[totalSeasonCount+1];
+		seasonPresenceArray[0] = personId.getName();
+		for(int i = 1; i<totalSeasonCount; i++){
+			if(seasonIdList.contains(i)){
+				seasonPresenceArray[i] = "1";
+			}
+			else seasonPresenceArray[i] = "0";
+		}
+		return seasonPresenceArray;
 	}
 	
 }

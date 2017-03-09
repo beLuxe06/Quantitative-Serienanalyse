@@ -14,15 +14,13 @@ public class FileImportTask extends Task<String>{
 	@Override
 	protected String call() throws Exception {
 		String fileContent = "";
-		try{
-			System.out.println("FileImportTask started");
-			TxtReader txtReader = new TxtReader();
-			System.out.println("TxtReader started");
-			fileContent = txtReader.readFile(filepath);
-			System.out.println("file Content size: " + fileContent.length());
-		}
-		catch(Exception e){
-			e.printStackTrace();
+		System.out.println("FileImportTask started");
+		TxtReader txtReader = new TxtReader();
+		System.out.println("TxtReader started");
+		fileContent = txtReader.readFile(filepath);
+		System.out.println("file Content size: " + fileContent.length());
+		if(fileContent == ""){
+			System.out.println("error! fileContent empty!");
 		}
 		return fileContent;
 	}
