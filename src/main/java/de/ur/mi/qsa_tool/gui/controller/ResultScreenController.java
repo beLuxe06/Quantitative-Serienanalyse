@@ -4,17 +4,12 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import de.iteratec.holiday.ressources.NumberValues;
-import de.iteratec.holiday.ressources.StringValues;
 import de.ur.mi.qsa_tool.gui.model.PersonUI;
 import de.ur.mi.qsa_tool.model.Corpus;
 import de.ur.mi.qsa_tool.model.Data;
 import de.ur.mi.qsa_tool.model.Stats;
-import de.ur.mi.qsa_tool.model.StringIntegerPair;
 import de.ur.mi.qsa_tool.task.FineDataGeneratorTask;
 import de.ur.mi.qsa_tool.task.RawDataGeneratorTask;
 import de.ur.mi.qsa_tool.task.StatsGeneratorTask;
@@ -31,8 +26,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -44,7 +37,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
@@ -103,6 +95,9 @@ public class ResultScreenController {
 
     @FXML
     private MenuItem export_reply_lengths_all;
+    
+    @FXML
+    private MenuItem export_persons_constellations;
 
     @FXML
     private ResourceBundle resources;
@@ -173,8 +168,8 @@ public class ResultScreenController {
     private Data data;
     private Stats stats;
     private Stage prevStage;
-    private Stage nextStage;
-    private Scene startScene;
+    private static Stage nextStage;
+    private static Scene startScene;
     private CSVWriter csvWriter;
 
     @FXML
@@ -452,6 +447,8 @@ public class ResultScreenController {
 				stats = statsGeneratorTask.getValue();
 				System.out.println("fill UI with stats: " + stats.toString());
 				updateUIWithStats();
+				removeUnneededData();
+				trimArrayLists();
 			}					
 		});
 		
@@ -470,6 +467,49 @@ public class ResultScreenController {
 		Thread th = new Thread(statsGeneratorTask);
 		th.setDaemon(true);
 		th.start();
+	}
+	
+	private void startCSVWritingTask() {
+		StatsGeneratorTask statsGeneratorTask = new StatsGeneratorTask(data);
+		System.out.println("stats processing started!");
+		statsGeneratorTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				System.out.println("stats processed!");
+				stats = statsGeneratorTask.getValue();
+				System.out.println("fill UI with stats: " + stats.toString());
+				updateUIWithStats();
+				removeUnneededData();
+				trimArrayLists();
+			}					
+		});
+		
+		statsGeneratorTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				System.out.println("stats processing failed!");
+			}					
+		});
+		statsGeneratorTask.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				System.out.println("stats processing cancelled!");
+			}					
+		});
+		Thread th = new Thread(statsGeneratorTask);
+		th.setDaemon(true);
+		th.start();
+	}
+	
+	private void trimArrayLists() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void removeUnneededData() {
+		data.clear();
+		corpus.clear();
+		personNames.trimToSize();
 	}
 	
 	private void getPersonNames() {
@@ -492,8 +532,16 @@ public class ResultScreenController {
 
     @FXML
     void exportConfigurationMatrixScene(ActionEvent event) {
-    	String fileContent = csvWriter.getCSVStringFromArraysInList(stats.getConfigurationSceneMatrixList());
-		saveFileFromFileChooser(fileContent);
+    	if(stats.getConfigurationSceneMatrixList().size()>200){
+    		if(showAlertDialog()){
+    			String fileContent = csvWriter.getCSVStringFromArraysInList(stats.getConfigurationSceneMatrixList());
+    			saveFileFromFileChooser(fileContent);
+    		}
+    	}
+    	else{
+    		String fileContent = csvWriter.getCSVStringFromArraysInList(stats.getConfigurationSceneMatrixList());
+    		saveFileFromFileChooser(fileContent);
+    	}
     }
 
     @FXML
@@ -545,10 +593,29 @@ public class ResultScreenController {
 
     @FXML
     void deleteInput(ActionEvent event) {
-    	showAlertDialog();
+    	showDeleteDialog();
     }
     
-    public void showAlertDialog() {
+    @FXML
+    void showInfos(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void exportPersonConstellations(ActionEvent event){
+    	if(personNames.size()>200){
+    		if(showAlertDialog()){
+    			String fileContent = csvWriter.getCSVStringFromPersonConstellations(stats.getPersonConstellations(), personNames);
+    			saveFileFromFileChooser(fileContent);
+    		}
+    	}
+    	else{
+    		String fileContent = csvWriter.getCSVStringFromPersonConstellations(stats.getPersonConstellations(), personNames);
+    		saveFileFromFileChooser(fileContent);
+    	}
+    }
+    
+    public void showDeleteDialog() {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Auswertung löschen?");
 			alert.setHeaderText("Möchten Sie die Auswertung beenden?");
@@ -560,6 +627,17 @@ public class ResultScreenController {
 			}
 	}
 
+    public boolean showAlertDialog() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Daten exportieren?");
+		alert.setHeaderText("Ihr Datenkorpus ist sehr groß!");
+		alert.setContentText("Der Vorgang kann mehrere Minuten dauern oder gar abbrechen. Falls möglich zerlegen Sie Ihren Korpus und führen die Exporte nacheinander durch.");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			return true;
+		}
+		else return false;
+}
     
     
 
@@ -581,7 +659,8 @@ public class ResultScreenController {
     	nextStage = new Stage();
 		nextStage.setTitle("Quantitative Serienanalyse");
 		try {
-			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("StartScreen.fxml"));
+			FXMLLoader myLoader = new FXMLLoader();
+			myLoader.setLocation(getClass().getResource("/de/ur/mi/qsa_tool/StartScreen.fxml"));
 			Pane root =  myLoader.load();
 			StartScreenController startController = (StartScreenController) myLoader.getController();
 			startScene = new Scene(root);
@@ -597,13 +676,6 @@ public class ResultScreenController {
 		}
 		nextStage.show();
 	}
-
-
-
-	@FXML
-    void showInfos(ActionEvent event) {
-
-    }
     
     private void saveFileFromFileChooser(String content) {
     	FileChooser fileChooser = new FileChooser();

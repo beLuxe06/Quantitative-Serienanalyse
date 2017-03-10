@@ -334,6 +334,7 @@ public class StartScreenController {
 			resultScene = new Scene(root);
 			resultScene.getStylesheets().add("css/qsa_tool.css");
 			resultController.setCorpus(corpus);
+			resultController.setPrevStage(prevStage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -17,9 +17,12 @@ public class Stats {
 	private ArrayList<HashMap<Integer, Integer>> replyLengthsMostImportant;
 	private String[][] wordsForPersons;
 	private String[][] mostImportantWordsForMostImportantPersons;
+	private Integer[][] personConstellations;
+
 	private ArrayList<Integer> timeLine;
 
 	public ArrayList<Integer> getTimeLine() {
+		timeLine.trimToSize();
 		return timeLine;
 	}
 
@@ -31,10 +34,12 @@ public class Stats {
 	}
 	
 	public ArrayList<PersonUI> getPersonOverviewStats(){
+		personsOverview.trimToSize();
 		return personsOverview;
 	}
 	
 	public ArrayList<HashMap<Integer, Integer>> getReplyLengths() {
+		replyLengths.trimToSize();
 		return replyLengths;
 	}
 
@@ -51,6 +56,7 @@ public class Stats {
 	}
 	
 	public ArrayList<String> getMostImportantPersonsNames() {
+		mostImportantPersonsNames.trimToSize();
 		return mostImportantPersonsNames;
 	}
 
@@ -63,6 +69,7 @@ public class Stats {
 	}
 
 	public ArrayList<String[]> getConfigurationSeasonMatrixList() {
+		configurationSeasonMatrixList.trimToSize();
 		return configurationSeasonMatrixList;
 	}
 
@@ -76,6 +83,7 @@ public class Stats {
 	}
 
 	public ArrayList<String[]> getConfigurationEpisodeMatrixList() {
+		configurationEpisodeMatrixList.trimToSize();
 		return configurationEpisodeMatrixList;
 	}
 
@@ -84,6 +92,7 @@ public class Stats {
 		
 	}
 	public ArrayList<String[]> getConfigurationSceneMatrixList() {
+		configurationSceneMatrixList.trimToSize();
 		return configurationSceneMatrixList;
 	}
 
@@ -102,6 +111,7 @@ public class Stats {
 	}
 	
 	public ArrayList<PersonUI> getMostImportantPersons() {
+		mostImportantPersons.trimToSize();
 		return mostImportantPersons;
 	}
 
@@ -110,6 +120,7 @@ public class Stats {
 	}
 	
 	public ArrayList<HashMap<Integer, Integer>> getReplyLengthsMostImportant() {
+		replyLengthsMostImportant.trimToSize();
 		return replyLengthsMostImportant;
 	}
 
@@ -120,6 +131,15 @@ public class Stats {
 	
 	public String[][] getWordsForPersons() {
 		return wordsForPersons;
+	}
+
+	public void setPersonConstellations(Integer[][] personConstellations) {
+		this.personConstellations = personConstellations;
+		
+	}
+	
+	public Integer[][] getPersonConstellations() {
+		return personConstellations;
 	}
 	
 }

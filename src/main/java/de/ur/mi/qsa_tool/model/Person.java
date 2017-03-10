@@ -2,7 +2,9 @@ package de.ur.mi.qsa_tool.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 
 import de.ur.mi.qsa_tool.util.StringIntegerPairComparator;
 
@@ -117,6 +119,26 @@ public class Person implements Comparable<Person>{
 	
 	public void setWordCounts(HashMap<String, Integer> wordCounts) {
 		this.wordCounts = wordCounts;
+	}
+	
+	public String[] getMostImportantWordCounts2(int count) {
+		String[] array = new String[count];
+		Object[] a = wordCounts.entrySet().toArray();
+		Arrays.sort(a, new Comparator() {
+
+			@Override
+			public int compare(Object o1, Object o2) {
+				return ((Map.Entry<String, Integer>) o1).getValue();
+			}
+		});
+		for(int i = 0; i<count; i++){
+			Object e = a[i];
+			String key = ((Map.Entry<String, Integer>) e).getKey();
+			Integer value = ((Map.Entry<String, Integer>) e).getValue();
+			String result = key + "(" + value.intValue() + ")";
+			array[i] = result;
+		}
+		return array;
 	}
 	
 	public String[] getMostImportantWordCounts(int count){

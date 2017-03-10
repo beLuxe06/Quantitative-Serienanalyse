@@ -55,27 +55,56 @@ public class StatsGeneratorTask extends Task <Stats>{
 		stats.setMostImportantPersonsNames(getMostImportantPersonsNames());
 		stats.setMostImportantPersons(mostImportantPersonsUI);
 		stats.setPersonOverviewStats(getPersonsOverview());
+		System.out.println("person overview generated!");
 		stats.setReplyLengthsMostImportant(getReplyLengthsMostImportant());
 		stats.setReplyLengths(getReplyLengths());
+		System.out.println("reply lengths generated!");
 		stats.setTimeLine(getTimeLine());
+		System.out.println("timeline generated!");
 		stats.setMostWordCountsForMostImportantPersons(getMostWordsCountsForMostImportantPersons());
 		stats.setWordCountsForPersons(getWordsCountsForPersons());
+		System.out.println("word counts generated!");
+		stats.setPersonConstellations(getPersonConstellations());
+		System.out.println("person constellations generated!");
 		//getAllScenesWordCounter();
 		//getAllWordCounter();
 		stats.setConfigurationSeasonMatrixList(getQuickSeasonMatrixListFromPerson());
 		stats.setConfigurationEpisodeMatrixList(getQuickEpisodeMatrixListFromPerson());
 		stats.setConfigurationSceneMatrixList(getQuickSceneMatrixListFromPerson());
+		System.out.println("configuration matrices generated!");
 		
 		return stats;
 	}
 	
 	
 	
+	private Integer[][] getPersonConstellations() {
+		Integer personLength = personList.size();
+		Integer constellationTable [][] = new Integer [personLength][personLength];
+		for(int i=0;i<personLength;i++){
+			for(int j=0;j<personLength;j++){
+				int countSameScenes = 0;
+				if(i!=j){
+					for(int k=0;k<personList.get(i).getSceneIdList().size();k++){
+						for(int l=0;l<personList.get(j).getSceneIdList().size();l++){
+							if(personList.get(i).getSceneIdList().get(k) == personList.get(j).getSceneIdList().get(l)){
+								countSameScenes++;							
+							}
+						}
+					}
+				}
+				float temp = (float) ((countSameScenes)/(float)(personList.get(i).getSceneIdList().size()))*100;
+				constellationTable[i][j]= (int) (temp);
+			}
+		}
+		return constellationTable;
+	}
+
 	private String[][] getWordsCountsForPersons() {
 		String[][] wordsForPersons = new String[personList.size()][];
 		for(int i = 0; i< mostImportantPersons.size(); i++){
 			Person person = mostImportantPersons.get(i);
-			wordsForPersons[i] = person.getMostImportantWordCounts(personList.size());
+			wordsForPersons[i] = person.getMostImportantWordCounts2(personList.size());
 		}
 		return wordsForPersons;
 	}
@@ -84,7 +113,7 @@ public class StatsGeneratorTask extends Task <Stats>{
 		String[][] mostWordsForMostImportantPersons = new String[NUM_OF_MOST_PERSONS][];
 		for(int i = 0; i< mostImportantPersons.size(); i++){
 			Person person = mostImportantPersons.get(i);
-			mostWordsForMostImportantPersons[i] = person.getMostImportantWordCounts(NUM_OF_MOST_PERSONS);
+			mostWordsForMostImportantPersons[i] = person.getMostImportantWordCounts2(NUM_OF_MOST_PERSONS);
 		}
 		return mostWordsForMostImportantPersons;
 	}

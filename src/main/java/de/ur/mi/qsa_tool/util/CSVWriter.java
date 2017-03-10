@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import de.ur.mi.qsa_tool.gui.model.PersonUI;
 
 public class CSVWriter {
@@ -46,6 +45,7 @@ public class CSVWriter {
 
 	public String getCSVStringFromPersonUI(ArrayList<PersonUI> personOverviewStats) {
 		String content = "";
+		content = getPersonStatsColumns();
 		for (PersonUI person : personOverviewStats) {
 			String itemAsString = person.getName() + SEPERATOR_CSV_DATA + person.getWordNumbers()
 					+ SEPERATOR_CSV_DATA + person.getSpeechNumbers() + SEPERATOR_CSV_DATA
@@ -55,6 +55,16 @@ public class CSVWriter {
 			content = content.concat(itemAsString);
 		}
 		return content;
+	}
+
+	private String getPersonStatsColumns() {
+		String columnNames = "Name:" + SEPERATOR_CSV_DATA
+				+ "Wortanzahl:" + SEPERATOR_CSV_DATA + "Replikenanzahl: "
+				+ SEPERATOR_CSV_DATA + "Auftritt in Staffeln: " + SEPERATOR_CSV_DATA + "Auftrittanteil in Staffeln: "
+				+ SEPERATOR_CSV_DATA + "Auftritt in Episoden: " + SEPERATOR_CSV_DATA + "Auftrittanteil in Episoden: "
+				+ SEPERATOR_CSV_DATA + "Auftritt in Szenen: " + SEPERATOR_CSV_DATA + "Auftrittanteil in Szenen: "
+				+ NEW_LINE_SEPERATOR;
+		return columnNames;
 	}
 
 	public String getCSVStringFromReplyLengths(ArrayList<HashMap<Integer, Integer>> replyLengths, ArrayList<String> personNames) {
@@ -70,6 +80,7 @@ public class CSVWriter {
 		}
 		return content;
 	}
+	
 
 	public String getCSVStringFromReplyLengths(String[][] wordsForPersons, ArrayList<String> personNames) {
 		String content = "";
@@ -78,6 +89,35 @@ public class CSVWriter {
 			for(int j = 0; j<wordsForPersons.length; j++){
 				content = content.concat(""+ wordsForPersons[i][j] + SEPERATOR_CSV_DATA);
 				if(j==wordsForPersons.length-1){
+					content = content.concat(NEW_LINE_SEPERATOR);
+				}
+			}
+		}
+		return content;
+	}
+
+	private String getPersonNamesColumns(ArrayList<String> personNames) {
+		String columnNames = "";
+		for(int i = 0; i< personNames.size(); i++){
+			if(i!=personNames.size()-1){
+				
+			}
+			else{
+				columnNames = columnNames.concat(personNames.get(i) + NEW_LINE_SEPERATOR);
+			}
+		}
+		return columnNames;
+	}
+	
+	public String getCSVStringFromPersonConstellations(Integer[][] personConstellations, ArrayList<String> personNames) {
+		String content = "";
+		content = getPersonNamesColumns(personNames);
+		for(int i = 0; i<personConstellations.length; i++){
+			content = content.concat(personNames.get(i) + SEPERATOR_CSV_DATA);
+			for(int j = 0; j<personConstellations.length; j++){
+				
+				content = content.concat(""+ personConstellations[i][j] + SEPERATOR_CSV_DATA);
+				if(j==personConstellations.length-1){
 					content = content.concat(NEW_LINE_SEPERATOR);
 				}
 			}

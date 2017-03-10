@@ -44,6 +44,7 @@
                               <MenuItem fx:id="export_word_counts_important" mnemonicParsing="false" onAction="#exportWordCountsImportant" text="Wichtigste Personen" />
                           </items>
                         </Menu>
+                        <MenuItem fx:id="export_persons_constellations" mnemonicParsing="false" onAction="#exportPersonConstellations" text="Personenkonstellationen" />
                     </items>
                   </Menu>
               <MenuItem id="result_screen_menu_file_submenu_close" fx:id="result_screen_menu_file_submenu_close" mnemonicParsing="false" onAction="#closeApp" text="Close" />
