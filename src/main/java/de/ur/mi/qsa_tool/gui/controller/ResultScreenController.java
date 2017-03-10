@@ -48,104 +48,139 @@ import javafx.util.Callback;
 
 public class ResultScreenController {
 
-	@FXML
-    private MenuItem result_screen_menu_file_submenu_close;
+	 @FXML
+	    private ResourceBundle resources;
 
-    @FXML
-    private MenuItem export_configuration_matrix_episodes;
+	    @FXML
+	    private URL location;
 
-    @FXML
-    private Menu result_screen_menu_help;
+	    @FXML
+	    private Text text_actions_size;
 
-    @FXML
-    private MenuItem export_word_counts_important;
+	    @FXML
+	    private MenuItem result_screen_menu_file_submenu_close;
 
-    @FXML
-    private Menu result_screen_menu_edit;
+	    @FXML
+	    private MenuItem export_person_names;
 
-    @FXML
-    private MenuItem result_screen_menu_help_submenu_about;
+	    @FXML
+	    private MenuItem export_configuration_matrix_episodes;
 
-    @FXML
-    private MenuItem export_configuration_matrix_seasons;
+	    @FXML
+	    private MenuItem export_scene_numbers;
 
-    @FXML
-    private MenuItem result_screen_menu_edit_submenu_delete;
+	    @FXML
+	    private Text title_overall_stats;
 
-    @FXML
-    private Menu result_screen_menu_file;
+	    @FXML
+	    private Menu result_screen_menu_help;
 
-    @FXML
-    private MenuItem export_person_stats_all;
+	    @FXML
+	    private ScrollPane result_content_scroll_pane;
 
-    @FXML
-    private MenuItem export_reply_lengths_important;
+	    @FXML
+	    private TableView<String[]> table_configuration_matrix;
 
-    @FXML
-    private MenuItem export_word_counts_all;
+	    @FXML
+	    private MenuItem export_word_counts_important;
 
-    @FXML
-    private MenuItem export_person_stats_important;
+	    @FXML
+	    private Menu result_screen_menu_edit;
 
-    @FXML
-    private MenuItem export_configuration_matrix_scenes;
+	    @FXML
+	    private MenuItem result_screen_menu_help_submenu_about;
 
-    @FXML
-    private MenuItem export_word_counts_whole;
+	    @FXML
+	    private NumberAxis line_chart_reply_lengths_y_axis;
 
-    @FXML
-    private MenuItem export_reply_lengths_all;
-    
-    @FXML
-    private MenuItem export_persons_constellations;
+	    @FXML
+	    private Text text_actions;
 
-    @FXML
-    private ResourceBundle resources;
+	    @FXML
+	    private Text text_persons_size;
 
-    @FXML
-    private URL location;
+	    @FXML
+	    private Text text_seasons;
 
-    @FXML
-    private Text title_configuration_matrix;
+	    @FXML
+	    private Text text_scenes_size;
 
-    @FXML
-    private TableView<?> table_time_line;
+	    @FXML
+	    private MenuItem export_configuration_matrix_seasons;
 
-    @FXML
-    private AnchorPane result_screen_tab_anchor_pane;
+	    @FXML
+	    private Text text_seasons_size;
 
-    @FXML
-    private Text title_time_line;
+	    @FXML
+	    private MenuItem result_screen_menu_edit_submenu_delete;
 
-    @FXML
-    private ScrollPane result_content_scroll_pane;
+	    @FXML
+	    private Menu result_screen_menu_file;
 
-    @FXML
-    private TableView<String[]> table_configuration_matrix;
+	    @FXML
+	    private MenuItem export_person_stats_all;
 
-    @FXML
-    private TableView<PersonUI> table_overall_stats;
+	    @FXML
+	    private Text title_configuration_matrix;
 
-    @FXML
-    private TableView<?> table_reply_length;
+	    @FXML
+	    private AnchorPane result_screen_tab_anchor_pane;
 
-    @FXML
-    private Text title_reply_length;
+	    @FXML
+	    private MenuItem export_reply_lengths_important;
 
-    @FXML
-    private Text title_overall_stats;
-    
-    @FXML
-    private NumberAxis line_chart_reply_lengths_x_axis;
-    
-    @FXML
-    private NumberAxis line_chart_reply_lengths_y_axis;
-    
-    @FXML
-    private LineChart<Integer, Integer> line_chart_reply_lengths;
-    
-    @FXML
-    private TableView<String[]> table_word_counts;
+	    @FXML
+	    private Text text_persons;
+
+	    @FXML
+	    private Text text_episodes_size;
+
+	    @FXML
+	    private MenuItem export_word_counts_all;
+
+	    @FXML
+	    private TableView<String> table_imported_files;
+
+	    @FXML
+	    private LineChart<Integer, Integer> line_chart_reply_lengths;
+
+	    @FXML
+	    private MenuItem export_person_stats_important;
+
+	    @FXML
+	    private MenuItem export_configuration_matrix_scenes;
+
+	    @FXML
+	    private Text text_seasons211;
+
+	    @FXML
+	    private MenuItem export_word_counts_whole;
+
+	    @FXML
+	    private MenuItem export_persons_constellations;
+
+	    @FXML
+	    private NumberAxis line_chart_reply_lengths_x_axis;
+
+	    @FXML
+	    private Text title_reply_length;
+
+	    @FXML
+	    private Text text_episodes;
+
+	    @FXML
+	    private Text stats_overview;
+
+	    @FXML
+	    private MenuItem export_reply_lengths_all;
+
+	    @FXML
+	    private TableView<PersonUI> table_overall_stats;
+
+	    @FXML
+	    private Text text_scenes;
+
+
     
 //    @FXML
 //    private CategoryAxis bar_chart_word_counts_x_axis;
@@ -201,11 +236,34 @@ public class ResultScreenController {
 		updateConfigurationMatrixTable();
 		updateOverviewStats();
 		updateReplyLengthLineChart();
-		updateWordCountsTable();
+		updatePersonDependenceOverview();
+		updateFileImportTable();
+		updateTextViews();
+		//updateWordCountsTable();
 		//updateTimeLineChart();
 		//updateWordCountsBarChart();
 	}
 	
+private void updatePersonDependenceOverview() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+private void updateTextViews() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+private void updateFileImportTable() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 //	private void updateWordCountsBarChart() {
 //		ArrayList<ArrayList<StringIntegerPair>> importantWords = stats.getMostWordCountsForMostImportantPersons();
 //		ArrayList<String> mostImportantPersonNames = stats.getMostImportantPersonsNames();
@@ -236,46 +294,47 @@ public class ResultScreenController {
 
 
 
-	private void updateWordCountsTable() {
-		table_word_counts.getItems().clear();
-		wordCountsTableContent.addAll(stats.getMostWordCountsForMostImportantPersons());
-		System.out.println("word count content size: " + wordCountsTableContent.size());
-		for(int i = 0; i<wordCountsTableContent.get(0).length-1; i++){
-			String columnTitle = stats.getMostImportantPersonsNames().get(i);
-			TableColumn<String[], String> column = new TableColumn<String[], String>(columnTitle);
-			final int columnIndex = i;
-			column.setCellValueFactory(new Callback<CellDataFeatures<String[], String>, ObservableValue<String>>() {
-                @Override
-                public ObservableValue<String> call(CellDataFeatures<String[], String> p) {
-                	String value = p.getValue()[columnIndex];
-                	if(value != null){
-                		return new SimpleStringProperty(value);
-                	}
-                	else {
-                		value = "";
-                		return new SimpleStringProperty(value);
-                	}
-                }
-            });
-			table_word_counts.getColumns().add(column);
-		}
-		table_word_counts.setItems(wordCountsTableContent);
-		table_word_counts.refresh();
-	}
+//	private void updateWordCountsTable() {
+//		table_word_counts.getItems().clear();
+//		wordCountsTableContent.addAll(stats.getMostWordCountsForMostImportantPersons());
+//		System.out.println("word count content size: " + wordCountsTableContent.size());
+//		for(int i = 0; i<wordCountsTableContent.get(0).length-1; i++){
+//			String columnTitle = stats.getMostImportantPersonsNames().get(i);
+//			TableColumn<String[], String> column = new TableColumn<String[], String>(columnTitle);
+//			final int columnIndex = i;
+//			column.setCellValueFactory(new Callback<CellDataFeatures<String[], String>, ObservableValue<String>>() {
+//                @Override
+//                public ObservableValue<String> call(CellDataFeatures<String[], String> p) {
+//                	String value = p.getValue()[columnIndex];
+//                	if(value != null){
+//                		return new SimpleStringProperty(value);
+//                	}
+//                	else {
+//                		value = "";
+//                		return new SimpleStringProperty(value);
+//                	}
+//                }
+//            });
+//			table_word_counts.getColumns().add(column);
+//		}
+//		table_word_counts.setItems(wordCountsTableContent);
+//		table_word_counts.refresh();
+//	}
 
 
 
 	private void updateReplyLengthLineChart() {
-		ArrayList<HashMap<Integer, Integer>> replyLengthData = stats.getReplyLengths();
+		ArrayList<HashMap<Integer, Integer>> replyLengthData = stats.getReplyLengthsMostImportant();
 		ArrayList<String> mostImportantPersonNames = stats.getMostImportantPersonsNames();
+		System.out.println("mostImportantPersons content size: " + mostImportantPersonNames.size());
 		System.out.println("mostImportantPersons content size: " + mostImportantPersonNames.size());
 		for(int i = 0; i<mostImportantPersonNames.size(); i++){
 			XYChart.Series<Integer, Integer> series = new XYChart.Series<>();
-			for(int j = 0; j<50; j++){
-				if(replyLengthData.get(i).containsKey(j)){
+			for(int j = 0; j<25; j++){
+				HashMap<Integer, Integer> mapI = replyLengthData.get(i);
+				if(mapI.containsKey(j)){
 					series.getData().add(new XYChart.Data<Integer, Integer>(j, replyLengthData.get(i).get(j)));
 				}
-				
 			}
 			series.setName(mostImportantPersonNames.get(i));
 			line_chart_reply_lengths.getStyleClass().add("line-chart");
@@ -296,6 +355,10 @@ public class ResultScreenController {
 		wordNumbersColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("wordNumbers"));
 		wordNumbersColumn.setComparator(new NumberAsStringComparator());
 		table_overall_stats.getColumns().add(wordNumbersColumn);
+		TableColumn<PersonUI, String> sentenceNumbersColumn = new TableColumn<PersonUI, String>("Satzanzahl:");
+		sentenceNumbersColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("sentences"));
+		sentenceNumbersColumn.setComparator(new NumberAsStringComparator());
+		table_overall_stats.getColumns().add(sentenceNumbersColumn);
 		TableColumn<PersonUI, String> speechNumbersColumn = new TableColumn<PersonUI, String>("Replikanzahl:");
 		speechNumbersColumn.setCellValueFactory(new PropertyValueFactory<PersonUI, String> ("speechNumbers"));
 		speechNumbersColumn.setComparator(new NumberAsStringComparator());
@@ -448,7 +511,6 @@ public class ResultScreenController {
 				System.out.println("fill UI with stats: " + stats.toString());
 				updateUIWithStats();
 				removeUnneededData();
-				trimArrayLists();
 			}					
 		});
 		
@@ -467,43 +529,6 @@ public class ResultScreenController {
 		Thread th = new Thread(statsGeneratorTask);
 		th.setDaemon(true);
 		th.start();
-	}
-	
-	private void startCSVWritingTask() {
-		StatsGeneratorTask statsGeneratorTask = new StatsGeneratorTask(data);
-		System.out.println("stats processing started!");
-		statsGeneratorTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent event) {
-				System.out.println("stats processed!");
-				stats = statsGeneratorTask.getValue();
-				System.out.println("fill UI with stats: " + stats.toString());
-				updateUIWithStats();
-				removeUnneededData();
-				trimArrayLists();
-			}					
-		});
-		
-		statsGeneratorTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent event) {
-				System.out.println("stats processing failed!");
-			}					
-		});
-		statsGeneratorTask.setOnCancelled(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent event) {
-				System.out.println("stats processing cancelled!");
-			}					
-		});
-		Thread th = new Thread(statsGeneratorTask);
-		th.setDaemon(true);
-		th.start();
-	}
-	
-	private void trimArrayLists() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	private void removeUnneededData() {
@@ -533,8 +558,8 @@ public class ResultScreenController {
     @FXML
     void exportConfigurationMatrixScene(ActionEvent event) {
     	if(stats.getConfigurationSceneMatrixList().size()>200){
-    		if(showAlertDialog()){
-    			String fileContent = csvWriter.getCSVStringFromArraysInList(stats.getConfigurationSceneMatrixList());
+    		if(showConfigurationMatrixAlertDialog()){
+    			String fileContent = csvWriter.getCSVStringFromArraysInListWithoutTitles(stats.getConfigurationSceneMatrixList());
     			saveFileFromFileChooser(fileContent);
     		}
     	}
@@ -604,8 +629,8 @@ public class ResultScreenController {
     @FXML
     void exportPersonConstellations(ActionEvent event){
     	if(personNames.size()>200){
-    		if(showAlertDialog()){
-    			String fileContent = csvWriter.getCSVStringFromPersonConstellations(stats.getPersonConstellations(), personNames);
+    		if(showPersonConstellationAlertDialog()){
+    			String fileContent = csvWriter.getCSVStringFromPersonConstellationsWithoutNames(stats.getPersonConstellations());
     			saveFileFromFileChooser(fileContent);
     		}
     	}
@@ -613,6 +638,18 @@ public class ResultScreenController {
     		String fileContent = csvWriter.getCSVStringFromPersonConstellations(stats.getPersonConstellations(), personNames);
     		saveFileFromFileChooser(fileContent);
     	}
+    }
+    
+    @FXML 
+    void exportPersonNames(ActionEvent event){
+    	String fileContent = csvWriter.getCSVStringFromPersonNames(stats.getMostImportantPersonsNames());
+		saveFileFromFileChooser(fileContent);
+    }
+    
+    @FXML 
+    void exportSceneNumbers(ActionEvent event){
+    	String fileContent = csvWriter.getCSVStringFromSceneNumbers(stats.getConfigurationSceneMatrixList().get(0));
+		saveFileFromFileChooser(fileContent);
     }
     
     public void showDeleteDialog() {
@@ -627,11 +664,25 @@ public class ResultScreenController {
 			}
 	}
 
-    public boolean showAlertDialog() {
+    public boolean showConfigurationMatrixAlertDialog() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Daten exportieren?");
 		alert.setHeaderText("Ihr Datenkorpus ist sehr groß!");
-		alert.setContentText("Der Vorgang kann mehrere Minuten dauern oder gar abbrechen. Falls möglich zerlegen Sie Ihren Korpus und führen die Exporte nacheinander durch.");
+		alert.setContentText("Die Daten werden ohne Überschriften exportiert. \nDiese können Sie im Anschluss noch einmal im Menü unter EXPORT gesondert exportieren. \n"
+				+ "Für dieses Tabelle fügen Sie bitte die Personennamen links als Zeilenüberschriften und die Szenennummern oben als Spaltenüberschriften ein");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			return true;
+		}
+		else return false;
+}
+    
+    public boolean showPersonConstellationAlertDialog() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Daten exportieren?");
+		alert.setHeaderText("Ihr Datenkorpus ist sehr groß!");
+		alert.setContentText("Die Daten werden ohne Überschriften exportiert. \nDiese können Sie im Anschluss noch einmal im Menü unter EXPORT gesondert exportieren. \n"
+				+ "Für dieses Tabelle fügen Sie bitte die Personennamen sowohl links als Zeilenüberschriften, als auch oben als Spaltenüberschriften ein");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			return true;
@@ -707,8 +758,11 @@ public class ResultScreenController {
 
 	@FXML
     void validateUIFields() {
-		assert result_screen_menu_file_submenu_close != null : "fx:id=\"result_screen_menu_file_submenu_close\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+		assert text_actions_size != null : "fx:id=\"text_actions_size\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert result_screen_menu_file_submenu_close != null : "fx:id=\"result_screen_menu_file_submenu_close\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert export_person_names != null : "fx:id=\"export_person_names\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_configuration_matrix_episodes != null : "fx:id=\"export_configuration_matrix_episodes\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert export_scene_numbers != null : "fx:id=\"export_scene_numbers\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert title_overall_stats != null : "fx:id=\"title_overall_stats\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_screen_menu_help != null : "fx:id=\"result_screen_menu_help\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_content_scroll_pane != null : "fx:id=\"result_content_scroll_pane\" was not injected: check your FXML file 'ResultScreen.fxml'.";
@@ -717,24 +771,36 @@ public class ResultScreenController {
         assert result_screen_menu_edit != null : "fx:id=\"result_screen_menu_edit\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_screen_menu_help_submenu_about != null : "fx:id=\"result_screen_menu_help_submenu_about\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert line_chart_reply_lengths_y_axis != null : "fx:id=\"line_chart_reply_lengths_y_axis\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert text_actions != null : "fx:id=\"text_actions\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert text_persons_size != null : "fx:id=\"text_persons_size\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert text_seasons != null : "fx:id=\"text_seasons\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert text_scenes_size != null : "fx:id=\"text_scenes_size\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_configuration_matrix_seasons != null : "fx:id=\"export_configuration_matrix_seasons\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert text_seasons_size != null : "fx:id=\"text_seasons_size\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_screen_menu_edit_submenu_delete != null : "fx:id=\"result_screen_menu_edit_submenu_delete\" was not injected: check your FXML file 'ResultScreen.fxml'.";
-        assert table_word_counts != null : "fx:id=\"table_word_counts\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_screen_menu_file != null : "fx:id=\"result_screen_menu_file\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_person_stats_all != null : "fx:id=\"export_person_stats_all\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert title_configuration_matrix != null : "fx:id=\"title_configuration_matrix\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_screen_tab_anchor_pane != null : "fx:id=\"result_screen_tab_anchor_pane\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_reply_lengths_important != null : "fx:id=\"export_reply_lengths_important\" was not injected: check your FXML file 'ResultScreen.fxml'.";
-        assert title_time_line != null : "fx:id=\"title_time_line\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert text_persons != null : "fx:id=\"text_persons\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert text_episodes_size != null : "fx:id=\"text_episodes_size\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_word_counts_all != null : "fx:id=\"export_word_counts_all\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert table_imported_files != null : "fx:id=\"table_imported_files\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert line_chart_reply_lengths != null : "fx:id=\"line_chart_reply_lengths\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_person_stats_important != null : "fx:id=\"export_person_stats_important\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_configuration_matrix_scenes != null : "fx:id=\"export_configuration_matrix_scenes\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert text_seasons211 != null : "fx:id=\"text_seasons211\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_word_counts_whole != null : "fx:id=\"export_word_counts_whole\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert export_persons_constellations != null : "fx:id=\"export_persons_constellations\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert line_chart_reply_lengths_x_axis != null : "fx:id=\"line_chart_reply_lengths_x_axis\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert title_reply_length != null : "fx:id=\"title_reply_length\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert text_episodes != null : "fx:id=\"text_episodes\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert stats_overview != null : "fx:id=\"stats_overview\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_reply_lengths_all != null : "fx:id=\"export_reply_lengths_all\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert table_overall_stats != null : "fx:id=\"table_overall_stats\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert text_scenes != null : "fx:id=\"text_scenes\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+
 
 
     }

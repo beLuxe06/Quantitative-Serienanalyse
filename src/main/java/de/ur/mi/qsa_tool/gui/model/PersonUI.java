@@ -7,7 +7,55 @@ import java.util.Map.Entry;
 import de.ur.mi.qsa_tool.model.Person;
 
 public class PersonUI {
+
+	private String name;
+	private String seasonsPresence;
+	private String seasonsPresenceSize;
+	private String appereanceSeasonsShare;
+	private String episodesPresence;
+	private String episodesPresenceSize;
+	private String appereanceEpisodesShare;
+	private String scenesPresence;
+	private String scenesPresenceSize;
+	private String appereanceScenesShare;
+	private Integer numberOfSeasons;
+	private Integer numberOfEpisodes;
+	private Integer numberOfScenes;
+	private String speechNumbers;
+	private String wordNumbers;
+	private String sentences;
 	
+	private final int NUM_OF_MOST_ITEMS_PER_LINE = 12;
+	private final String NEW_LINE = "\n";
+	private final String SEPERATOR = "; ";
+	
+	public PersonUI(Person person, Integer numberOfSeasons, Integer numberOfEpisodes, Integer numberOfScenes){
+		this.name = person.getPersonId().getName();
+		this.numberOfEpisodes = numberOfEpisodes;
+		this.numberOfScenes = numberOfScenes;
+		this.numberOfSeasons = numberOfSeasons;
+		this.seasonsPresence = getArrayListAsSingleString(person.getSeasonIdList());
+		this.episodesPresence = getArrayListAsSingleString(person.getEpisodeIdList());
+		this.scenesPresence = getArrayListAsSingleString(person.getSceneIdList());
+		this.seasonsPresenceSize = "" + person.getSeasonIdList().size();
+		this.episodesPresenceSize = "" + person.getEpisodeIdList().size();
+		this.scenesPresenceSize = "" + person.getSceneIdList().size();
+		this.appereanceSeasonsShare = getShareOfListSize(person.getSeasonIdList().size(), numberOfSeasons);
+		this.appereanceEpisodesShare = getShareOfListSize(person.getEpisodeIdList().size(), numberOfEpisodes);
+		this.appereanceScenesShare = getShareOfListSize(person.getSceneIdList().size(), numberOfScenes);
+		this.speechNumbers = person.getSpeechNumbers().toString();
+		this.wordNumbers = person.getWordNumbers().toString();
+		this.sentences = person.getSentences().toString();
+	}
+	
+	public String getSentences() {
+		return sentences;
+	}
+
+	public void setSentences(String sentences) {
+		this.sentences = sentences;
+	}
+
 	public String getSeasonsPresenceSize() {
 		return seasonsPresenceSize;
 	}
@@ -30,44 +78,6 @@ public class PersonUI {
 
 	public void setScenesPresenceSize(String scenesPresenceSize) {
 		this.scenesPresenceSize = scenesPresenceSize;
-	}
-
-	private String name;
-	private String seasonsPresence;
-	private String seasonsPresenceSize;
-	private String appereanceSeasonsShare;
-	private String episodesPresence;
-	private String episodesPresenceSize;
-	private String appereanceEpisodesShare;
-	private String scenesPresence;
-	private String scenesPresenceSize;
-	private String appereanceScenesShare;
-	private Integer numberOfSeasons;
-	private Integer numberOfEpisodes;
-	private Integer numberOfScenes;
-	private String speechNumbers;
-	private String wordNumbers;
-	
-	private final int NUM_OF_MOST_ITEMS_PER_LINE = 12;
-	private final String NEW_LINE = "\n";
-	private final String SEPERATOR = "; ";
-	
-	public PersonUI(Person person, Integer numberOfSeasons, Integer numberOfEpisodes, Integer numberOfScenes){
-		this.name = person.getPersonId().getName();
-		this.numberOfEpisodes = numberOfEpisodes;
-		this.numberOfScenes = numberOfScenes;
-		this.numberOfSeasons = numberOfSeasons;
-		this.seasonsPresence = getArrayListAsSingleString(person.getSeasonIdList());
-		this.episodesPresence = getArrayListAsSingleString(person.getEpisodeIdList());
-		this.scenesPresence = getArrayListAsSingleString(person.getSceneIdList());
-		this.seasonsPresenceSize = "" + person.getSeasonIdList().size();
-		this.episodesPresenceSize = "" + person.getEpisodeIdList().size();
-		this.scenesPresenceSize = "" + person.getSceneIdList().size();
-		this.appereanceSeasonsShare = getShareOfListSize(person.getSeasonIdList().size(), numberOfSeasons);
-		this.appereanceEpisodesShare = getShareOfListSize(person.getEpisodeIdList().size(), numberOfEpisodes);
-		this.appereanceScenesShare = getShareOfListSize(person.getSceneIdList().size(), numberOfScenes);
-		this.speechNumbers = person.getSpeechNumbers().toString();
-		this.wordNumbers = person.getWordNumbers().toString();
 	}
 
 	public String getName() {

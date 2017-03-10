@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.ur.mi.qsa_tool.gui.controller.ResultScreenController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.ur.mi.qsa_tool.gui.controller.ResultScreenController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -45,6 +45,8 @@
                           </items>
                         </Menu>
                         <MenuItem fx:id="export_persons_constellations" mnemonicParsing="false" onAction="#exportPersonConstellations" text="Personenkonstellationen" />
+                        <MenuItem fx:id="export_person_names" mnemonicParsing="false" onAction="#exportPersonNames" text="Personennamen" />
+                        <MenuItem fx:id="export_scene_numbers" mnemonicParsing="false" onAction="#exportSceneNumbers" text="Szenennummern" />
                     </items>
                   </Menu>
               <MenuItem id="result_screen_menu_file_submenu_close" fx:id="result_screen_menu_file_submenu_close" mnemonicParsing="false" onAction="#closeApp" text="Close" />
@@ -143,9 +145,9 @@
                                  <children>
                                     <ScrollPane fx:id="result_content_scroll_pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <content>
-                                        <AnchorPane>
+                                        <AnchorPane prefWidth="1400.0">
                                              <children>
-                                                <VBox prefHeight="400.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                                             <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                                                    <children>
                                                       <AnchorPane>
                                                          <children>
@@ -153,7 +155,7 @@
                                                                <children>
                                                                   <AnchorPane>
                                                                      <children>
-                                                                        <Text fx:id="title_configuration_matrix" strokeType="OUTSIDE" strokeWidth="0.0" text="Konfigurationsmatrix" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                                                                        <Text fx:id="stats_overview" strokeType="OUTSIDE" strokeWidth="0.0" text="Korpusübersicht" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
                                                                      </children>
                                                                   </AnchorPane>
                                                                </children>
@@ -162,8 +164,107 @@
                                                                <children>
                                                                   <AnchorPane>
                                                                      <children>
-                                                                        <TableView fx:id="table_configuration_matrix" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
-                                                                        </TableView>
+                                                                        <HBox AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="40.0">
+                                                                           <children>
+                                                                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                                                 <children>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                                                                       <children>
+                                                                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Importierte Files" />
+                                                                                       </children></VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                                                                       <children>
+                                                                                          <TableView fx:id="table_imported_files" prefHeight="200.0" prefWidth="200.0" />
+                                                                                       </children></VBox>
+                                                                                 </children>
+                                                                              </AnchorPane>
+                                                                           </children>
+                                                                        </HBox>
+                                                                        <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="340.0" AnchorPane.topAnchor="50.0">
+                                                                           <children>
+                                                                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                                                 <children>
+                                                                                 	<VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_seasons" strokeType="OUTSIDE" strokeWidth="0.0" text="Staffeln" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_seasons_size" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_episodes" strokeType="OUTSIDE" strokeWidth="0.0" text="Episoden" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_episodes_size" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_scenes" strokeType="OUTSIDE" strokeWidth="0.0" text="Szenen" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="130.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_scenes_size" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                 </children>
+                                                                              </AnchorPane>
+                                                                           </children>
+                                                                        </HBox>
+                                                                        <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="50.0">
+                                                                           <children>
+                                                                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                                                 <children>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_persons" strokeType="OUTSIDE" strokeWidth="0.0" text="Personen" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_persons_size" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_actions" strokeType="OUTSIDE" strokeWidth="0.0" text="Aktionen" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_actions_size" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
+                                                                                       <children>
+                                                                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="130.0">
+                                                                                       <children>
+                                                                                          <Text fx:id="text_seasons211" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                                                                       </children>
+                                                                                    </VBox>
+                                                                                 </children>
+                                                                              </AnchorPane>
+                                                                           </children></HBox>
+                                                                        <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="600.0" AnchorPane.topAnchor="50.0">
+                                                                           <children>
+                                                                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                                                 <children>
+                                                                                 <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                                 	<VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                                                                                 </children>
+                                                                              </AnchorPane>
+                                                                           </children>
+                                                                        </HBox>
                                                                      </children>
                                                                   </AnchorPane>
                                                                </children>
@@ -172,7 +273,7 @@
                                                       </AnchorPane>
                                                    </children>
                                                 </VBox>
-                                                <VBox prefHeight="400.0" prefWidth="1200.0" AnchorPane.bottomAnchor="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="450.0">
+                                                <VBox AnchorPane.bottomAnchor="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="200.0">
                                                    <children>
                                                       <AnchorPane>
                                                          <children>
@@ -199,7 +300,34 @@
                                                       </AnchorPane>
                                                    </children>
                                                 </VBox>
-                                                <VBox prefHeight="400.0" prefWidth="1200.0" AnchorPane.bottomAnchor="450.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="900.0">
+                                                <VBox AnchorPane.bottomAnchor="450.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="650.0">
+                                                   <children>
+                                                      <AnchorPane>
+                                                         <children>
+                                                            <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <AnchorPane>
+                                                                     <children>
+                                                                        <Text fx:id="title_configuration_matrix" strokeType="OUTSIDE" strokeWidth="0.0" text="Konfigurationsmatrix" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <AnchorPane>
+                                                                     <children>
+                                                                        <TableView fx:id="table_configuration_matrix" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+                                                                        </TableView>
+                                                                     </children>
+                                                                  </AnchorPane>
+                                                               </children>
+                                                            </VBox>
+                                                         </children>
+                                                      </AnchorPane>
+                                                   </children>
+                                                </VBox>
+                                                <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="1100.0">
                                                    <children>
                                                       <AnchorPane>
                                                          <children>
@@ -224,33 +352,6 @@
                                                                             <NumberAxis fx:id="line_chart_reply_lengths_y_axis" label="Replikenanzahl" side="LEFT" />
                                                                           </yAxis>
                                                                         </LineChart>
-                                                                     </children>
-                                                                  </AnchorPane>
-                                                               </children>
-                                                            </VBox>
-                                                         </children>
-                                                      </AnchorPane>
-                                                   </children>
-                                                </VBox>
-                                                <VBox prefHeight="400.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="1350.0">
-                                                   <children>
-                                                      <AnchorPane>
-                                                         <children>
-                                                            <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
-                                                               <children>
-                                                                  <AnchorPane>
-                                                                     <children>
-                                                                        <Text fx:id="title_time_line" strokeType="OUTSIDE" strokeWidth="0.0" text="Zeitstrahl" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
-                                                                     </children>
-                                                                  </AnchorPane>
-                                                               </children>
-                                                            </VBox>
-                                                            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0">
-                                                               <children>
-                                                                  <AnchorPane>
-                                                                     <children>
-                                                                        <TableView fx:id="table_word_counts" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
-                                                                        </TableView>
                                                                      </children>
                                                                   </AnchorPane>
                                                                </children>

@@ -21,11 +21,11 @@ public class RawDataGeneratorTask extends Task <Data>{
 	private ArrayList<Season> seasonList = new ArrayList<>();
 	private ArrayList<Action> actionList = new ArrayList<>();
 	
-	private int sceneCounter = 1;
+	private int sceneCounter = 0;
 	private int actionCounter = 0;
 	private int episodeCounter = 1;
 	private int seasonCounter = 1;
-	private int personCounter = 1;
+	private int personCounter = 0;
 	
 	private static final char ACTION_STARTER = '(';
 	//private static final char ACTION_STOPPER = ')';
@@ -33,6 +33,7 @@ public class RawDataGeneratorTask extends Task <Data>{
 	//private static final char SCENE_STOPPER = ']';
 	private static final char EPISODE_STARTER = '-';
 	private static final char SEASON_STARTER = '~';
+	private static final String MISTAKE = "﻿";
 	
 	public RawDataGeneratorTask(Data data) {
 		this.data = data;
@@ -47,16 +48,17 @@ public class RawDataGeneratorTask extends Task <Data>{
 				String file = fileContent.get(i);
 				String[] lines = file.split("\\n");
 				System.out.println("lines size: " + lines.length + " of file no.: " + (fileContent.indexOf(file)+1));
-				seasonList.add(new Season(seasonCounter));
-				seasonCounter++;
 				for(String line : lines) {
+					if(line.contains(MISTAKE)){
+						line = line.replaceAll(MISTAKE, "");
+					}
 					char c = line.charAt(0);
 					
 					// check for scene
 					if (c == SCENE_STARTER) {
+						sceneCounter++;
 						sceneList.add(new Scene(seasonCounter, episodeCounter, sceneCounter));
 						sceneList.get(sceneCounter-1).setTitle(line);
-						sceneCounter++;
 					} 
 					// check for action
 					else if (c == ACTION_STARTER) {
@@ -82,9 +84,9 @@ public class RawDataGeneratorTask extends Task <Data>{
 						if (c == ':') {
 							String personName = line.substring(0, charCounter);
 							if(!personNames.contains(personName)){
+								personCounter++;
 								personNames.add(personName);
 								personList.add(new Person(personCounter, personName));
-								personCounter++;
 							}
 						}
 					}

@@ -31,7 +31,7 @@ public class StatsGeneratorTask extends Task <Stats>{
 	private ArrayList<Episode> episodeList = new ArrayList<>();
 	private ArrayList<Action> actionList = new ArrayList<>();
 	private ArrayListConverter arrayListConverter;
-	private static final int NUM_OF_MOST_PERSONS = 10;
+	private static final int NUM_OF_MOST_PERSONS = 6;
 	
 	public StatsGeneratorTask(Data data) {
 		this.data = data;

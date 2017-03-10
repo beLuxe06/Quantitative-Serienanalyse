@@ -18,10 +18,11 @@ public class Person implements Comparable<Person>{
 	private HashMap<String, Integer> wordCounts = new HashMap<>();
 	private Integer wordNumbers = 0;
 	private Integer speechNumbers = 0;
+	private Integer sentences = 0;
 	
 	public Person(PersonId personId, ArrayList<Integer> seasonIdList, ArrayList<Integer> episodeIdList,
 			ArrayList<Integer> sceneIdList, HashMap<Integer, Integer> replyLengths,
-			HashMap<String, Integer> wordCounts, Integer wordNumbers, Integer speechNumbers) {
+			HashMap<String, Integer> wordCounts, Integer wordNumbers, Integer speechNumbers, Integer sentences) {
 		this.personId = personId;
 		this.seasonIdList = seasonIdList;
 		this.episodeIdList = episodeIdList;
@@ -30,8 +31,17 @@ public class Person implements Comparable<Person>{
 		this.wordCounts = wordCounts;
 		this.wordNumbers = wordNumbers;
 		this.speechNumbers = speechNumbers;
+		this.sentences = sentences;
 	}
 	
+	public Integer getSentences() {
+		return sentences;
+	}
+
+	public void setSentences(Integer sentences) {
+		this.sentences = sentences;
+	}
+
 	public Integer getWordNumbers() {
 		return wordNumbers;
 	}
@@ -97,24 +107,19 @@ public class Person implements Comparable<Person>{
 	}
 
 	public void addLengthToReplyLengths(Integer length) {
-		int count = 1;
-		if(replyLengths.containsKey(length)){
-			count = replyLengths.get(length)+1;
-			replyLengths.remove(length);
-			replyLengths.put(length, count);
-		}
-		else replyLengths.put(length, 1);
-		
+		if (!replyLengths.containsKey(length)) {
+            replyLengths.put(length, 1);
+        } else {
+            replyLengths.put(length, (Integer) replyLengths.get(length) + 1);
+        }
 	}
 	
 	public void increaseWordCount(String word){
-		int count = 1;
-		if(wordCounts.containsKey(word)){
-			count = wordCounts.get(word);
-			wordCounts.remove(word);
-			wordCounts.put(word, count+1);
-		}
-		else wordCounts.put(word, 1);
+		if (!wordCounts.containsKey(word)) {
+            wordCounts.put(word, 1);
+        } else {
+            wordCounts.put(word, (Integer) wordCounts.get(word) + 1);
+        }
 	}
 	
 	public void setWordCounts(HashMap<String, Integer> wordCounts) {

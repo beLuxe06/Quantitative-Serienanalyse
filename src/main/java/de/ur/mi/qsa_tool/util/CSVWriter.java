@@ -30,12 +30,12 @@ public class CSVWriter {
 		}
 	}
 
-	public String getCSVStringFromArraysInList(ArrayList<String[]> configurationEpisodeMatrix) {
+	public String getCSVStringFromArraysInList(ArrayList<String[]> configurationMatrix) {
 		String content = "";
-		for(int i = 0; i<configurationEpisodeMatrix.size(); i++){
-			for(int j = 0; j<configurationEpisodeMatrix.get(0).length; j++){
-				content = content.concat(configurationEpisodeMatrix.get(i)[j] + SEPERATOR_CSV_DATA);
-				if(j==configurationEpisodeMatrix.get(0).length-1){
+		for(int i = 0; i<configurationMatrix.size(); i++){
+			for(int j = 0; j<configurationMatrix.get(0).length; j++){
+				content = content.concat(configurationMatrix.get(i)[j] + SEPERATOR_CSV_DATA);
+				if(j==configurationMatrix.get(0).length-1){
 					content = content.concat(NEW_LINE_SEPERATOR);
 				}
 			}
@@ -69,10 +69,14 @@ public class CSVWriter {
 
 	public String getCSVStringFromReplyLengths(ArrayList<HashMap<Integer, Integer>> replyLengths, ArrayList<String> personNames) {
 		String content = "";
-		for(int i = 0; i<personNames.size(); i++){
+		for(int i = 0; i<replyLengths.size(); i++){
 			content = content.concat(personNames.get(i) + SEPERATOR_CSV_DATA);
 			for(int j = 0; j<replyLengths.get(i).size(); j++){
-				content = content.concat(""+ j +" (" + replyLengths.get(i).get(j).intValue() + ") " + SEPERATOR_CSV_DATA);
+				Integer count = replyLengths.get(i).get(j);
+				if(count == null){
+					count = 0;
+				}
+				content = content.concat(""+ j +" (" + count + ") " + SEPERATOR_CSV_DATA);
 				if(j==replyLengths.get(i).size()-1){
 					content = content.concat(NEW_LINE_SEPERATOR);
 				}
@@ -96,26 +100,31 @@ public class CSVWriter {
 		return content;
 	}
 
-	private String getPersonNamesColumns(ArrayList<String> personNames) {
+	private String getTitleColumns(ArrayList<String> arrayList) {
 		String columnNames = "";
-		for(int i = 0; i< personNames.size(); i++){
-			if(i!=personNames.size()-1){
-				
-			}
-			else{
-				columnNames = columnNames.concat(personNames.get(i) + NEW_LINE_SEPERATOR);
-			}
+		for(int i = 0; i< arrayList.size(); i++){
+			columnNames = columnNames.concat(arrayList.get(i) + SEPERATOR_CSV_DATA);
 		}
+		columnNames = columnNames.concat(NEW_LINE_SEPERATOR);
+		return columnNames;
+	}
+	
+	private String getTitleColumns(String[] array) {
+		String columnNames = "";
+		for(int i = 0; i< array.length; i++){
+			columnNames = columnNames.concat(array[i] + SEPERATOR_CSV_DATA);
+		}
+		columnNames = columnNames.concat(NEW_LINE_SEPERATOR);
 		return columnNames;
 	}
 	
 	public String getCSVStringFromPersonConstellations(Integer[][] personConstellations, ArrayList<String> personNames) {
 		String content = "";
-		content = getPersonNamesColumns(personNames);
+		content = getTitleColumns(personNames);
 		for(int i = 0; i<personConstellations.length; i++){
 			content = content.concat(personNames.get(i) + SEPERATOR_CSV_DATA);
 			for(int j = 0; j<personConstellations.length; j++){
-				
+				content = content.concat(personNames.get(j) + SEPERATOR_CSV_DATA);
 				content = content.concat(""+ personConstellations[i][j] + SEPERATOR_CSV_DATA);
 				if(j==personConstellations.length-1){
 					content = content.concat(NEW_LINE_SEPERATOR);
@@ -123,6 +132,40 @@ public class CSVWriter {
 			}
 		}
 		return content;
+	}
+
+	public String getCSVStringFromArraysInListWithoutTitles(ArrayList<String[]> configurationMatrix) {
+		String content = "";
+		for(int i = 1; i<configurationMatrix.size(); i++){
+			for(int j = 1; j<configurationMatrix.get(0).length; j++){
+				content = content.concat(configurationMatrix.get(i)[j] + SEPERATOR_CSV_DATA);
+				if(j==configurationMatrix.get(0).length-1){
+					content = content.concat(NEW_LINE_SEPERATOR);
+				}
+			}
+		}
+		return content;
+	}
+
+	public String getCSVStringFromPersonConstellationsWithoutNames(Integer[][] personConstellations) {
+		String content = "";
+		for(int i = 0; i<personConstellations.length; i++){
+			for(int j = 0; j<personConstellations.length; j++){
+				content = content.concat(""+ personConstellations[i][j] + SEPERATOR_CSV_DATA);
+				if(j==personConstellations.length-1){
+					content = content.concat(NEW_LINE_SEPERATOR);
+				}
+			}
+		}
+		return content;
+	}
+
+	public String getCSVStringFromPersonNames(ArrayList<String> mostImportantPersonsNames) {
+		return getTitleColumns(mostImportantPersonsNames);
+	}
+
+	public String getCSVStringFromSceneNumbers(String[] strings) {
+		return getTitleColumns(strings);
 	}
 
 }

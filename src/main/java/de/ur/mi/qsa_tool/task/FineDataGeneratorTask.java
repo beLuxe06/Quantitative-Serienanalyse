@@ -7,7 +7,6 @@ import de.ur.mi.qsa_tool.model.Episode;
 import de.ur.mi.qsa_tool.model.Data;
 import de.ur.mi.qsa_tool.model.Person;
 import de.ur.mi.qsa_tool.model.Scene;
-import de.ur.mi.qsa_tool.model.ScriptId;
 import de.ur.mi.qsa_tool.model.Season;
 import de.ur.mi.qsa_tool.util.WordCounter;
 import javafx.concurrent.Task;
@@ -37,6 +36,7 @@ public class FineDataGeneratorTask extends Task<Data>{
 	private static final char ACTION_STARTER = '(';
 	private static final char EPISODE_STARTER = '-';
 	private static final char SEASON_STARTER = '~';
+	private static final String MISTAKE = "﻿";
 	
 	public FineDataGeneratorTask(Data data){
 		this.data = data;
@@ -67,31 +67,34 @@ public class FineDataGeneratorTask extends Task<Data>{
 				System.out.println("lines size: " + lines.length + " of file no.: " + (fileContent.indexOf(file)+1));
 				
 				for(String line : lines) {
+					if(line.contains(MISTAKE)){
+						line = line.replaceAll(MISTAKE, "");
+					}
 					char c = line.charAt(0);
 					
 					// check for scene
 					if (c == SCENE_STARTER) {
-						sceneNameAnalysis(line, sceneList.get(sceneCounter));
 						if(sceneCounter<sceneList.size()-1){
 							sceneCounter++;
 						}
+						sceneNameAnalysis(line, sceneList.get(sceneCounter));
 					} 
 					// check for action
 					else if (c == ACTION_STARTER) {
+						actionCounter++;
 						Action action = new Action(actionCounter);
 						actionOutsidePerson(action, line);
 						actionList.add(action);
-						actionCounter++;
 					} 
 					// check for episode
 					else if (c == EPISODE_STARTER) {
-						if(episodeCounter<episodeList.size()-1){
+						if(episodeCounter<episodeList.size()){
 							episodeCounter++;
 						}
 					} 
 					// check for season
 					else if (c == SEASON_STARTER) {
-						if(seasonCounter<seasonList.size()-1){
+						if(seasonCounter<seasonList.size()){
 							seasonCounter++;
 						}
 					} 
@@ -108,8 +111,10 @@ public class FineDataGeneratorTask extends Task<Data>{
 							String personName = line.substring(0, charCounter);
 							if(personNames.contains(personName)){
 								Person person = personList.get(personNames.indexOf(personName));
-								addPersonToSceneEpisodeAndSeason(person);
+								addPersonToScene(person);
 								addIdsToPerson(person);
+								Integer sentences = wordCounter.getSentencesFromLine(endLine.substring(1));
+								addSentenceToPerson(person, sentences);
 								ArrayList<String> words = wordCounter.getWordsFromLine(endLine.substring(1));
 								addSpeechAndWordCountToPerson(person, words.size());
 								addReplyLengthToPerson(person, words.size());
@@ -134,6 +139,10 @@ public class FineDataGeneratorTask extends Task<Data>{
 		return data;
 	}
 	
+	private void addSentenceToPerson(Person person, Integer sentences) {
+		person.setSentences(person.getSentences() + sentences);
+	}
+
 	private void addSpeechAndWordCountToPerson(Person person, int wordSize) {
 		person.setSpeechNumbers(person.getSpeechNumbers()+1);
 		person.setWordNumbers(person.getWordNumbers()+wordSize);
@@ -150,29 +159,31 @@ public class FineDataGeneratorTask extends Task<Data>{
 			person.increaseWordCount(word);
 		}
 	}
-
-	private ScriptId getActualScriptId(){
-		return sceneList.get(sceneCounter).getScriptId();
-	}
 	
 	private void addReplyLengthToPerson(Person person, Integer wordCount) {
 		person.addLengthToReplyLengths(wordCount);	
 	}
 
 	private void addIdsToPerson(Person person) {
-		if(!person.getSeasonIdList().contains(seasonList.get(seasonCounter-1).getSeasonId())){
-			person.getSeasonIdList().add(seasonList.get(seasonCounter-1).getSeasonId());
+		Integer seasonId = seasonList.get(seasonCounter-1).getSeasonId();
+		if(!person.getSeasonIdList().contains(seasonId)){
+			person.getSeasonIdList().add(seasonId);
 		}
-		if(!person.getEpisodeIdList().contains(episodeList.get(episodeCounter-1).getEpisodeId())){
-			person.getEpisodeIdList().add(episodeList.get(episodeCounter-1).getEpisodeId());
+		Integer episodeId = episodeList.get(episodeCounter-1).getEpisodeId();
+		if(!person.getEpisodeIdList().contains(episodeId)){
+			person.getEpisodeIdList().add(episodeId);
 		}
-		if(!person.getSceneIdList().contains(sceneList.get(sceneCounter-1).getSceneId())){
-			person.getSceneIdList().add(sceneList.get(sceneCounter-1).getSceneId());
+		Integer sceneId = sceneList.get(sceneCounter-1).getSceneId();
+		if(!person.getSceneIdList().contains(sceneId)){
+			person.getSceneIdList().add(sceneId);
 		}
-		
+		//Just to set DebugPoint
+		if((person.getPersonId().getId()==1) && (sceneId % 1150 == 0)){
+			int  z = 0;
+		}
 	}
 
-	private void addPersonToSceneEpisodeAndSeason(Person person) {
+	private void addPersonToScene(Person person) {
 		Scene scene = sceneList.get(sceneCounter-1);
 		if(!scene.getPersonIdList().contains(person.getPersonId().getId())){
 			scene.getPersonIdList().add(person.getPersonId().getId());
@@ -192,8 +203,9 @@ public class FineDataGeneratorTask extends Task<Data>{
 				if(line.length()>14){
 					if(line.substring(11,15).toLowerCase().equals("ends") ||line.substring(11,15).toLowerCase().equals("over")){
 						scene.setFlashback(false);
-						if(sceneCounter >= 2){
-							scene.setFlashbackReferenceScriptId(sceneList.get(sceneCounter-2).getScriptId());
+						int index = sceneCounter;
+						if(index >= 2){
+							scene.setFlashbackReferenceScriptId(sceneList.get(index-2).getScriptId());
 						}
 						
 					} else {

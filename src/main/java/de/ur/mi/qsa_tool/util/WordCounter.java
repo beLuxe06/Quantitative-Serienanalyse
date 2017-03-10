@@ -18,4 +18,16 @@ public class WordCounter {
 		return wordsFromLine;
 	}
 
+	public Integer getSentencesFromLine(String line) {
+		Integer sentences = 0;
+		for (int d = 1; d < line.length(); d++) {
+			if(line.charAt(d)=='.' || line.charAt(d)=='!' || line.charAt(d)=='?'){
+				if(line.charAt(d-1)=='.' || line.charAt(d-1)=='!' || line.charAt(d-1)=='?'){
+					sentences++;
+				}
+			}
+		}
+		return sentences;
+	}
+
 }
