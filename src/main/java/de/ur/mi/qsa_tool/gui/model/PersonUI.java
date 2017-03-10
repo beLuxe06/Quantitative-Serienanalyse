@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import de.ur.mi.qsa_tool.model.Person;
-import de.ur.mi.qsa_tool.model.ReplyLength;
 
 public class PersonUI {
 	

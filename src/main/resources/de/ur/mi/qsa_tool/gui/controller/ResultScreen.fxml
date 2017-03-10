@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.paint.*?>
@@ -15,17 +16,47 @@
         <menus>
           <Menu id="result_screen_menu_file" fx:id="result_screen_menu_file" mnemonicParsing="false" text="File">
             <items>
-              <MenuItem id="result_screen_menu_file_submenu_close" fx:id="result_screen_menu_file_submenu_close" mnemonicParsing="false" text="Close" />
+                  <Menu mnemonicParsing="false" text="Export">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Konfigurationsmatrix">
+                          <items>
+                            <MenuItem fx:id="export_configuration_matrix_seasons" mnemonicParsing="false" onAction="#exportConfigurationMatrixSeason" text="Nach Staffeln" />
+                              <MenuItem fx:id="export_configuration_matrix_episodes" mnemonicParsing="false" onAction="#exportConfigurationMatrixEpisode" text="Nach Episoden" />
+                              <MenuItem fx:id="export_configuration_matrix_scenes" mnemonicParsing="false" onAction="#exportConfigurationMatrixScene" text="Nach Szenen" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Personenstatistiken">
+                          <items>
+                            <MenuItem fx:id="export_person_stats_all" mnemonicParsing="false" onAction="#exportPersonStatsAll" text="Alle Personen" />
+                              <MenuItem fx:id="export_person_stats_important" mnemonicParsing="false" onAction="#exportPersonStatsImportant" text="Wichtigste Personen" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Replikenlängen">
+                          <items>
+                            <MenuItem fx:id="export_reply_lengths_all" mnemonicParsing="false" onAction="#exportReplyLengthsAll" text="Alle Personen" />
+                              <MenuItem fx:id="export_reply_lengths_important" mnemonicParsing="false" onAction="#exportReplyLengthsImportant" text="Wichtigste Personen" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Worthäufigkeiten">
+                          <items>
+                              <MenuItem fx:id="export_word_counts_whole" mnemonicParsing="false" onAction="#exportWordCountsWhole" text="Gesamtkorpus" />
+                            <MenuItem fx:id="export_word_counts_all" mnemonicParsing="false" onAction="#exportWordCountsAll" text="Alle Personen" />
+                              <MenuItem fx:id="export_word_counts_important" mnemonicParsing="false" onAction="#exportWordCountsImportant" text="Wichtigste Personen" />
+                          </items>
+                        </Menu>
+                    </items>
+                  </Menu>
+              <MenuItem id="result_screen_menu_file_submenu_close" fx:id="result_screen_menu_file_submenu_close" mnemonicParsing="false" onAction="#closeApp" text="Close" />
             </items>
           </Menu>
           <Menu id="result_screen_menu_edit" fx:id="result_screen_menu_edit" mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem id="result_screen_menu_edit_submenu_delete" fx:id="result_screen_menu_edit_submenu_delete" mnemonicParsing="false" text="Delete" />
+              <MenuItem id="result_screen_menu_edit_submenu_delete" fx:id="result_screen_menu_edit_submenu_delete" mnemonicParsing="false" onAction="#deleteInput" text="Delete" />
             </items>
           </Menu>
           <Menu id="result_screen_menu_help" fx:id="result_screen_menu_help" mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem id="result_screen_menu_help_submenu_about" fx:id="result_screen_menu_help_submenu_about" mnemonicParsing="false" text="About" />
+              <MenuItem id="result_screen_menu_help_submenu_about" fx:id="result_screen_menu_help_submenu_about" mnemonicParsing="false" onAction="#showInfos" text="About" />
             </items>
           </Menu>
         </menus>
@@ -184,8 +215,14 @@
                                                                <children>
                                                                   <AnchorPane>
                                                                      <children>
-                                                                        <TableView fx:id="table_reply_length" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
-                                                                        </TableView>
+                                                                        <LineChart fx:id="line_chart_reply_lengths" title="Replikenlängen" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+                                                                          <xAxis>
+                                                                            <NumberAxis fx:id="line_chart_reply_lengths_x_axis" label="Replikenlänge" side="BOTTOM" />
+                                                                          </xAxis>
+                                                                          <yAxis>
+                                                                            <NumberAxis fx:id="line_chart_reply_lengths_y_axis" label="Replikenanzahl" side="LEFT" />
+                                                                          </yAxis>
+                                                                        </LineChart>
                                                                      </children>
                                                                   </AnchorPane>
                                                                </children>
@@ -211,7 +248,7 @@
                                                                <children>
                                                                   <AnchorPane>
                                                                      <children>
-                                                                        <TableView fx:id="table_time_line" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+                                                                        <TableView fx:id="table_word_counts" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
                                                                         </TableView>
                                                                      </children>
                                                                   </AnchorPane>

@@ -10,8 +10,8 @@ public class NumberAsStringComparator implements Comparator<String>  {
 	@Override
 	public int compare(String s1, String s2) {
 		
-		deleteUnneededChars(s1);
-		deleteUnneededChars(s2);
+		s1 = deleteUnneededChars(s1);
+		s2 = deleteUnneededChars(s2);
 		
 		try{
 			return Integer.parseInt(s1) < Integer.parseInt(s2) ? -1 : Integer.parseInt(s1) == Integer.parseInt(s2) ? 0 : 1;
@@ -21,9 +21,10 @@ public class NumberAsStringComparator implements Comparator<String>  {
 		}
 	}
 
-	private void deleteUnneededChars(String string) {
+	private String deleteUnneededChars(String string) {
 		if(string.contains(PERCENTAGE)){
 			string = string.replaceAll(PERCENTAGE, EMPTY_STRING);
 		}
+		return string;
 	}
 }

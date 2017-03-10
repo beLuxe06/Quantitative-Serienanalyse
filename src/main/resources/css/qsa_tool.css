@@ -7,6 +7,12 @@
     -fx-font: 25px "Serif";
     -fx-text-fill: #FFFFFF;
 }
+
+.line-chart
+{
+	-fx-stroke-width: 5px;
+}
+
 .data-value-text
 {
     -fx-font: 40px "Serif";

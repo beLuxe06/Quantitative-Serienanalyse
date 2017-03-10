@@ -6,7 +6,6 @@ import de.ur.mi.qsa_tool.model.Action;
 import de.ur.mi.qsa_tool.model.Episode;
 import de.ur.mi.qsa_tool.model.Data;
 import de.ur.mi.qsa_tool.model.Person;
-import de.ur.mi.qsa_tool.model.ReplyLength;
 import de.ur.mi.qsa_tool.model.Scene;
 import de.ur.mi.qsa_tool.model.ScriptId;
 import de.ur.mi.qsa_tool.model.Season;
@@ -29,7 +28,7 @@ public class FineDataGeneratorTask extends Task<Data>{
 	// private int testVariable = 0;
 	private int episodeCounter = 1;
 	private int seasonCounter = 1;
-	private int sceneCounter = 1;
+	private int sceneCounter = 0;
 	private int actionCounter = 0;
 	// private int personCounter = 0;
 		
@@ -109,7 +108,7 @@ public class FineDataGeneratorTask extends Task<Data>{
 							String personName = line.substring(0, charCounter);
 							if(personNames.contains(personName)){
 								Person person = personList.get(personNames.indexOf(personName));
-								addPersonToScene(person);
+								addPersonToSceneEpisodeAndSeason(person);
 								addIdsToPerson(person);
 								ArrayList<String> words = wordCounter.getWordsFromLine(endLine.substring(1));
 								addSpeechAndWordCountToPerson(person, words.size());
@@ -157,15 +156,7 @@ public class FineDataGeneratorTask extends Task<Data>{
 	}
 	
 	private void addReplyLengthToPerson(Person person, Integer wordCount) {
-		ScriptId actualScriptId = getActualScriptId();
-		ReplyLength actualReplyLength = person.getReplyLength(actualScriptId);
-		if(actualReplyLength != null){
-			actualReplyLength.getLengths().add(wordCount);
-		}
-		else{
-			actualReplyLength = new ReplyLength(actualScriptId, wordCount);
-			person.getReplyLengths().add(actualReplyLength);
-		}	
+		person.addLengthToReplyLengths(wordCount);	
 	}
 
 	private void addIdsToPerson(Person person) {
@@ -181,7 +172,7 @@ public class FineDataGeneratorTask extends Task<Data>{
 		
 	}
 
-	private void addPersonToScene(Person person) {
+	private void addPersonToSceneEpisodeAndSeason(Person person) {
 		Scene scene = sceneList.get(sceneCounter-1);
 		if(!scene.getPersonIdList().contains(person.getPersonId().getId())){
 			scene.getPersonIdList().add(person.getPersonId().getId());

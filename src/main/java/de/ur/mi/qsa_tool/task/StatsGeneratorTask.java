@@ -1,6 +1,8 @@
 package de.ur.mi.qsa_tool.task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import de.ur.mi.qsa_tool.gui.model.PersonUI;
 import de.ur.mi.qsa_tool.model.Action;
@@ -10,7 +12,9 @@ import de.ur.mi.qsa_tool.model.Person;
 import de.ur.mi.qsa_tool.model.Scene;
 import de.ur.mi.qsa_tool.model.Season;
 import de.ur.mi.qsa_tool.model.Stats;
+import de.ur.mi.qsa_tool.model.StringIntegerPair;
 import de.ur.mi.qsa_tool.util.ArrayListConverter;
+import de.ur.mi.qsa_tool.util.PersonComparator;
 import javafx.concurrent.Task;
 
 public class StatsGeneratorTask extends Task <Stats>{
@@ -19,12 +23,14 @@ public class StatsGeneratorTask extends Task <Stats>{
 	private Stats stats;
 	
 	private ArrayList<Person> personList = new ArrayList<>();
+	private ArrayList<Person> mostImportantPersons = new ArrayList<>();
 	private ArrayList<String> personNames = new ArrayList<>();
 	private ArrayList<Scene> sceneList = new ArrayList<>();
 	private ArrayList<Season> seasonList = new ArrayList<>();
 	private ArrayList<Episode> episodeList = new ArrayList<>();
 	private ArrayList<Action> actionList = new ArrayList<>();
 	private ArrayListConverter arrayListConverter;
+	private static final int NUM_OF_MOST_PERSONS = 10;
 	
 	public StatsGeneratorTask(Data data) {
 		this.data = data;
@@ -44,22 +50,67 @@ public class StatsGeneratorTask extends Task <Stats>{
 	protected Stats call() throws Exception {
 		stats = new Stats();
 		getPersonNames();
+		getMostImportantPersons();
+		stats.setMostImportantPersonsNames(getMostImportantPersonsNames());
 		stats.setPersonOverviewStats(getPersonsOverview());
-		//getTimeLine();
+		stats.setReplyLengths(getReplyLengths());
+		stats.setTimeLine(getTimeLine());
+		stats.setMostWordCountsForMostImportantPersons(getMostWordsCountsForMostImportantPersons());
 		//getAllScenesWordCounter();
-		//getReplyLengths();
 		//getAllWordCounter();
 		//stats.setConfigurationSceneMatrix(getQuickSceneMatrix());
 		//stats.setConfigurationSeasonMatrix(getQuickSeasonMatrix());
-		//stats.setConfigurationSceneMatrix(getQuickSceneMatrixFromPerson());
-		stats.setConfigurationSceneMatrix(getQuickSceneMatrixFromScene());
-		//stats.setConfigurationEpisodeMatrix(getQuickEpisodeMatrixFromPerson());
+		stats.setConfigurationSceneMatrix(getQuickSceneMatrixFromPerson());
+		//stats.setConfigurationSceneMatrix(getQuickSceneMatrixFromScene());
+		stats.setConfigurationEpisodeMatrix(getQuickEpisodeMatrixFromPerson());
 		
 		return stats;
 	}
 	
 	
 	
+	private String[][] getMostWordsCountsForMostImportantPersons() {
+		String[][] mostWordsForMostImportantPersons = new String[NUM_OF_MOST_PERSONS][];
+		for(int i = 0; i< mostImportantPersons.size(); i++){
+			Person person = mostImportantPersons.get(i);
+			mostWordsForMostImportantPersons[i] = person.getMostImportantWordCounts(NUM_OF_MOST_PERSONS);
+		}
+		return mostWordsForMostImportantPersons;
+	}
+
+	private ArrayList<Integer> getTimeLine() {
+		ArrayList<Integer> timeLine = new ArrayList<>();
+		for(Scene scene : sceneList){
+			if(scene.isFlashback()){
+				timeLine.add(0);
+			}
+			else timeLine.add(1);
+		}
+		return timeLine;
+	}
+
+	private void getMostImportantPersons() {
+		mostImportantPersons.addAll(personList);
+		mostImportantPersons.sort(new PersonComparator());
+		mostImportantPersons.subList(NUM_OF_MOST_PERSONS, mostImportantPersons.size()).clear();
+	}
+
+	private ArrayList<HashMap<Integer, Integer>> getReplyLengths() {
+		ArrayList<HashMap<Integer, Integer>> replyLengths = new ArrayList<HashMap<Integer, Integer>>();
+		for(Person person : mostImportantPersons){
+			replyLengths.add(person.getReplyLengths());
+		}
+		return replyLengths;
+	}
+	
+	public ArrayList<String> getMostImportantPersonsNames(){
+		ArrayList<String> mostImportantPersonsNames = new ArrayList<>();
+		for(int i = 0; i<mostImportantPersons.size(); i++){
+			mostImportantPersonsNames.add(mostImportantPersons.get(i).getPersonId().getName());
+		}
+		return mostImportantPersonsNames;
+	}
+
 	@Override
 	protected void failed() {
 		super.failed();
@@ -76,7 +127,8 @@ public class StatsGeneratorTask extends Task <Stats>{
 	}
 	
 	private String[][] getQuickSeasonMatrixFromPerson() {
-		String[][] configurationMatrix = new String[seasonList.size()+1][personList.size()+1];
+		Integer dimension = getNeededDimension(seasonList.size(), personList.size());
+		String[][] configurationMatrix = new String[dimension+1][];
 		configurationMatrix [0] = getSeasonNamesAsArray();
 		for (int i = 0; i < personList.size(); i++) { 
 			int rowIndex = i+1;
@@ -85,6 +137,13 @@ public class StatsGeneratorTask extends Task <Stats>{
 		return configurationMatrix;
 	}
 	
+	private Integer getNeededDimension(int size, int size2) {
+		if(size<size2){
+			return size2;
+		}
+		else return size;
+	}
+
 	private String[] getSeasonNamesAsArray() {
 		String[] seasonNamesAsArray = new String[seasonList.size()+1];
 		seasonNamesAsArray[0] = "Person:";
@@ -96,11 +155,11 @@ public class StatsGeneratorTask extends Task <Stats>{
 	}
 
 	private String[][] getQuickEpisodeMatrixFromPerson() {
-		String[][] configurationMatrix = new String[episodeList.size()+1][personList.size()+1];
+		Integer dimension = getNeededDimension(episodeList.size(), personList.size());
+		String[][] configurationMatrix = new String[dimension+1][];
 		configurationMatrix [0] = getEpisodeNamesAsArray();
-		for (int i = 0; i < episodeList.size(); i++) { 
-			int rowIndex = i;
-			rowIndex++;
+		for (int i = 0; i < personList.size(); i++) { 
+			int rowIndex = i+1;
 		    configurationMatrix[rowIndex] = personList.get(i).getEpisodePresenceArray(episodeList.size());
 		}
 		return configurationMatrix;
@@ -117,19 +176,21 @@ public class StatsGeneratorTask extends Task <Stats>{
 	}
 
 	private String[][] getQuickSceneMatrixFromScene() {
-		String[][] configurationMatrix = new String[sceneList.size()+1][];
+		Integer dimension = getNeededDimension(sceneList.size(), personList.size());
+		String[][] configurationMatrix = new String[dimension+1][];
 		configurationMatrix [0] = getSceneNamesAsArray();
 		for (int i = 0; i < sceneList.size(); i++) { 
-			int colIndex = i+1;
-		    configurationMatrix[colIndex] = sceneList.get(i).getPersonPresenceList(personList);
+			int rowIndex = i+1;
+		    configurationMatrix[rowIndex] = sceneList.get(i).getPersonPresenceList(personList);
 		}
 		return configurationMatrix;
 	}
 	
 	private String[][] getQuickSceneMatrixFromPerson() {
-		String[][] configurationMatrix = new String[sceneList.size()+1][personList.size()+1];
+		Integer dimension = getNeededDimension(sceneList.size(), personList.size());
+		String[][] configurationMatrix = new String[dimension+1][];
 		configurationMatrix [0] = getSceneNamesAsArray();
-		for (int i = 0; i < sceneList.size(); i++) { 
+		for (int i = 0; i < personList.size(); i++) { 
 			int rowIndex = i+1;
 		    configurationMatrix[rowIndex] = personList.get(i).getScenePresenceArray(sceneList.size());
 		}

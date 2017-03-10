@@ -1,21 +1,24 @@
 package de.ur.mi.qsa_tool.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
-public class Person {
+import de.ur.mi.qsa_tool.util.StringIntegerPairComparator;
+
+public class Person implements Comparable<Person>{
 	
 	private PersonId personId;
 	private ArrayList<Integer> seasonIdList = new ArrayList<>();
 	private ArrayList<Integer> episodeIdList = new ArrayList<>();
 	private ArrayList<Integer> sceneIdList = new ArrayList<>();
-	private ArrayList<ReplyLength> replyLengths = new ArrayList<>();
+	private HashMap<Integer, Integer> replyLengths = new HashMap<>();
 	private HashMap<String, Integer> wordCounts = new HashMap<>();
 	private Integer wordNumbers = 0;
 	private Integer speechNumbers = 0;
 	
 	public Person(PersonId personId, ArrayList<Integer> seasonIdList, ArrayList<Integer> episodeIdList,
-			ArrayList<Integer> sceneIdList, ArrayList<ReplyLength> replyLengths,
+			ArrayList<Integer> sceneIdList, HashMap<Integer, Integer> replyLengths,
 			HashMap<String, Integer> wordCounts, Integer wordNumbers, Integer speechNumbers) {
 		this.personId = personId;
 		this.seasonIdList = seasonIdList;
@@ -79,19 +82,11 @@ public class Person {
 		this.sceneIdList = sceneIdList;
 	}
 	
-	public ReplyLength getReplyLength(ScriptId scriptId) {
-		for(ReplyLength replyLength : replyLengths){
-			if(replyLength.getScriptId().equals(scriptId))
-				return replyLength;
-		}
-		return null;
-	}
-	
-	public ArrayList<ReplyLength> getReplyLengths() {
+	public HashMap<Integer, Integer> getReplyLengths() {
 		return replyLengths;
 	}
 
-	public void setReplyLengths(ArrayList<ReplyLength> replyLengths) {
+	public void setReplyLengths(HashMap<Integer, Integer> replyLengths) {
 		this.replyLengths = replyLengths;
 	}
 
@@ -99,26 +94,69 @@ public class Person {
 		return wordCounts;
 	}
 
+	public void addLengthToReplyLengths(Integer length) {
+		int count = 1;
+		if(replyLengths.containsKey(length)){
+			count = replyLengths.get(length)+1;
+			replyLengths.remove(length);
+			replyLengths.put(length, count);
+		}
+		else replyLengths.put(length, 1);
+		
+	}
+	
 	public void increaseWordCount(String word){
 		int count = 1;
 		if(wordCounts.containsKey(word)){
 			count = wordCounts.get(word);
-			count++;
 			wordCounts.remove(word);
-			wordCounts.put(word, count);
+			wordCounts.put(word, count+1);
 		}
-		else wordCounts.put(word, count);
+		else wordCounts.put(word, 1);
 	}
 	
 	public void setWordCounts(HashMap<String, Integer> wordCounts) {
 		this.wordCounts = wordCounts;
 	}
 	
+	public String[] getMostImportantWordCounts(int count){
+		ArrayList<StringIntegerPair> keyValueList = new ArrayList<>();
+		ArrayList<String> keyList = new ArrayList<>();
+		keyList.addAll(wordCounts.keySet());
+		for(int i = 0; i<wordCounts.size(); i++){
+			keyValueList.add(new StringIntegerPair(keyList.get(i), wordCounts.get(keyList.get(i))));
+		}
+		keyValueList.sort(new StringIntegerPairComparator());
+		keyValueList.subList(count, keyValueList.size()).clear();
+		String[] array = new String[count];
+		for(int i = 0; i<count; i++){
+			array[i] = keyValueList.get(i).getString() + "(" + keyValueList.get(i).getInteger() + ")";
+		}
+		return array;
+	}
+	
+	
+	public String[] getMostImportantWordCounts(int count){
+		ArrayList<StringIntegerPair> keyValueList = new ArrayList<>();
+		ArrayList<String> keyList = new ArrayList<>();
+		keyList.addAll(wordCounts.keySet());
+		for(int i = 0; i<wordCounts.size(); i++){
+			keyValueList.add(new StringIntegerPair(keyList.get(i), wordCounts.get(keyList.get(i))));
+		}
+		keyValueList.sort(new StringIntegerPairComparator());
+		keyValueList.subList(count, keyValueList.size()).clear();
+		String[] array = new String[count];
+		for(int i = 0; i<count; i++){
+			array[i] = keyValueList.get(i).getString() + "(" + keyValueList.get(i).getInteger() + ")";
+		}
+		return array;
+	}
+	
 	public String[] getScenePresenceArray(Integer totalSceneCount){
 		String[] scenePresenceArray = new String[totalSceneCount+1];
 		scenePresenceArray[0] = personId.getName();
 		for(int i = 0; i<totalSceneCount; i++){
-			if(sceneIdList.contains(i)){
+			if(sceneIdList.contains(i+1)){
 				scenePresenceArray[i+1] = "1";
 			}
 			else scenePresenceArray[i+1] = "0";
@@ -130,7 +168,7 @@ public class Person {
 		String[] episodePresenceArray = new String[totalEpisodeCount+1];
 		episodePresenceArray[0] = personId.getName();
 		for(int i = 0; i<totalEpisodeCount; i++){
-			if(episodeIdList.contains(i)){
+			if(episodeIdList.contains(i+1)){
 				episodePresenceArray[i+1] = "1";
 			}
 			else episodePresenceArray[i+1] = "0";
@@ -141,13 +179,18 @@ public class Person {
 	public String[] getSeasonPresenceArray(int totalSeasonCount) {
 		String[] seasonPresenceArray = new String[totalSeasonCount+1];
 		seasonPresenceArray[0] = personId.getName();
-		for(int i = 1; i<totalSeasonCount; i++){
-			if(seasonIdList.contains(i)){
-				seasonPresenceArray[i] = "1";
+		for(int i = 0; i<totalSeasonCount; i++){
+			if(seasonIdList.contains(i+1)){
+				seasonPresenceArray[i+1] = "1";
 			}
-			else seasonPresenceArray[i] = "0";
+			else seasonPresenceArray[i+1] = "0";
 		}
 		return seasonPresenceArray;
+	}
+
+	@Override
+	public int compareTo(Person person) {
+		return person.speechNumbers < speechNumbers ? -1 : person.speechNumbers == speechNumbers ? 0 : 1;
 	}
 	
 }

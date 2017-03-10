@@ -27,10 +27,9 @@ public class Scene {
 	}
 	
 	public String[] getPersonPresenceList(ArrayList<Person> personList){
-		String[] personPresenceArray = new String[personList.size()+1]; 
+		String[] personPresenceArray = new String[personList.size()+1]; 	
 		for(int i = 0; i<personList.size(); i++){
 			PersonId personId = personList.get(i).getPersonId();
-			personPresenceArray[0] = personId.getName();
 			Integer personID = personId.getId();
 			if(personIdList.contains(personID)){
 				personPresenceArray[i+1] = "1";
