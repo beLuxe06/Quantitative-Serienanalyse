@@ -39,8 +39,6 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Worthäufigkeiten">
                           <items>
-                              <MenuItem fx:id="export_word_counts_whole" mnemonicParsing="false" onAction="#exportWordCountsWhole" text="Gesamtkorpus" />
-                            <MenuItem fx:id="export_word_counts_all" mnemonicParsing="false" onAction="#exportWordCountsAll" text="Alle Personen" />
                               <MenuItem fx:id="export_word_counts_important" mnemonicParsing="false" onAction="#exportWordCountsImportant" text="Wichtigste Personen" />
                           </items>
                         </Menu>
@@ -55,11 +53,6 @@
           <Menu id="result_screen_menu_edit" fx:id="result_screen_menu_edit" mnemonicParsing="false" text="Edit">
             <items>
               <MenuItem id="result_screen_menu_edit_submenu_delete" fx:id="result_screen_menu_edit_submenu_delete" mnemonicParsing="false" onAction="#deleteInput" text="Delete" />
-            </items>
-          </Menu>
-          <Menu id="result_screen_menu_help" fx:id="result_screen_menu_help" mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem id="result_screen_menu_help_submenu_about" fx:id="result_screen_menu_help_submenu_about" mnemonicParsing="false" onAction="#showInfos" text="About" />
             </items>
           </Menu>
         </menus>
@@ -174,7 +167,7 @@
                                                                                        </children></VBox>
                                                                                     <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                                                                                        <children>
-                                                                                          <TableView fx:id="table_imported_files" prefHeight="200.0" prefWidth="200.0" />
+                                                                                          <ListView fx:id="file_import_list" prefHeight="200.0" prefWidth="200.0" />
                                                                                        </children></VBox>
                                                                                  </children>
                                                                               </AnchorPane>

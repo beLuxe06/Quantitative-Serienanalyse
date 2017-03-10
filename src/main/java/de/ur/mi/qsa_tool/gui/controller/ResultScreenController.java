@@ -31,6 +31,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -88,9 +89,6 @@ public class ResultScreenController {
 	    private Menu result_screen_menu_edit;
 
 	    @FXML
-	    private MenuItem result_screen_menu_help_submenu_about;
-
-	    @FXML
 	    private NumberAxis line_chart_reply_lengths_y_axis;
 
 	    @FXML
@@ -136,10 +134,7 @@ public class ResultScreenController {
 	    private Text text_episodes_size;
 
 	    @FXML
-	    private MenuItem export_word_counts_all;
-
-	    @FXML
-	    private TableView<String> table_imported_files;
+	    private ListView<String> file_import_list;
 
 	    @FXML
 	    private LineChart<Integer, Integer> line_chart_reply_lengths;
@@ -152,9 +147,6 @@ public class ResultScreenController {
 
 	    @FXML
 	    private Text text_seasons211;
-
-	    @FXML
-	    private MenuItem export_word_counts_whole;
 
 	    @FXML
 	    private MenuItem export_persons_constellations;
@@ -263,20 +255,14 @@ private void updateTextViews() {
 		text_persons_size.setText("" + data.getPersonList().size());
 		text_episodes_size.setText("" + data.getEpisodeList().size());
 		text_scenes_size.setText("" + data.getSceneList().size());
-		text_seasons.setText("" + data.getSeasonList().size());
+		text_seasons_size.setText("" + data.getSeasonList().size());
 	}
 
 
 
 private void updateFileImportTable() {
-	table_imported_files.getItems().clear();
-	importedFiles.addAll(corpus.getFileNames());
-	System.out.println("fileNames content size: " + importedFiles.size());
-	String columnTitle = "Dateinamen";
-	TableColumn<String, String> column = new TableColumn<String, String>(columnTitle);
-	table_imported_files.getColumns().add(column);
-	table_imported_files.setItems(importedFiles);
-	table_imported_files.refresh();
+	importedFiles.setAll(data.getCorpus().getFileNames());
+	file_import_list.setItems(importedFiles);
 	}
 
 
@@ -785,7 +771,6 @@ private void updateFileImportTable() {
         assert table_configuration_matrix != null : "fx:id=\"table_configuration_matrix\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_word_counts_important != null : "fx:id=\"export_word_counts_important\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert result_screen_menu_edit != null : "fx:id=\"result_screen_menu_edit\" was not injected: check your FXML file 'ResultScreen.fxml'.";
-        assert result_screen_menu_help_submenu_about != null : "fx:id=\"result_screen_menu_help_submenu_about\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert line_chart_reply_lengths_y_axis != null : "fx:id=\"line_chart_reply_lengths_y_axis\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert text_actions != null : "fx:id=\"text_actions\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert text_persons_size != null : "fx:id=\"text_persons_size\" was not injected: check your FXML file 'ResultScreen.fxml'.";
@@ -801,13 +786,11 @@ private void updateFileImportTable() {
         assert export_reply_lengths_important != null : "fx:id=\"export_reply_lengths_important\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert text_persons != null : "fx:id=\"text_persons\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert text_episodes_size != null : "fx:id=\"text_episodes_size\" was not injected: check your FXML file 'ResultScreen.fxml'.";
-        assert export_word_counts_all != null : "fx:id=\"export_word_counts_all\" was not injected: check your FXML file 'ResultScreen.fxml'.";
-        assert table_imported_files != null : "fx:id=\"table_imported_files\" was not injected: check your FXML file 'ResultScreen.fxml'.";
+        assert file_import_list != null : "fx:id=\"file_import_list\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert line_chart_reply_lengths != null : "fx:id=\"line_chart_reply_lengths\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_person_stats_important != null : "fx:id=\"export_person_stats_important\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_configuration_matrix_scenes != null : "fx:id=\"export_configuration_matrix_scenes\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert text_seasons211 != null : "fx:id=\"text_seasons211\" was not injected: check your FXML file 'ResultScreen.fxml'.";
-        assert export_word_counts_whole != null : "fx:id=\"export_word_counts_whole\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert export_persons_constellations != null : "fx:id=\"export_persons_constellations\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert line_chart_reply_lengths_x_axis != null : "fx:id=\"line_chart_reply_lengths_x_axis\" was not injected: check your FXML file 'ResultScreen.fxml'.";
         assert title_reply_length != null : "fx:id=\"title_reply_length\" was not injected: check your FXML file 'ResultScreen.fxml'.";

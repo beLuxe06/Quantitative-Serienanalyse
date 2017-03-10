@@ -91,7 +91,11 @@ public class CSVWriter {
 		for(int i = 0; i<wordsForPersons.length; i++){
 			content = content.concat(personNames.get(i) + SEPERATOR_CSV_DATA);
 			for(int j = 0; j<wordsForPersons.length; j++){
-				content = content.concat(""+ wordsForPersons[i][j] + SEPERATOR_CSV_DATA);
+				String count = wordsForPersons[i][j];
+				if(count == null){
+					count = "" + 0;
+				}
+				content = content.concat(""+ count + SEPERATOR_CSV_DATA);
 				if(j==wordsForPersons.length-1){
 					content = content.concat(NEW_LINE_SEPERATOR);
 				}
