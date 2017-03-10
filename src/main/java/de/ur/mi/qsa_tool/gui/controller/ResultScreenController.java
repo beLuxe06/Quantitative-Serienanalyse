@@ -478,7 +478,7 @@ public class ResultScreenController {
 	
 	@FXML
     void exportConfigurationMatrixEpisode(ActionEvent event) {
-		String fileContent = csvWriter.getCSVStringFrom2DArray(stats.getConfigurationEpisodeMatrix());
+		String fileContent = csvWriter.getCSVStringFromArraysInList(stats.getConfigurationEpisodeMatrixList());
     }
 
     @FXML

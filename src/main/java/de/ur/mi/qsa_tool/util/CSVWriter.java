@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 
 public class CSVWriter {
 
@@ -27,14 +28,14 @@ public class CSVWriter {
 		}
 	}
 
-	public String getCSVStringFrom2DArray(String[][] configurationEpisodeMatrix) {
+	public String getCSVStringFromArraysInList(ArrayList<String[]> configurationEpisodeMatrix) {
 		String content = "";
-		for(int i = 0; i<configurationEpisodeMatrix.length; i++){
+		for(int i = 0; i<configurationEpisodeMatrix.size(); i++){
 			if(i!=0){
 				content = content.concat(NEW_LINE_SEPERATOR);
 			}
-			for(int j = 0; j<configurationEpisodeMatrix.length; j++){
-				content = content.concat(configurationEpisodeMatrix[i][j] + SEPERATOR_CSV_DATA);
+			for(int j = 0; j<configurationEpisodeMatrix.get(0).length; j++){
+				content = content.concat(configurationEpisodeMatrix.get(i)[j] + SEPERATOR_CSV_DATA);
 			}
 		}
 		return content;
