@@ -5,7 +5,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+
+import de.iteratec.holiday.ressources.NumberValues;
+import de.iteratec.holiday.ressources.StringValues;
 import de.ur.mi.qsa_tool.gui.model.PersonUI;
 import de.ur.mi.qsa_tool.model.Corpus;
 import de.ur.mi.qsa_tool.model.Data;
@@ -16,6 +20,7 @@ import de.ur.mi.qsa_tool.task.RawDataGeneratorTask;
 import de.ur.mi.qsa_tool.task.StatsGeneratorTask;
 import de.ur.mi.qsa_tool.util.CSVWriter;
 import de.ur.mi.qsa_tool.util.NumberAsStringComparator;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,19 +29,26 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -161,6 +173,8 @@ public class ResultScreenController {
     private Data data;
     private Stats stats;
     private Stage prevStage;
+    private Stage nextStage;
+    private Scene startScene;
     private CSVWriter csvWriter;
 
     @FXML
@@ -463,80 +477,135 @@ public class ResultScreenController {
 			personNames.add(data.getPersonList().get(i).getPersonId().getName());
 		}
 	}
-	
-	private Integer getSize(int size, int size2) {
-		if(size>size2){
-			return size;
-		}else return size2;
-	}
-
 
 	@FXML
 	void exportConfigurationMatrixSeason(ActionEvent event){
-		
+		String fileContent = csvWriter.getCSVStringFromArraysInList(stats.getConfigurationSeasonMatrixList());
+		saveFileFromFileChooser(fileContent);
 	}
 	
 	@FXML
     void exportConfigurationMatrixEpisode(ActionEvent event) {
 		String fileContent = csvWriter.getCSVStringFromArraysInList(stats.getConfigurationEpisodeMatrixList());
+		saveFileFromFileChooser(fileContent);
     }
 
     @FXML
     void exportConfigurationMatrixScene(ActionEvent event) {
-
+    	String fileContent = csvWriter.getCSVStringFromArraysInList(stats.getConfigurationSceneMatrixList());
+		saveFileFromFileChooser(fileContent);
     }
 
     @FXML
     void exportPersonStatsAll(ActionEvent event) {
-
+    	String fileContent = csvWriter.getCSVStringFromPersonUI(stats.getPersonOverviewStats());
+		saveFileFromFileChooser(fileContent);
     }
 
     @FXML
     void exportPersonStatsImportant(ActionEvent event) {
-
+    	String fileContent = csvWriter.getCSVStringFromPersonUI(stats.getMostImportantPersons());
+		saveFileFromFileChooser(fileContent);
     }
 
     @FXML
     void exportReplyLengthsAll(ActionEvent event) {
-
+    	String fileContent = csvWriter.getCSVStringFromReplyLengths(stats.getReplyLengths(), personNames);
+		saveFileFromFileChooser(fileContent);
     }
 
     @FXML
     void exportReplyLengthsImportant(ActionEvent event) {
-
+    	String fileContent = csvWriter.getCSVStringFromReplyLengths(stats.getReplyLengthsMostImportant(), stats.getMostImportantPersonsNames());
+		saveFileFromFileChooser(fileContent);
     }
 
     @FXML
     void exportWordCountsWhole(ActionEvent event) {
-
+    	
     }
 
     @FXML
     void exportWordCountsAll(ActionEvent event) {
-
+    	String fileContent = csvWriter.getCSVStringFromReplyLengths(stats.getWordsForPersons(), personNames);
+		saveFileFromFileChooser(fileContent);
     }
 
     @FXML
     void exportWordCountsImportant(ActionEvent event) {
-
+    	String fileContent = csvWriter.getCSVStringFromReplyLengths(stats.getMostWordCountsForMostImportantPersons(), stats.getMostImportantPersonsNames());
+		saveFileFromFileChooser(fileContent);
     }
 
     @FXML
     void closeApp(ActionEvent event) {
-
+    	Platform.exit();
+    	System.exit(0);
     }
 
     @FXML
     void deleteInput(ActionEvent event) {
-
+    	showAlertDialog();
     }
+    
+    public void showAlertDialog() {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Auswertung löschen?");
+			alert.setHeaderText("Möchten Sie die Auswertung beenden?");
+			alert.setContentText("Alle berechneten Daten werden gelöscht und Sie kehren zurück zum Startbildschirm.");
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				clearData();
+		    	showStartScreen();
+			}
+	}
 
-    @FXML
+    
+    
+
+    private void clearData() {
+		data.clear();
+		fileNames.clear();
+	    configurationMatrixContent.clear();
+	    personsOverviewContent.clear();
+	    wordCountsTableContent.clear();
+	    personNames.clear();
+	    corpus.clear();
+	    stats.clear();
+		
+	}
+
+
+
+	private void showStartScreen() {
+    	nextStage = new Stage();
+		nextStage.setTitle("Quantitative Serienanalyse");
+		try {
+			FXMLLoader myLoader = new FXMLLoader(getClass().getResource("StartScreen.fxml"));
+			Pane root =  myLoader.load();
+			StartScreenController startController = (StartScreenController) myLoader.getController();
+			startScene = new Scene(root);
+			startScene.getStylesheets().add("css/qsa_tool.css");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		nextStage.setScene(startScene);
+		
+		if (prevStage != null){
+			prevStage.close();
+		}
+		nextStage.show();
+	}
+
+
+
+	@FXML
     void showInfos(ActionEvent event) {
 
     }
     
-    private void saveFileFromFileChooser(String fileName, String content) {
+    private void saveFileFromFileChooser(String content) {
     	FileChooser fileChooser = new FileChooser();
     	configureFileChooser(fileChooser);
     	File file = fileChooser.showSaveDialog(prevStage);

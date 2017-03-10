@@ -91,6 +91,15 @@ public class Data {
 		return "NewData values: fileNames: " + corpus.getFileNames().toString() + " found persons: " + personList.size() + " found actions: " + actionList.size() + 
 				" found scenes: " + sceneList.size() +" found episodes: " + episodeList.size() + " found seasons: " + seasonList.size();
 	}
+
+	public void clear() {
+		corpus.clear();
+		personList.clear();
+		sceneList.clear();
+		episodeList.clear();
+		seasonList.clear();
+		actionList.clear();
+	}
 	
 	
 	

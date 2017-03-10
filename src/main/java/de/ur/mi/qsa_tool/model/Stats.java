@@ -12,7 +12,10 @@ public class Stats {
 	private ArrayList<String[]> configurationSeasonMatrixList;
 	private ArrayList<String> mostImportantPersonsNames;
 	private ArrayList<PersonUI> personsOverview;
+	private ArrayList<PersonUI> mostImportantPersons;
 	private ArrayList<HashMap<Integer, Integer>> replyLengths;
+	private ArrayList<HashMap<Integer, Integer>> replyLengthsMostImportant;
+	private String[][] wordsForPersons;
 	private String[][] mostImportantWordsForMostImportantPersons;
 	private ArrayList<Integer> timeLine;
 
@@ -82,6 +85,41 @@ public class Stats {
 	}
 	public ArrayList<String[]> getConfigurationSceneMatrixList() {
 		return configurationSceneMatrixList;
+	}
+
+	public void clear() {
+		configurationEpisodeMatrixList.clear();
+		configurationSceneMatrixList.clear();
+		configurationSeasonMatrixList.clear();
+		mostImportantPersonsNames.clear();
+		personsOverview.clear();
+		replyLengths.clear();
+		timeLine.clear();
+	}
+
+	public void setMostImportantPersons(ArrayList<PersonUI> mostImportantPersons) {
+		this.mostImportantPersons = mostImportantPersons;
+	}
+	
+	public ArrayList<PersonUI> getMostImportantPersons() {
+		return mostImportantPersons;
+	}
+
+	public void setReplyLengthsMostImportant(ArrayList<HashMap<Integer, Integer>> replyLengthsMostImportant) {
+		this.replyLengthsMostImportant = replyLengthsMostImportant;
+	}
+	
+	public ArrayList<HashMap<Integer, Integer>> getReplyLengthsMostImportant() {
+		return replyLengthsMostImportant;
+	}
+
+	public void setWordCountsForPersons(String[][] wordsCountsForPersons) {
+		this.wordsForPersons = wordsCountsForPersons;
+		
+	}
+	
+	public String[][] getWordsForPersons() {
+		return wordsForPersons;
 	}
 	
 }

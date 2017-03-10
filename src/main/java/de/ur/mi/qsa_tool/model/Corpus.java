@@ -42,5 +42,9 @@ public class Corpus {
 		return fileContents;
 	}
 	
+	public void clear(){
+		scripts.clear();
+	}
+	
 	
 }
