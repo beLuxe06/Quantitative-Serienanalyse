@@ -1,8 +1,6 @@
 package de.ur.mi.qsa_tool.gui.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map.Entry;
 
 import de.ur.mi.qsa_tool.model.Person;
 

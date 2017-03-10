@@ -2,7 +2,6 @@ package de.ur.mi.qsa_tool.task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import de.ur.mi.qsa_tool.gui.model.PersonUI;
 import de.ur.mi.qsa_tool.model.Action;
@@ -12,7 +11,6 @@ import de.ur.mi.qsa_tool.model.Person;
 import de.ur.mi.qsa_tool.model.Scene;
 import de.ur.mi.qsa_tool.model.Season;
 import de.ur.mi.qsa_tool.model.Stats;
-import de.ur.mi.qsa_tool.model.StringIntegerPair;
 import de.ur.mi.qsa_tool.util.ArrayListConverter;
 import de.ur.mi.qsa_tool.util.PersonComparator;
 import javafx.concurrent.Task;

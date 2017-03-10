@@ -12,6 +12,7 @@ import de.ur.mi.qsa_tool.model.Corpus;
 import de.ur.mi.qsa_tool.model.Script;
 import de.ur.mi.qsa_tool.task.FileImportTask;
 import de.ur.mi.qsa_tool.util.FileInputChecker;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -55,52 +56,23 @@ public class StartScreenController {
     private URL location;
 
     @FXML
-    private MenuItem start_screen_menu_edit_sub_delete;
-
-    @FXML
-    private CheckBox start_screen_checkbox_analyse_stage_directions;
-
-    @FXML
-    private Menu start_screen_menu_file;
-
-    @FXML
     private ImageView start_screen_logo;
-
-    @FXML
-    private CheckBox start_screen_checkbox_calculate_configuration_matrix;
 
     @FXML
     private TextField start_screen_insert_filepath_edit;
 
     @FXML
-    private MenuItem start_screen_menu_help_sub_about;
-
-    @FXML
     private ImageView start_screen_search_file;
-
-    @FXML
-    private CheckBox start_screen_checkbox_show_person_constellations;
 
     @FXML
     private Button start_screen_start_analysis_button;
 
     @FXML
     private TitledPane start_screen_further_settings_accordion;
-
+    
     @FXML
     private MenuItem start_screen_menu_file_sub_close;
 
-    @FXML
-    private CheckBox start_screen_checkbox_analyse_szenes;
-
-    @FXML
-    private Menu start_screen_menu_edit;
-
-    @FXML
-    private CheckBox start_screen_checkbox_extract_persons;
-
-    @FXML
-    private CheckBox start_screen_checkbox_count_words;
     
     private StartScreenListViewController importFileListViewController;
 	private ObservableList<String> observableImportList = FXCollections.observableArrayList();
@@ -137,6 +109,12 @@ public class StartScreenController {
 		resultScene = scene;
 	}
     
+	@FXML
+	public void closeApp(ActionEvent event){
+		Platform.exit();
+    	System.exit(0);
+	}
+	
     @FXML
 	public void initialize() {
         validateUIFields();
@@ -145,22 +123,11 @@ public class StartScreenController {
     }
 
 	private void validateUIFields() {
-    	assert start_screen_menu_edit_sub_delete != null : "fx:id=\"start_screen_menu_edit_sub_delete\" was not injected: check your FXML file 'StartScreen.fxml'.";
-        assert start_screen_checkbox_analyse_stage_directions != null : "fx:id=\"start_screen_checkbox_analyse_stage_directions\" was not injected: check your FXML file 'StartScreen.fxml'.";
-        assert start_screen_menu_file != null : "fx:id=\"start_screen_menu_file\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_logo != null : "fx:id=\"start_screen_logo\" was not injected: check your FXML file 'StartScreen.fxml'.";
-        assert start_screen_checkbox_calculate_configuration_matrix != null : "fx:id=\"start_screen_checkbox_calculate_configuration_matrix\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_insert_filepath_edit != null : "fx:id=\"start_screen_insert_filepath_edit\" was not injected: check your FXML file 'StartScreen.fxml'.";
-        assert start_screen_menu_help_sub_about != null : "fx:id=\"start_screen_menu_help_sub_about\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_search_file != null : "fx:id=\"start_screen_search_file\" was not injected: check your FXML file 'StartScreen.fxml'.";
-        assert start_screen_checkbox_show_person_constellations != null : "fx:id=\"start_screen_checkbox_show_person_constellations\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_start_analysis_button != null : "fx:id=\"start_screen_start_analysis_button\" was not injected: check your FXML file 'StartScreen.fxml'.";
         assert start_screen_further_settings_accordion != null : "fx:id=\"start_screen_further_settings_accordion\" was not injected: check your FXML file 'StartScreen.fxml'.";
-        assert start_screen_menu_file_sub_close != null : "fx:id=\"start_screen_menu_file_sub_close\" was not injected: check your FXML file 'StartScreen.fxml'.";
-        assert start_screen_checkbox_analyse_szenes != null : "fx:id=\"start_screen_checkbox_analyse_szenes\" was not injected: check your FXML file 'StartScreen.fxml'.";
-        assert start_screen_menu_edit != null : "fx:id=\"start_screen_menu_edit\" was not injected: check your FXML file 'StartScreen.fxml'.";
-        assert start_screen_checkbox_extract_persons != null : "fx:id=\"start_screen_checkbox_extract_persons\" was not injected: check your FXML file 'StartScreen.fxml'.";
-        assert start_screen_checkbox_count_words != null : "fx:id=\"start_screen_checkbox_count_words\" was not injected: check your FXML file 'StartScreen.fxml'.";
 	}
 
 	private void initFileInputChecker() {

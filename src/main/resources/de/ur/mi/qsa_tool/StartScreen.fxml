@@ -15,17 +15,7 @@
         <menus>
           <Menu id="start_screen_menu_file" fx:id="start_screen_menu_file" mnemonicParsing="false" text="File">
             <items>
-              <MenuItem id="start_screen_menu_file_sub_close" fx:id="start_screen_menu_file_sub_close" mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu id="start_screen_menu_edit" fx:id="start_screen_menu_edit" mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem id="start_screen_menu_edit_sub_delete" fx:id="start_screen_menu_edit_sub_delete" mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu id="start_screen_menu_help" fx:id="start_screen_menu_edit" mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem id="start_screen_menu_help_sub_about" fx:id="start_screen_menu_help_sub_about" mnemonicParsing="false" text="About" />
+              <MenuItem id="start_screen_menu_file_sub_close" fx:id="start_screen_menu_file_sub_close" mnemonicParsing="false" onAction="#closeApp" text="Close" />
             </items>
           </Menu>
         </menus>
@@ -198,84 +188,7 @@
                            <children>
                               <AnchorPane>
                                  <children>
-                                    <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
-                                      <panes>
-                                        <TitledPane id="start_screen_further_settings_accordion" fx:id="start_screen_further_settings_accordion" animated="false" text="Weitere Einstellungen">
-                                          <content>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0">
-                                                   <children>
-                                                      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                         <children>
-                                                            <AnchorPane>
-                                                               <children>
-                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                     <children>
-                                                                        <AnchorPane>
-                                                                           <children>
-                                                                              <CheckBox id="start_screen_checkbox_extract_persons" fx:id="start_screen_checkbox_extract_persons" mnemonicParsing="false" onAction="#extractPersons" text="Personen extrahieren" />
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children></VBox>
-                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-                                                                     <children>
-                                                                        <AnchorPane>
-                                                                           <children>
-                                                                              <CheckBox id="start_screen_checkbox_analyse_szenes" fx:id="start_screen_checkbox_analyse_szenes" mnemonicParsing="false" onAction="#analyseSzenes" text="Szenenangaben auswerten" />
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children></VBox>
-                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
-                                                                     <children>
-                                                                        <AnchorPane>
-                                                                           <children>
-                                                                              <CheckBox id="start_screen_checkbox_analyse_stage_directions" fx:id="start_screen_checkbox_analyse_stage_directions" mnemonicParsing="false" onAction="#analyseStageDirections" text="Regieanweisungen auswerten" />
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children></VBox>
-                                                               </children>
-                                                            </AnchorPane>
-                                                         </children>
-                                                      </HBox>
-                                                      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="0.0">
-                                                         <children>
-                                                            <AnchorPane>
-                                                               <children>
-                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                     <children>
-                                                                        <AnchorPane>
-                                                                           <children>
-                                                                              <CheckBox id="start_screen_checkbox_calculate_configuration_matrix" fx:id="start_screen_checkbox_calculate_configuration_matrix" mnemonicParsing="false" onAction="#calculateConfigurationMatrix" text="Konfigurationsmatritzen berechnen" />
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children>
-                                                                  </VBox>
-                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-                                                                     <children>
-                                                                        <AnchorPane>
-                                                                           <children>
-                                                                              <CheckBox id="start_screen_checkbox_count_words" fx:id="start_screen_checkbox_count_words" mnemonicParsing="false" onAction="#countWords" text="Wörter zählen" />
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children>
-                                                                  </VBox>
-                                                                  <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
-                                                                     <children>
-                                                                        <AnchorPane>
-                                                                           <children>
-                                                                              <CheckBox id="start_screen_checkbox_show_person_constellations" fx:id="start_screen_checkbox_show_person_constellations" mnemonicParsing="false" onAction="#showPersonConstellations" text="Personenkonstellationen darstellen" />
-                                                                           </children>
-                                                                        </AnchorPane>
-                                                                     </children>
-                                                                  </VBox>
-                                                               </children></AnchorPane>
-                                                         </children>
-                                                      </HBox>
-                                                   </children>
-                                                </AnchorPane>
-                                          </content>
-                                        </TitledPane>
-                                      </panes>
-                                    </Accordion>
+                                    <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </children>
