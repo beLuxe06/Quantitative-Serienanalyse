@@ -197,8 +197,15 @@ public class ResultScreenController {
     private ObservableList<String[]> configurationMatrixContent = FXCollections.observableArrayList();
     private ObservableList<PersonUI> personsOverviewContent = FXCollections.observableArrayList();
     private ObservableList<String[]> wordCountsTableContent = FXCollections.observableArrayList();
+    private ObservableList<String> importedFiles = FXCollections.observableArrayList();
     private ArrayList<String> personNames = new ArrayList<>();
 
+    private Integer numberOfSeasons;
+    private Integer numberOfEpisodes;
+    private Integer numberOfScenes;
+    private Integer numberOfPersons;
+    private Integer numberOfActions;
+    
     private Corpus corpus;
     private Data data;
     private Stats stats;
@@ -236,7 +243,7 @@ public class ResultScreenController {
 		updateConfigurationMatrixTable();
 		updateOverviewStats();
 		updateReplyLengthLineChart();
-		updatePersonDependenceOverview();
+		//updatePersonDependenceOverview();
 		updateFileImportTable();
 		updateTextViews();
 		//updateWordCountsTable();
@@ -252,15 +259,24 @@ private void updatePersonDependenceOverview() {
 
 
 private void updateTextViews() {
-		// TODO Auto-generated method stub
-		
+		text_actions_size.setText(data.getActionCount().toString());
+		text_persons_size.setText("" + data.getPersonList().size());
+		text_episodes_size.setText("" + data.getEpisodeList().size());
+		text_scenes_size.setText("" + data.getSceneList().size());
+		text_seasons.setText("" + data.getSeasonList().size());
 	}
 
 
 
 private void updateFileImportTable() {
-		// TODO Auto-generated method stub
-		
+	table_imported_files.getItems().clear();
+	importedFiles.addAll(corpus.getFileNames());
+	System.out.println("fileNames content size: " + importedFiles.size());
+	String columnTitle = "Dateinamen";
+	TableColumn<String, String> column = new TableColumn<String, String>(columnTitle);
+	table_imported_files.getColumns().add(column);
+	table_imported_files.setItems(importedFiles);
+	table_imported_files.refresh();
 	}
 
 
