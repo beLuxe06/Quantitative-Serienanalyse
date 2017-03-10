@@ -135,23 +135,6 @@ public class Person implements Comparable<Person>{
 		return array;
 	}
 	
-	
-	public String[] getMostImportantWordCounts(int count){
-		ArrayList<StringIntegerPair> keyValueList = new ArrayList<>();
-		ArrayList<String> keyList = new ArrayList<>();
-		keyList.addAll(wordCounts.keySet());
-		for(int i = 0; i<wordCounts.size(); i++){
-			keyValueList.add(new StringIntegerPair(keyList.get(i), wordCounts.get(keyList.get(i))));
-		}
-		keyValueList.sort(new StringIntegerPairComparator());
-		keyValueList.subList(count, keyValueList.size()).clear();
-		String[] array = new String[count];
-		for(int i = 0; i<count; i++){
-			array[i] = keyValueList.get(i).getString() + "(" + keyValueList.get(i).getInteger() + ")";
-		}
-		return array;
-	}
-	
 	public String[] getScenePresenceArray(Integer totalSceneCount){
 		String[] scenePresenceArray = new String[totalSceneCount+1];
 		scenePresenceArray[0] = personId.getName();

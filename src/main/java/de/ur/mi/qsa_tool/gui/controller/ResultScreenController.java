@@ -1,8 +1,10 @@
 package de.ur.mi.qsa_tool.gui.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 import de.ur.mi.qsa_tool.gui.model.PersonUI;
 import de.ur.mi.qsa_tool.model.Corpus;
@@ -12,6 +14,7 @@ import de.ur.mi.qsa_tool.model.StringIntegerPair;
 import de.ur.mi.qsa_tool.task.FineDataGeneratorTask;
 import de.ur.mi.qsa_tool.task.RawDataGeneratorTask;
 import de.ur.mi.qsa_tool.task.StatsGeneratorTask;
+import de.ur.mi.qsa_tool.util.CSVWriter;
 import de.ur.mi.qsa_tool.util.NumberAsStringComparator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -35,6 +38,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class ResultScreenController {
@@ -155,11 +160,13 @@ public class ResultScreenController {
     private Corpus corpus;
     private Data data;
     private Stats stats;
-
+    private Stage prevStage;
+    private CSVWriter csvWriter;
 
     @FXML
     void initialize() {
     	validateUIFields();
+    	csvWriter = new CSVWriter();
     }
 
 	
@@ -311,20 +318,15 @@ public class ResultScreenController {
 		table_overall_stats.setItems(personsOverviewContent);
 		table_overall_stats.refresh();
 	}
-
-
-
+	
 	private void updateConfigurationMatrixTable() {
 		table_configuration_matrix.getItems().clear();
-		configurationMatrixContent.addAll(stats.getConfigurationEpisodeMatrix());
+		configurationMatrixContent.addAll(stats.getConfigurationEpisodeMatrixList());
 		System.out.println("configuration matrix content size: " + configurationMatrixContent.size());
 		System.out.println("configuration matrix length: " + configurationMatrixContent.get(0).length);
 		configurationMatrixContent.remove(0);
-		System.out.println("configuration matrix content size: " + configurationMatrixContent.size());
-		System.out.println("configuration matrix length: " + configurationMatrixContent.get(0).length);
-		System.out.println("configuration matrix [1]: " + configurationMatrixContent.get(1).length);
 		for(int i = 0; i<configurationMatrixContent.get(0).length-1; i++){
-			String columnTitle = stats.getConfigurationEpisodeMatrix()[0][i];
+			String columnTitle = stats.getConfigurationEpisodeMatrixList().get(0)[i];
 			TableColumn<String[], String> column = new TableColumn<String[], String>(columnTitle);
 			final int columnIndex = i;
 			column.setCellValueFactory(new Callback<CellDataFeatures<String[], String>, ObservableValue<String>>() {
@@ -470,8 +472,13 @@ public class ResultScreenController {
 
 
 	@FXML
+	void exportConfigurationMatrixSeason(ActionEvent event){
+		
+	}
+	
+	@FXML
     void exportConfigurationMatrixEpisode(ActionEvent event) {
-
+		String fileContent = csvWriter.getCSVStringFrom2DArray(stats.getConfigurationEpisodeMatrix());
     }
 
     @FXML
@@ -528,8 +535,34 @@ public class ResultScreenController {
     void showInfos(ActionEvent event) {
 
     }
+    
+    private void saveFileFromFileChooser(String fileName, String content) {
+    	FileChooser fileChooser = new FileChooser();
+    	configureFileChooser(fileChooser);
+    	File file = fileChooser.showSaveDialog(prevStage);
+        if (file != null) {
+        	try{
+        		csvWriter.writeCSV(file, content);
+        	} catch(Exception e){
+        		e.printStackTrace();
+        	}
+        }
+	}
+
+	private void configureFileChooser(FileChooser fileChooser) {
+		fileChooser.setTitle("Datei speichern");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("csv", "*.csv"));
+	}
 	
 	
+	 public void setPrevStage(Stage prevStage) {
+			this.prevStage = prevStage;
+		}
+
+		public Stage getPrevStage() {
+			return this.prevStage;
+		}
 
 	@FXML
     void validateUIFields() {

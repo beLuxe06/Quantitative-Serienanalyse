@@ -58,11 +58,9 @@ public class StatsGeneratorTask extends Task <Stats>{
 		stats.setMostWordCountsForMostImportantPersons(getMostWordsCountsForMostImportantPersons());
 		//getAllScenesWordCounter();
 		//getAllWordCounter();
-		//stats.setConfigurationSceneMatrix(getQuickSceneMatrix());
-		//stats.setConfigurationSeasonMatrix(getQuickSeasonMatrix());
-		stats.setConfigurationSceneMatrix(getQuickSceneMatrixFromPerson());
-		//stats.setConfigurationSceneMatrix(getQuickSceneMatrixFromScene());
-		stats.setConfigurationEpisodeMatrix(getQuickEpisodeMatrixFromPerson());
+		stats.setConfigurationSeasonMatrixList(getQuickSeasonMatrixListFromPerson());
+		stats.setConfigurationEpisodeMatrixList(getQuickEpisodeMatrixListFromPerson());
+		stats.setConfigurationSceneMatrixList(getQuickSceneMatrixListFromPerson());
 		
 		return stats;
 	}
@@ -126,22 +124,22 @@ public class StatsGeneratorTask extends Task <Stats>{
 		}
 	}
 	
-	private String[][] getQuickSeasonMatrixFromPerson() {
-		Integer dimension = getNeededDimension(seasonList.size(), personList.size());
-		String[][] configurationMatrix = new String[dimension+1][];
-		configurationMatrix [0] = getSeasonNamesAsArray();
+	private ArrayList<String[]> getQuickSeasonMatrixListFromPerson() {
+		ArrayList<String[]> returnList = new ArrayList<>();
+		returnList.add(getSeasonNamesAsArray());
 		for (int i = 0; i < personList.size(); i++) { 
-			int rowIndex = i+1;
-		    configurationMatrix[rowIndex] = personList.get(i).getSeasonPresenceArray(seasonList.size());
+			returnList.add(personList.get(i).getScenePresenceArray(seasonList.size()));
 		}
-		return configurationMatrix;
+		return returnList;
 	}
 	
-	private Integer getNeededDimension(int size, int size2) {
-		if(size<size2){
-			return size2;
+	private ArrayList<String[]> getQuickSceneMatrixListFromPerson() {
+		ArrayList<String[]> returnList = new ArrayList<>();
+		returnList.add(getSceneNamesAsArray());
+		for (int i = 0; i < personList.size(); i++) { 
+			returnList.add(personList.get(i).getScenePresenceArray(sceneList.size()));
 		}
-		else return size;
+		return returnList;
 	}
 
 	private String[] getSeasonNamesAsArray() {
@@ -154,15 +152,13 @@ public class StatsGeneratorTask extends Task <Stats>{
 		return seasonNamesAsArray;
 	}
 
-	private String[][] getQuickEpisodeMatrixFromPerson() {
-		Integer dimension = getNeededDimension(episodeList.size(), personList.size());
-		String[][] configurationMatrix = new String[dimension+1][];
-		configurationMatrix [0] = getEpisodeNamesAsArray();
+	private ArrayList<String[]> getQuickEpisodeMatrixListFromPerson() {
+		ArrayList<String[]> returnList = new ArrayList<>();
+		returnList.add(getEpisodeNamesAsArray());
 		for (int i = 0; i < personList.size(); i++) { 
-			int rowIndex = i+1;
-		    configurationMatrix[rowIndex] = personList.get(i).getEpisodePresenceArray(episodeList.size());
+			returnList.add(personList.get(i).getEpisodePresenceArray(episodeList.size()));
 		}
-		return configurationMatrix;
+		return returnList;
 	}
 	
 	private String[] getEpisodeNamesAsArray() {

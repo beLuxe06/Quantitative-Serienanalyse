@@ -299,7 +299,7 @@ public class StartScreenController {
 	}
 
 	private void configureFileChooser(FileChooser fileChooser) {
-		fileChooser.setTitle("Import Files");
+		fileChooser.setTitle("Datei(en) importieren");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt", "*.txt"));
 	}

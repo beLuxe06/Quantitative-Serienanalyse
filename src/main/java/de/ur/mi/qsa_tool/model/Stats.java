@@ -7,9 +7,9 @@ import de.ur.mi.qsa_tool.gui.model.PersonUI;
 
 public class Stats {
 
-	private String[][] configurationSceneMatrix;
-	private String[][] configurationEpisodeMatrix;
-	private String[][] configurationSeasonMatrix;
+	private ArrayList<String[]> configurationEpisodeMatrixList;
+	private ArrayList<String[]> configurationSceneMatrixList;
+	private ArrayList<String[]> configurationSeasonMatrixList;
 	private ArrayList<String> mostImportantPersonsNames;
 	private ArrayList<PersonUI> personsOverview;
 	private ArrayList<HashMap<Integer, Integer>> replyLengths;
@@ -43,30 +43,6 @@ public class Stats {
 		this.personsOverview = personUIList;
 	}
 
-	public String[][] getConfigurationSceneMatrix() {
-		return configurationSceneMatrix;
-	}
-
-	public void setConfigurationSceneMatrix(String[][] configurationMatrix) {
-		this.configurationSceneMatrix = configurationMatrix;
-	}
-
-	public String[][] getConfigurationSeasonMatrix() {
-		return configurationSeasonMatrix;
-	}
-
-	public void setConfigurationSeasonMatrix(String[][] configurationSeasonMatrix) {
-		this.configurationSeasonMatrix = configurationSeasonMatrix;
-	}
-
-	public String[][] getConfigurationEpisodeMatrix() {
-		return configurationEpisodeMatrix;
-	}
-
-	public void setConfigurationEpisodeMatrix(String[][] configurationEpisodeMatrix) {
-		this.configurationEpisodeMatrix = configurationEpisodeMatrix;
-	}
-
 	public void setMostImportantPersonsNames(ArrayList<String> mostImportantPersonsNames) {
 		this.mostImportantPersonsNames = mostImportantPersonsNames;
 	}
@@ -81,6 +57,31 @@ public class Stats {
 	
 	public String[][] getMostWordCountsForMostImportantPersons() {
 		return mostImportantWordsForMostImportantPersons;
+	}
+
+	public ArrayList<String[]> getConfigurationSeasonMatrixList() {
+		return configurationSeasonMatrixList;
+	}
+
+	public void setConfigurationSeasonMatrixList(ArrayList<String[]> configurationSeasonMatrixList) {
+		this.configurationSeasonMatrixList = configurationSeasonMatrixList;
+	}
+	
+	public void setConfigurationEpisodeMatrixList(ArrayList<String[]> quickEpisodeMatrixListFromPerson) {
+		this.configurationEpisodeMatrixList = quickEpisodeMatrixListFromPerson;
+		
+	}
+
+	public ArrayList<String[]> getConfigurationEpisodeMatrixList() {
+		return configurationEpisodeMatrixList;
+	}
+
+	public void setConfigurationSceneMatrixList(ArrayList<String[]> quickSceneMatrixListFromPerson) {
+		this.configurationSceneMatrixList = quickSceneMatrixListFromPerson;
+		
+	}
+	public ArrayList<String[]> getConfigurationSceneMatrixList() {
+		return configurationSceneMatrixList;
 	}
 	
 }
